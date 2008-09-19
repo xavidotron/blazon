@@ -1,8 +1,13 @@
-from .types import *
+from structs import Tincture, Charge, Bend, Chief
 
-COLORS = {
-    'azure': Color(),
-    'argent': Color()
+TINCTURES = {
+    'azure': Tincture('blue'),
+    'sable': Tincture('black'),
+    'purpure': Tincture('purple'),
+    'gules': Tincture('red'),
+    'vert': Tincture('green'),
+    'argent': Tincture('white'),
+    'or': Tincture('gold')
     }
 
 NUMBERS = {
@@ -20,7 +25,22 @@ NUMBERS = {
     }
 
 CHARGES = {
-    'eagle': Charge()
+    'eagle': lambda:Charge('eagle'),
+    'lion': lambda:Charge('lion'),
+    'mullet': lambda:Charge('mullet'),
+    'sword': lambda:Charge('sword')
     }
 
-DEFAULT_CHARGE = Charge()
+ORDINARIES = {
+    'bend': lambda:Bend()
+    }
+
+PERIPHERALS = {
+    'chief': lambda:Chief()
+    }
+
+PUNCT = frozenset((',','.'))
+
+BETWEEN = frozenset(('between',))
+
+DEFAULT_CHARGE = lambda:Charge('?')
