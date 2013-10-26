@@ -5,6 +5,7 @@ class Thingy(object):
 
 class Parent(Thingy):
     kid = None
+    category = None
 
 class Field(Parent):
     BOXES_FOR_COUNT = {
@@ -12,6 +13,17 @@ class Field(Parent):
         2: [(20,20,255,450),(290,20,255,450)],
         3: [(20,20,255,255),(290,20,255,255),(155,295,255,255)]
         }
+
+    def tree(self):
+        yield "Field: %s" % self.tincture
+        for l in self.kid.tree():
+            yield "  " + l
+    
+    def describe(self):
+        for l in self.tincture.fielddescription():
+            yield l
+        for l in self.kid.describe():
+            yield l
 
     def render(self):
         assert self.between is None
@@ -42,13 +54,35 @@ class Field(Parent):
 
 class Charge(Thingy):
     name = None
-    mods = []
+    number = None
 
-    def __init__(self,name):
+    def __init__(self, name, desc, category=False):
         self.name = name
+        self.desc = desc
+        self.category = category
+        self.mods = []
+        self.seealso = []
     
     def render(self):
         return """<circle cx="50" cy="50" r="50" fill="%s" /><text x="5" y="40" fill="grey">%s</text>""" % (self.tincture, self.name)
+
+    def tree(self):
+        yield "Charge: %s %s" % (self.tincture, self.name)
+
+    def describe(self):
+        if self.number < 5:
+            numberness = '%s' % self.number
+        else:
+            numberness = '5 or more'
+        for c in [self] + self.seealso:
+            yield "%s:%s:%s" % (c.desc, self.tincture.tincture, numberness)
+        for c in self.tincture.chargeextras:
+            yield c
+        for c in self.mods:
+            yield c.desc
+
+    def __repr__(self):
+        return 'Charge:'+repr((self.name, self.desc, self.category))
 
 class Ordinary(Parent):
     arounds = []
@@ -100,13 +134,53 @@ class Chief(Peripheral):
     
         return ret
 
-class Group(list,Thingy):
-    pass
+class Group(list, Thingy):
+    def tree(self):
+        for i in self:
+            for l in i.tree():
+                yield l
+
+    def describe(self):
+        for i in self:
+            for l in i.describe():
+                yield l
 
 class Tincture(object):
-    
-    def __init__(self,csscolor):
+    def __init__(self, tincture, csscolor=None, fielddesc=None):
+        self.tincture = tincture
         self.css = csscolor
+        self.fielddesc = fielddesc
+        self.fieldextras = []
+        self.chargeextras = []
 
     def __str__(self):
         return self.css
+    
+    def add_treatment(self, treatment):
+        from words import CHARGES
+        self.fieldextras.append(CHARGES['field treatment, %s' % treatment])
+        if 'charge treatment, %s' % treatment in CHARGES:
+            self.chargeextras.append(
+                CHARGES['charge treatment, %s' % treatment])
+        else:
+            self.chargeextras.append(
+                CHARGES['charge treatment, seme, %s' % treatment])
+
+    def fielddescription(self):
+        yield self.fielddesc
+        for e in self.fieldextras:
+            yield e.desc
+
+class ComplexTincture(Tincture):
+    def __init__(self, fieldcharge):
+        Tincture.__init__(self, 'multicolor', fielddesc=fieldcharge.desc)
+        self.tcnt = 0
+    
+    def add_tincture(self, tincture):
+        if self.tcnt == 0:
+            self.fielddesc += ':' + tincture
+        elif self.tcnt == 1:
+            self.fielddesc += ':~and ' + tincture
+        else:
+            pass#assert False, (self.tcnt, tincture)
+        self.tcnt += 1
