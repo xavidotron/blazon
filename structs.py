@@ -1,5 +1,18 @@
+import copy
+
+def coalesce(l):
+    l = list(l)
+    idx = 0
+    while idx < len(l) - 1:
+        if l[idx].combinable_with(l[idx + 1]):
+            l[idx].number += l[idx + 1].number
+            del l[idx + 1]
+        else:
+            idx += 1
+    return l
 
 class Thingy(object):
+    name = None
     tincture = None
     between = None
 
@@ -55,13 +68,20 @@ class Field(Parent):
 class Charge(Thingy):
     name = None
     number = None
+    maintained = False
 
     def __init__(self, name, desc, category=False):
         self.name = name
         self.desc = desc
         self.category = category
         self.mods = []
+        self.tags = []
         self.seealso = []
+
+    def combinable_with(self, other):
+        return (other.name == self.name and other.maintained == self.maintained
+                and self.tincture == other.tincture and self.mods == other.mods
+                and self.tags == other.tags and self.between == other.between)
     
     def render(self):
         return """<circle cx="50" cy="50" r="50" fill="%s" /><text x="5" y="40" fill="grey">%s</text>""" % (self.tincture, self.name)
@@ -69,17 +89,41 @@ class Charge(Thingy):
     def tree(self):
         yield "Charge: %s %s" % (self.tincture, self.name)
 
-    def describe(self):
-        if self.number < 5:
-            numberness = '%s' % self.number
+    def describe(self, as_mod=False):
+        assert self.between is None, self.between
+        if self.maintained:
+            return
+        tagbit = ''
+        tags = list(self.tags)
+        primtags = list(tags)
+        if self.tincture:
+            tags = [self.tincture.tincture] + tags
+
+        if self.number == 'seme':
+            tags = ['seme'] + tags
+        elif self.number in (None, 'the'):
+            pass
+        elif self.number < 5:
+            tags = ['%s' % self.number] + tags
+            if self.number < 4:
+                primtags = ['%s' % self.number] + primtags
         else:
-            numberness = '5 or more'
+            tags = ['5 or more'] + tags
+
+        if tags:
+            tagbit = ':' + ':'.join(tags)
         for c in [self] + self.seealso:
-            yield "%s:%s:%s" % (c.desc, self.tincture.tincture, numberness)
-        for c in self.tincture.chargeextras:
-            yield c
+            yield "%s%s" % (c.desc, tagbit)
+        if self.tincture:
+            if 'primary' in self.tags and not as_mod:
+                # Add an additonal instance, without the tincture, for 
+                # sig diffness
+                yield "%s:%s" % (self.desc, ':'.join(primtags))
+            for c in self.tincture.chargeextras:
+                yield c
         for c in self.mods:
-            yield c.desc
+            for d in c.describe(as_mod=True):
+                yield d
 
     def __repr__(self):
         return 'Charge:'+repr((self.name, self.desc, self.category))
@@ -141,9 +185,14 @@ class Group(list, Thingy):
                 yield l
 
     def describe(self):
-        for i in self:
+        l = coalesce(self)
+        for i in l:
             for l in i.describe():
                 yield l
+        if self.between:
+            for i in coalesce(self.between):
+                for l in i.describe():
+                    yield l
 
 class Tincture(object):
     def __init__(self, tincture, csscolor=None, fielddesc=None):
@@ -152,24 +201,42 @@ class Tincture(object):
         self.fielddesc = fielddesc
         self.fieldextras = []
         self.chargeextras = []
+        self.on_field = False
 
     def __str__(self):
         return self.css
     
     def add_treatment(self, treatment):
         from words import CHARGES
-        self.fieldextras.append(CHARGES['field treatment, %s' % treatment])
-        if 'charge treatment, %s' % treatment in CHARGES:
-            self.chargeextras.append(
-                CHARGES['charge treatment, %s' % treatment])
+        if 'field treatment, %s' % treatment in CHARGES:
+            a = copy.deepcopy(CHARGES['field treatment, %s' % treatment])
         else:
-            self.chargeextras.append(
-                CHARGES['charge treatment, seme, %s' % treatment])
+            a = copy.deepcopy(CHARGES['field treatment, seme, %s' % treatment])
+        self.fieldextras.append(a)
+        if 'charge treatment, %s' % treatment in CHARGES:
+            b = copy.deepcopy(CHARGES['charge treatment, %s' % treatment])
+        else:
+            b = copy.deepcopy(CHARGES['charge treatment, seme, %s' % treatment])
+        self.chargeextras.append(b)
+        l = [a, b]
+        return l
+
+    def add_extra(self, extra):
+        self.fieldextras.append(extra)
+        self.chargeextras.append(extra)
 
     def fielddescription(self):
         yield self.fielddesc
         for e in self.fieldextras:
-            yield e.desc
+            for d in e.describe():
+                yield d
+
+class Fieldless(Tincture):
+    def __init__(self):
+        Tincture.__init__(self, None)
+
+    def fielddescription(self):
+        return ()
 
 class ComplexTincture(Tincture):
     def __init__(self, fieldcharge):
@@ -184,3 +251,13 @@ class ComplexTincture(Tincture):
         else:
             pass#assert False, (self.tcnt, tincture)
         self.tcnt += 1
+
+class MultiTincture(Tincture):
+    def __init__(self, tincts):
+        Tincture.__init__(self, 'multicolor')
+        self.tincts = tincts
+
+    def fielddescription(self):
+        for t in self.tincts:
+            for d in t.fielddescription():
+                yield d
