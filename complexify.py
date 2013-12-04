@@ -6,7 +6,8 @@ from parse import parse
 
 if __name__ == '__main__':
     import sys
-    p = parse(sys.argv[1])
+    blaz = unicode(sys.argv[1], 'utf-8')
+    p = parse(blaz)
     lst = list(p.describe())
     for l in lst:
         print l

@@ -44,7 +44,11 @@ def proc(x, b, next, numberless=False):
         if x.maintained:
             c.maintained = True
             x.maintained = False
-        x.unspecified.append(c)
+        if b in IMPLIED_TINCTURES:
+            assert not x.unspecified, x.unspecified
+            c.tincture = copy.deepcopy(TINCTURES[IMPLIED_TINCTURES[b]])
+        else:
+            x.unspecified.append(c)
         x.number = None
         x.adj = None
     elif b in BETWEEN:
@@ -69,6 +73,8 @@ def depluralize(chargename):
 
 def parse(blaz):
     loadwords()
+
+    assert isinstance(blaz, unicode), repr(blaz)
 
     blaz = blaz.lower().strip()
     if not blaz.endswith('.'):

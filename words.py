@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import copy
 
 from structs import Tincture, Fieldless, Charge
@@ -42,10 +44,12 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames',
            'queue-forchy',
            'couped', 'erased',
            'erect',
+           'throughout',
            # ???
            'counterchanged'}
 
-LINES = {'grady': 'indented'}
+LINES = {'grady': 'indented',
+         u'ployé': 'ploye'}
 
 BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {'rising': 'rousant'}
@@ -78,6 +82,16 @@ ALIASES = {'cross, as charge': ['cross'],
 }
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
+
+IMPLIED_TINCTURES = {'bezant': 'or',
+                     'plate': 'argent',
+                     'hurt': 'azure',
+                     'torteau': 'gules',
+                     'pellet': 'sable',
+                     'pomme': 'vert',
+                     'golpe': 'purpure'}
+
+BLACKLIST = {'throughout'}
 
 LOADED = False
 
@@ -148,7 +162,9 @@ def loadwords():
                 if ', ' in name:
                     cat, typ = name.rsplit(', ', 1)
                     charge = Charge(name, desc, category=cat)
-                    if typ not in CHARGES:
+                    if typ in BLACKLIST:
+                        pass
+                    elif typ not in CHARGES:
                         CHARGES[typ] = charge
                     else:
                         if CHARGES[typ] is None or CHARGES[typ].category != typ:
