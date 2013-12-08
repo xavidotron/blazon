@@ -112,8 +112,10 @@ class Charge(Thingy):
 
         if tags:
             tagbit = ':' + ':'.join(tags)
-        for c in [self] + self.seealso:
-            yield "%s%s" % (c.desc, tagbit)
+        yield "%s%s" % (self.desc, tagbit)
+        if not as_mod:
+            for c in self.seealso:
+                yield "%s%s" % (c.desc, tagbit)
         if self.tincture:
             if 'primary' in self.tags and not as_mod:
                 # Add an additonal instance, without the tincture, for 

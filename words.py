@@ -39,14 +39,15 @@ PERIPHERALS = {'chief', 'base'}
 
 BETWEEN = frozenset(('between',))
 
+MAJOR_DETAILS = {'winged': 'winged object'}
+
 DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames',
-           'wings displayed',
+           'wings displayed', 'wings elevated', 'wings addorsed', 
+           'wings elevated and addorsed',
            'queue-forchy',
            'couped', 'erased',
            'erect',
-           'throughout',
-           # ???
-           'counterchanged'}
+           'throughout', 'reversed'}
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye'}
@@ -79,6 +80,8 @@ ALIASES = {'cross, as charge': ['cross'],
                ['charge treatment, seme, crusilly'],
            'field treatment, vairy': ['field treatment, vair'],
            'cross, throughout': ['cross throughout'],
+           'tree, rounded shape': ['tree'], # This is the default tree.
+           'paw print': ['pawprint'],
 }
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
@@ -90,6 +93,22 @@ IMPLIED_TINCTURES = {'bezant': 'or',
                      'pellet': 'sable',
                      'pomme': 'vert',
                      'golpe': 'purpure'}
+
+SEMYS = {
+    'billety': 'billet',
+    'billetty': 'billet',
+    'bezanty': 'bezant',
+    'crescenty': 'crescent',
+    'crusily': 'cross',
+    'delphy': 'delf',
+    'escallopy': 'escallop',
+    'estencely': 'spark',
+    'estoilly': 'estoile',
+    'fleury': 'fleur de lys',
+    'goutty': 'goute',
+}
+
+CHARGE_ADJ = {'winged': 'monster, winged'}
 
 BLACKLIST = {'throughout'}
 

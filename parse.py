@@ -14,10 +14,7 @@ class stor(object):
     pass
 
 def proc(x, b, next, numberless=False):
-    if b in NUMBERS:
-        assert x.number is None,"Multiple numbers without a charge between!"
-        x.number = NUMBERS[b]
-    elif b in CHARGES:
+    if b in CHARGES:
         print 'CHARGE', b
         assert numberless or x.number is not None,("No number/a/an for a charge:", b,
                                      x.unspecified)
@@ -44,6 +41,8 @@ def proc(x, b, next, numberless=False):
         if x.maintained:
             c.maintained = True
             x.maintained = False
+        if x.nextmods:
+            c.mods += x.nextmods
         if b in IMPLIED_TINCTURES:
             assert not x.unspecified, x.unspecified
             c.tincture = copy.deepcopy(TINCTURES[IMPLIED_TINCTURES[b]])
@@ -51,6 +50,7 @@ def proc(x, b, next, numberless=False):
             x.unspecified.append(c)
         x.number = None
         x.adj = None
+        x.nextmods = []
     elif b in BETWEEN:
         assert x.on.kid is not None,"Between with nothing before it!"
         x.primary = False
@@ -100,6 +100,8 @@ def parse(blaz):
     x.maintained = False
     x.primary = True
     x.commadeprim = False
+    x.was_detail = False
+    x.nextmods = []
 
     while len(blist) > 0:
         b = blist.pop(0)
@@ -117,6 +119,10 @@ def parse(blaz):
             assert b in LOCATIONS, b
             x.mod = None
             continue
+
+        if b in SEMYS:
+            blist = ['of', SEMYS[b]] + blist
+            b = 'semy'
         
         if 'arrangement, %s' % b in CHARGES:
             chg = CHARGES['arrangement, %s' % b]
@@ -128,8 +134,14 @@ def parse(blaz):
                 x.arrangement = chg
             x.unspecified.append(chg)
             continue
-        elif x.unspecified and b in ORIENTATIONS:
-            x.unspecified[-1].tags.append(ORIENTATIONS[b])
+        elif (x.unspecified or x.adj) and b in ORIENTATIONS:
+            if x.unspecified:
+                x.unspecified[-1].tags.append(ORIENTATIONS[b])
+            else:
+                warn(BlazonException(
+                    "Unknown charge: %s" % x.adj,
+                    'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
+                    % x.adj))
             continue
         elif x.unspecified and b in LINES:
             x.unspecified[-1].tags.append(LINES[b])
@@ -187,6 +199,20 @@ def parse(blaz):
         else:
             assert x.mod in (None, 'of', 'within', 'on'), x.mod
 
+        if b in NUMBERS:
+            assert x.number is None,"Multiple numbers without a charge between: %s"%x.number
+            if x.mod == 'of':
+                num = NUMBERS[b]
+                assert num in xrange(1,10), num
+                x.unspecified[-1].tags.append('of %d' % num)
+                x.mod = None
+                if blist[0] in ('rays', 'points'):
+                    blist.pop(0)
+            else:
+                assert x.mod in (None, 'within', 'on'), x.mod
+                x.number = NUMBERS[b]
+            continue
+
         if b in TINCTURES:
             if not x.unspecified and x.fielddivision:
                 assert b in TINCTURES, b
@@ -199,6 +225,9 @@ def parse(blaz):
                         "Unknown charge: %s" % x.adj,
                         'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
                         % x.adj))
+                    x.number = None
+                    continue
+                elif x.was_detail:
                     continue
                 else:
                     raise BlazonException(
@@ -210,7 +239,14 @@ def parse(blaz):
                 s.tincture = t
             x.lasttincture = t
             x.unspecified = []
+            x.was_detail = False
             continue
+        elif b == 'counterchanged':
+            x.lasttincture = None
+            x.unspecified = []
+            x.was_detail = False
+            continue
+        x.was_detail = False
 
         if depluralize(b) not in CHARGES and (
                 'field treatment, %s' % b in CHARGES 
@@ -249,7 +285,19 @@ def parse(blaz):
             #x.on = x.onstack.pop()
             x.betweenness = None
             continue
-        elif b in DETAILS or b in ARRANGEMENTS:
+        elif x.number is None and b in MAJOR_DETAILS:
+            x.on.kid.append(copy.deepcopy(CHARGES[MAJOR_DETAILS[b]]))
+            x.was_detail = True
+            continue
+        elif b in DETAILS:
+            x.was_detail = True
+            continue
+        elif b in ARRANGEMENTS:
+            continue
+        elif x.number is not None and b in CHARGE_ADJ:
+            adj = copy.deepcopy(CHARGES[CHARGE_ADJ[b]])
+            x.unspecified.append(adj)
+            x.nextmods.append(adj)
             continue
 
         if x.fielddivision:

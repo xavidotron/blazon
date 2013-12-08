@@ -13,7 +13,7 @@ if __name__ == '__main__':
         print l
     print 'self.assertEquals('
     print '    %s,' % repr(lst)
-    print '    list(parse(%s).describe()))' % repr(sys.argv[1])
+    print '    list(parse(%s).describe()))' % repr(blaz)
     url = 'http://oanda.sca.org/oanda_complex.cgi?'
     idx = 1
     for l in lst:
