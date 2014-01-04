@@ -26,16 +26,20 @@ NUMBERS = {
     'seven': 7,
     'eight': 8,
     'nine': 9,
-    'ten': 10
+    'ten': 10,
+    'a sheaf of': 3,
     }
 
 CHARGES = {}
 
 LOCATIONS = {'base', 'chief'}
-ARRANGEMENTS = {'one and two'}
+ARRANGEMENTS = {
+    'one and two', 'two and one',
+    'two , two and two',
+}
 ORIENTATIONS = {}
 
-PERIPHERALS = {'chief', 'base'}
+PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore'}
 
 BETWEEN = frozenset(('between',))
 
@@ -44,10 +48,18 @@ MAJOR_DETAILS = {'winged': 'winged object'}
 DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames',
            'wings displayed', 'wings elevated', 'wings addorsed', 
            'wings elevated and addorsed',
+           'contourney', 'contourny',
+           'inverted',
+           'affronty',
+           'gowned',
+           'eradicated',
+           'fimbriated',
            'queue-forchy',
            'couped', 'erased',
            'erect',
-           'throughout', 'reversed'}
+           'throughout', 'reversed',
+           'in her vanity', 'in its piety',
+           'crined'}
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye'}
@@ -56,8 +68,8 @@ BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {'rising': 'rousant'}
 
 POSTURES = {}
-POSTURE_ALIASES = {'rampant': 'segreant',
-                   'passant': 'courant'}
+POSTURE_ALIASES = {'rampant': ['segreant'],
+                   'passant': ['courant', 'passant guardant']}
 
 CROSS_FAMILIES = {}
 
@@ -71,7 +83,7 @@ ALIASES = {'cross, as charge': ['cross'],
            'gate': ['torii gate'],
            'caltrap': ['caltrop'],
            'roundel, whole': ['roundel'],
-           'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys'],
+           'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
            'knot': ['quatrefoil knot'],
            'quill': ['quill pen'],
            'field treatment, seme, crusily': 
@@ -83,8 +95,11 @@ ALIASES = {'cross, as charge': ['cross'],
            'tree, rounded shape': ['tree'], # This is the default tree.
            'paw print': ['pawprint'],
 }
+MULTI = {'bow and arrow': ['bow', 'arrow']}
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
+
+EXPLICIT_CATEGORIES = {'human figure': 'human'}
 
 IMPLIED_TINCTURES = {'bezant': 'or',
                      'plate': 'argent',
@@ -126,7 +141,7 @@ def loadwords():
                     typ, tinct = l.split(':')
                     if '<' in tinct:
                         tinct, rest = tinct.split('<', 1)
-                    if tinct not in TINCTURES:
+                    if tinct not in TINCTURES and tinct != 'brown':
                         TINCTURES[tinct] = Tincture(tinct)
                 elif l.startswith('|bird_posture:'):
                     typ, post = l.split(':')
@@ -154,8 +169,8 @@ def loadwords():
                     names = [name]
                     for a in POSTURE_ALIASES:
                         if name.startswith(a):
-                            names.append(POSTURE_ALIASES[a] 
-                                         + name[len(a):])
+                            for v in POSTURE_ALIASES[a]:
+                                names.append(v + name[len(a):])
                     
                     for n in names:
                         POSTURES[n] = post
@@ -193,6 +208,9 @@ def loadwords():
                         CATEGORIES[cat] = [charge]
                     else:
                         CATEGORIES[cat].append(charge)
+                elif name in EXPLICIT_CATEGORIES:
+                    charge = Charge(name, desc, 
+                                    category=EXPLICIT_CATEGORIES[name])
                 else:
                     charge = Charge(name, desc)
                 CHARGES[name] = charge
@@ -239,6 +257,11 @@ def loadwords():
             else:
                 assert False, l
     
+    for w in MULTI:
+        assert w not in CHARGES
+        CHARGES[w] = copy.deepcopy(CHARGES[MULTI[w][0]])
+        CHARGES[w].seealso += [CHARGES[a] for a in MULTI[w][1:]]
+
     for n in TINCTURES:
         tinct = TINCTURES[n]
         if tinct.fielddesc is None:

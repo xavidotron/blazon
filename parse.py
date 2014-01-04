@@ -13,10 +13,10 @@ class BlazonException(Warning):
 class stor(object):
     pass
 
-def proc(x, b, next, numberless=False):
+def proc(x, b, next):
     if b in CHARGES:
         print 'CHARGE', b
-        assert numberless or x.number is not None,("No number/a/an for a charge:", b,
+        assert x.number is not None,("No number/a/an for a charge:", b,
                                      x.unspecified)
         if x.betweenness is not None:
             assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
@@ -71,6 +71,18 @@ def depluralize(chargename):
                 return poss
     return chargename
 
+def clear_fielddivision(x):
+    if x.fielddivision:
+        # Done describing a complex tincture
+        assert len(x.fdunspec) > 0
+        for s in x.fdunspec:
+            if len(x.fielddivision) == 1:
+                s.tincture = x.fielddivision[0]
+            else:
+                s.tincture = MultiTincture(x.fielddivision)
+        x.fdunspec = []
+        x.fielddivision = []
+
 def parse(blaz):
     loadwords()
 
@@ -100,21 +112,25 @@ def parse(blaz):
     x.maintained = False
     x.primary = True
     x.commadeprim = False
+    x.numdeprim = False
     x.was_detail = False
+    x.was_field_treatment = False
     x.nextmods = []
 
     while len(blist) > 0:
         b = blist.pop(0)
 
-        for ln in xrange(3, 0, -1):
+        for ln in xrange(4, 0, -1):
             poss = ' '.join([b]+blist[:ln])
             if (depluralize(poss) in CHARGES
                 or poss in DETAILS or poss in ARRANGEMENTS 
-                or poss in ORIENTATIONS):
+                or poss in ORIENTATIONS or poss in POSTURES
+                or poss in NUMBERS
+                or poss in ('charged with',)):
                 b = poss
                 blist = blist[ln:]
                 break
-        print b
+        print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
             assert b in LOCATIONS, b
             x.mod = None
@@ -163,7 +179,7 @@ def parse(blaz):
                 CHARGES['arrangement, head, %s' % b])
             continue
         elif (x.unspecified
-              and x.unspecified[-1].category in ('monster', 'beast')
+              and x.unspecified[-1].category in ('monster', 'beast', 'human')
               and b in POSTURES):
             x.unspecified[-1].tags.append(POSTURES[b])
             continue
@@ -197,10 +213,14 @@ def parse(blaz):
                 x.mod = None
                 continue
         else:
-            assert x.mod in (None, 'of', 'within', 'on'), x.mod
+            assert x.mod in (None, 'of', 'within', 'on', 'charged with'), x.mod
 
         if b in NUMBERS:
             assert x.number is None,"Multiple numbers without a charge between: %s"%x.number
+            if x.numdeprim:
+                x.primary = False
+            elif x.commadeprim:
+                x.numdeprim = True
             if x.mod == 'of':
                 num = NUMBERS[b]
                 assert num in xrange(1,10), num
@@ -209,7 +229,7 @@ def parse(blaz):
                 if blist[0] in ('rays', 'points'):
                     blist.pop(0)
             else:
-                assert x.mod in (None, 'within', 'on'), x.mod
+                assert x.mod in (None, 'within', 'on', 'charged with'), x.mod
                 x.number = NUMBERS[b]
             continue
 
@@ -227,7 +247,7 @@ def parse(blaz):
                         % x.adj))
                     x.number = None
                     continue
-                elif x.was_detail:
+                elif x.was_detail or x.was_field_treatment:
                     continue
                 else:
                     raise BlazonException(
@@ -235,9 +255,12 @@ def parse(blaz):
             t = copy.deepcopy(TINCTURES[b])
             if isinstance(x.unspecified[0], Field):
                 t.on_field = True
-            for s in x.unspecified:
-                s.tincture = t
             x.lasttincture = t
+            if len(x.unspecified) == 1 and x.unspecified[0].category == 'field treatment':
+                x.was_field_treatment = True
+            else:
+                for s in x.unspecified:
+                    s.tincture = t
             x.unspecified = []
             x.was_detail = False
             continue
@@ -247,16 +270,19 @@ def parse(blaz):
             x.was_detail = False
             continue
         x.was_detail = False
-
-        if depluralize(b) not in CHARGES and (
-                'field treatment, %s' % b in CHARGES 
-                or 'field treatment, seme, %s' % b in CHARGES):
+        x.was_field_treatment = True
+        print ':'
+        if ('field treatment, %s' % b in CHARGES 
+            or 'field treatment, seme, %s' % b in CHARGES):
             assert x.lasttincture is not None
             chgs = x.lasttincture.add_treatment(b)
+            print 'TREATMENT', chgs
             x.unspecified += chgs
+            clear_fielddivision(x)
             continue
         elif b == 'semy':
             assert blist.pop(0) == 'of'
+            print 'SEMY'
             # ! Handle multiword charges
             charge = depluralize(blist.pop(0))
             assert charge in CHARGES, charge
@@ -293,26 +319,20 @@ def parse(blaz):
             x.was_detail = True
             continue
         elif b in ARRANGEMENTS:
+            print 'ARRANGEMENT'
             continue
         elif x.number is not None and b in CHARGE_ADJ:
+            print 'CHARGE_ADJ'
             adj = copy.deepcopy(CHARGES[CHARGE_ADJ[b]])
             x.unspecified.append(adj)
             x.nextmods.append(adj)
             continue
 
-        if x.fielddivision:
-            # Done describing a complex tincture
-            assert len(x.fdunspec) > 0
-            for s in x.fdunspec:
-                if len(x.fielddivision) == 1:
-                    s.tincture = x.fielddivision[0]
-                else:
-                    s.tincture = MultiTincture(x.fielddivision)
-            x.fdunspec = []
-            x.fielddivision = []
+        clear_fielddivision(x)
 
         next = blist[0] if blist else None
         res = proc(x, depluralize(b), next)
+        print res, depluralize(b)
         if not res and b.startswith('demi-'):
             res = proc(x, depluralize(b[len('demi-'):]), next)
             if res:
@@ -336,7 +356,7 @@ def parse(blaz):
                 #    x.unspecified.append(c)
                 #x.number = None
                 x.adj = b
-            elif b in ('in', 'within'):
+            elif b in ('in', 'within', 'charged with'):
                 x.primary = False
                 x.mod = b
             elif b in ('on'):

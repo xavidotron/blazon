@@ -217,10 +217,15 @@ class Tincture(object):
         self.fieldextras.append(a)
         if 'charge treatment, %s' % treatment in CHARGES:
             b = copy.deepcopy(CHARGES['charge treatment, %s' % treatment])
-        else:
+        elif 'charge treatment, seme, %s' % treatment in CHARGES:
             b = copy.deepcopy(CHARGES['charge treatment, seme, %s' % treatment])
-        self.chargeextras.append(b)
-        l = [a, b]
+        else:
+            b = None
+        if b is not None:
+            self.chargeextras.append(b)
+            l = [a, b]
+        else:
+            l = [a]
         return l
 
     def add_extra(self, extra):
@@ -243,6 +248,7 @@ class Fieldless(Tincture):
 class ComplexTincture(Tincture):
     def __init__(self, fieldcharge):
         Tincture.__init__(self, 'multicolor', fielddesc=fieldcharge.desc)
+        self.fieldcharge = fieldcharge
         self.tcnt = 0
     
     def add_tincture(self, tincture):
@@ -251,8 +257,12 @@ class ComplexTincture(Tincture):
         elif self.tcnt == 1:
             self.fielddesc += ':~and ' + tincture
         else:
-            pass#assert False, (self.tcnt, tincture)
+            assert False, (self.fielddesc, self.tcnt, tincture)
         self.tcnt += 1
+    
+    def add_treatment(self, treatment):
+        self.add_tincture('multicolor')
+        return Tincture.add_treatment(self, treatment)
 
 class MultiTincture(Tincture):
     def __init__(self, tincts):
