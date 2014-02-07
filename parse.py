@@ -83,6 +83,20 @@ def clear_fielddivision(x):
         x.fdunspec = []
         x.fielddivision = []
 
+def pop_blist(blist):
+    b = blist.pop(0)
+    
+    for ln in xrange(4, 0, -1):
+        poss = ' '.join([b]+blist[:ln])
+        if (depluralize(poss) in CHARGES
+            or poss in DETAILS or poss in ARRANGEMENTS 
+            or poss in ORIENTATIONS or poss in POSTURES
+            or poss in NUMBERS
+            or poss in ('charged with',)):
+            del blist[:ln]
+            return poss
+    return b
+
 def parse(blaz):
     loadwords()
 
@@ -118,18 +132,7 @@ def parse(blaz):
     x.nextmods = []
 
     while len(blist) > 0:
-        b = blist.pop(0)
-
-        for ln in xrange(4, 0, -1):
-            poss = ' '.join([b]+blist[:ln])
-            if (depluralize(poss) in CHARGES
-                or poss in DETAILS or poss in ARRANGEMENTS 
-                or poss in ORIENTATIONS or poss in POSTURES
-                or poss in NUMBERS
-                or poss in ('charged with',)):
-                b = poss
-                blist = blist[ln:]
-                break
+        b = pop_blist(blist)
         print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
             assert b in LOCATIONS, b
@@ -283,8 +286,7 @@ def parse(blaz):
         elif b == 'semy':
             assert blist.pop(0) == 'of'
             print 'SEMY'
-            # ! Handle multiword charges
-            charge = depluralize(blist.pop(0))
+            charge = depluralize(pop_blist(blist))
             assert charge in CHARGES, charge
             chg = copy.deepcopy(CHARGES[charge])
             chg.number = 'seme'

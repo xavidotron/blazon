@@ -109,5 +109,9 @@ class TestCases(unittest.TestCase):
             ['OR', 'BEND:1:azure:primary:cotised', 'FIELD DIV.-BENDY:1:azure:primary:cotised', 'BEND:1:primary:cotised', 'FDL:1:or:palewise', 'ROSE:2:or', 'CHIEF:1:gules', 'CAT:1:or:passant'],
             list(parse(u'Or, on a bend cotised azure a fleur-de-lys palewise between two cinquefoils Or and on a chief gules a lion passant guardant Or\n\n').describe()))
 
+        self.assertEquals(
+            ['AZ', 'PLANT-WHEAT:seme:or:seme on field', 'FIELD TREATMENT-SEME (9OTHER):or', 'PALE:1:or:primary', 'FIELD DIV.-PALY:1:or:primary', 'PALE:1:primary', 'SWORD:1:azure'],
+            list(parse(u'Azure semy of ears of wheat, on a pale Or a sword azure').describe()))
+
 if __name__ == "__main__":
     unittest.main()

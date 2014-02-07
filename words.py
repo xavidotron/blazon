@@ -57,6 +57,8 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames',
            'queue-forchy',
            'couped', 'erased',
            'erect',
+           'nowed in', 'nowed',
+           'fretted with',
            'throughout', 'reversed',
            'in her vanity', 'in its piety',
            'crined'}
@@ -93,6 +95,7 @@ ALIASES = {'cross, as charge': ['cross'],
            'field treatment, vairy': ['field treatment, vair'],
            'cross, throughout': ['cross throughout'],
            'tree, rounded shape': ['tree'], # This is the default tree.
+           'plant, wheat': ['ears of wheat'],
            'paw print': ['pawprint'],
 }
 MULTI = {'bow and arrow': ['bow', 'arrow']}
