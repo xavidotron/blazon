@@ -322,7 +322,13 @@ def parse(blaz):
             x.number = 'the'
             x.was_charge_word = False
             continue
-        elif b in ('and', 'sustaining'):
+        elif b == 'and':
+            if x.primary is None:
+                x.primary = True
+            x.was_charge_word = False
+            continue
+        elif b == 'sustaining':
+            x.primary = False
             x.was_charge_word = False
             continue
         elif b == ',':
@@ -343,7 +349,7 @@ def parse(blaz):
         elif b in DETAILS:
             x.was_detail = True
             x.was_charge_word = False
-            x.primary = False
+            x.primary = None  # Not primary until "and"
             continue
         elif b in ARRANGEMENTS:
             print 'ARRANGEMENT'

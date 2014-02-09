@@ -8,7 +8,7 @@ class TestCases(unittest.TestCase):
     
     def test_one(self):
         self.assertEquals(
-            ['ARM:1:argent:primary:embowed', 'ARM:1:primary:embowed', 'HORN AND ATTIRES:1:or:primary', 'HORN AND ATTIRES:1:primary'], 
+            ['ARM:1:argent:primary:embowed', 'ARM:1:primary:embowed', 'HORN AND ATTIRES:1:or'], 
             list(parse(u"(Fieldless) An arm embowed argent sustaining a stag's attire Or.").describe()))
         self.assertEquals(
             ['CRAC:1:or:primary', 'CRAC:1:primary', 'FDL:1:sable'], 
