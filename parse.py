@@ -1,10 +1,9 @@
 import copy
-from warnings import warn
 
 from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
 
-class BlazonException(Warning):
+class BlazonException(Exception):
     def __init__(self, text, url=None):
         if url:
             text += '\n' + url
@@ -16,8 +15,14 @@ class stor(object):
 def proc(x, b, next):
     if b in CHARGES:
         print 'CHARGE', b
-        assert x.number is not None,("No number/a/an for a charge:", b,
-                                     x.unspecified)
+        if x.number is None:
+            assert x.was_charge_word,("No number/a/an for a charge:", b,
+                                      x.unspecified)
+            if x.unspecified[-1].name != CHARGES[b].name:
+                raise BlazonException(
+                    "I don't know if a '%s %s' is a %s or a %s!"
+                    % (x.unspecified[-1].blazon, b,
+                       x.unspecified[-1].name, CHARGES[b].name))
         if x.betweenness is not None:
             assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
             g = x.betweenness
@@ -27,6 +32,7 @@ def proc(x, b, next):
             assert isinstance(x.on.kid, Group)
             g = x.on.kid
         c = copy.deepcopy(CHARGES[b])
+        c.blazon = b
         g.append(c)
         c.number = x.number
         if b in PERIPHERALS:
@@ -51,6 +57,7 @@ def proc(x, b, next):
         x.number = None
         x.adj = None
         x.nextmods = []
+        x.was_charge_word = True
     elif b in BETWEEN:
         assert x.on.kid is not None,"Between with nothing before it!"
         x.primary = False
@@ -129,6 +136,7 @@ def parse(blaz):
     x.numdeprim = False
     x.was_detail = False
     x.was_field_treatment = False
+    x.was_charge_word = False
     x.nextmods = []
 
     while len(blist) > 0:
@@ -157,10 +165,10 @@ def parse(blaz):
             if x.unspecified:
                 x.unspecified[-1].tags.append(ORIENTATIONS[b])
             else:
-                warn(BlazonException(
+                raise BlazonException(
                     "Unknown charge: %s" % x.adj,
                     'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                    % x.adj))
+                    % x.adj)
             continue
         elif x.unspecified and b in LINES:
             x.unspecified[-1].tags.append(LINES[b])
@@ -244,10 +252,10 @@ def parse(blaz):
                 continue
             if len(x.unspecified) == 0:
                 if x.adj:
-                    warn(BlazonException(
+                    raise BlazonException(
                         "Unknown charge: %s" % x.adj,
                         'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                        % x.adj))
+                        % x.adj)
                     x.number = None
                     continue
                 elif x.was_detail or x.was_field_treatment:
@@ -266,11 +274,13 @@ def parse(blaz):
                     s.tincture = t
             x.unspecified = []
             x.was_detail = False
+            x.was_charge_word = False
             continue
         elif b == 'counterchanged':
             x.lasttincture = None
             x.unspecified = []
             x.was_detail = False
+            x.was_charge_word = False
             continue
         x.was_detail = False
         x.was_field_treatment = True
@@ -281,6 +291,7 @@ def parse(blaz):
             chgs = x.lasttincture.add_treatment(b)
             print 'TREATMENT', chgs
             x.unspecified += chgs
+            x.was_charge_word = False
             clear_fielddivision(x)
             continue
         elif b == 'semy':
@@ -292,6 +303,7 @@ def parse(blaz):
             chg.number = 'seme'
             x.unspecified.append(chg)
             x.lasttincture.add_extra(chg)
+            x.was_charge_word = False
             if x.lasttincture.on_field:
                 ft = copy.deepcopy(CHARGES['field treatment, seme, other'])
                 x.unspecified.append(ft)
@@ -301,8 +313,10 @@ def parse(blaz):
 
         if b == 'the':
             x.number = 'the'
+            x.was_charge_word = False
             continue
         elif b in ('and', 'sustaining'):
+            x.was_charge_word = False
             continue
         elif b == ',':
             if x.commadeprim:
@@ -312,22 +326,27 @@ def parse(blaz):
             assert x.betweenness is None or len(x.betweenness) > 0, "Unfilled between!"
             #x.on = x.onstack.pop()
             x.betweenness = None
+            x.was_charge_word = False
             continue
         elif x.number is None and b in MAJOR_DETAILS:
             x.on.kid.append(copy.deepcopy(CHARGES[MAJOR_DETAILS[b]]))
             x.was_detail = True
+            x.was_charge_word = False
             continue
         elif b in DETAILS:
             x.was_detail = True
+            x.was_charge_word = False
             continue
         elif b in ARRANGEMENTS:
             print 'ARRANGEMENT'
+            x.was_charge_word = False
             continue
         elif x.number is not None and b in CHARGE_ADJ:
             print 'CHARGE_ADJ'
             adj = copy.deepcopy(CHARGES[CHARGE_ADJ[b]])
             x.unspecified.append(adj)
             x.nextmods.append(adj)
+            x.was_charge_word = False
             continue
 
         clear_fielddivision(x)
@@ -358,23 +377,31 @@ def parse(blaz):
                 #    x.unspecified.append(c)
                 #x.number = None
                 x.adj = b
+                x.was_charge_word = False
             elif b in ('in', 'within', 'charged with'):
                 x.primary = False
                 x.mod = b
+                x.was_charge_word = False
             elif b in ('on'):
                 x.commadeprim = True
                 x.mod = b
+                x.was_charge_word = False
             elif b in ('of', 'issuant', 'elongated'):
                 x.mod = b
+                x.was_charge_word = False
             elif b == 'maintaining':
                 x.maintained = True
                 x.primary = False
+                x.was_charge_word = False
             elif x.mod == 'of':
+                x.was_charge_word = False
                 pass
             elif b == '.':
+                x.was_charge_word = False
                 pass
             else:
                 if x.unspecified and x.unspecified[-1].name == 'symbol':
+                    x.was_charge_word = False
                     pass
                 else:
                     assert False,("Unknown noncharge word %s!"%b, x.unspecified)

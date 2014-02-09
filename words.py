@@ -79,24 +79,24 @@ DEFAULT_CHARGE = Charge('?', '?')
 
 #SYMBOLS = {'elder futhark'}
 
-ALIASES = {'cross, as charge': ['cross'],
-           'mullet': ['mullet, charged'],
-           'bird, whole': ['bird'],
-           'gate': ['torii gate'],
-           'caltrap': ['caltrop'],
-           'roundel, whole': ['roundel'],
-           'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
-           'knot': ['quatrefoil knot'],
-           'quill': ['quill pen'],
-           'field treatment, seme, crusily': 
-               ['field treatment, seme, crusilly'],
-           'charge treatment, seme, crusily': 
-               ['charge treatment, seme, crusilly'],
-           'field treatment, vairy': ['field treatment, vair'],
-           'cross, throughout': ['cross throughout'],
-           'tree, rounded shape': ['tree'], # This is the default tree.
-           'plant, wheat': ['ears of wheat'],
-           'paw print': ['pawprint'],
+ALIASES = {
+    'cross, as charge': ['cross'],
+    'mullet': ['mullet, charged', 'spur rowel'],
+    'bird, whole': ['bird'],
+    'gate': ['torii gate'],
+    'caltrap': ['caltrop'],
+    'roundel, whole': ['roundel'],
+    'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
+    'knot': ['quatrefoil knot'],
+    'quill': ['quill pen'],
+    'field treatment, seme, crusily': ['field treatment, seme, crusilly'],
+    'charge treatment, seme, crusily': ['charge treatment, seme, crusilly'],
+    'field treatment, vairy': ['field treatment, vair'],
+    'cross, throughout': ['cross throughout'],
+    'tree, rounded shape': ['tree'], # This is the default tree.
+    'plant, wheat': ['ears of wheat'],
+    'paw print': ['pawprint'],
+    'jewelry': ['rosary'],
 }
 MULTI = {'bow and arrow': ['bow', 'arrow']}
 ALSOS = {'flower, few petals'}

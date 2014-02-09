@@ -26,7 +26,7 @@ class TestCases(unittest.TestCase):
             ['OR', 'FIELD TREATMENT-SEME (CRUSILLY):sable', 'CRAC:sable', 'CROSS:1:gules:primary', 'CROSS:1:primary', 'BIRD:1:or:displayed'], 
             list(parse(u'Or, crusilly sable, on a cross throughout gules, an eagle displayed Or.\n\n').describe()))
         self.assertEquals(
-            ['OR', 'ARROW:2:vert:primary', 'ARROW:2:primary', 'INSA:2:vert:primary'], 
+            ['OR', 'ARROW:2:vert:primary', 'ARROW:2:primary', 'INSA:2:vert:primary', 'JEWELS AND JEWELRY:1:gules', 'CROWN:1:gules'], 
             list(parse(u'Or, two arrows in saltire vert within a rosary gules.\n').describe()))
         self.assertEquals(
             ['PB:purpure:~and sable', 'HEADDOG:1:argent:primary', 'HEADDOG:1:primary', 'FLOWER-IRIS AND ORCHID:1:argent:primary:bendwise', 'FLOWER-IRIS AND ORCHID:1:primary:bendwise'], 
@@ -112,6 +112,10 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             ['AZ', 'PLANT-WHEAT:seme:or:seme on field', 'FIELD TREATMENT-SEME (9OTHER):or', 'PALE:1:or:primary', 'FIELD DIV.-PALY:1:or:primary', 'PALE:1:primary', 'SWORD:1:azure'],
             list(parse(u'Azure semy of ears of wheat, on a pale Or a sword azure').describe()))
+
+        self.assertEquals(
+            [u'PBS:sable:~and argent', 'STAR:1:or:primary', 'CALTRAP:1:or:primary', 'ESTOILE:1:or:primary', 'SUN-DEMI:1:or:primary', 'SUN:1:or:primary', 'STAR:1:primary', 'HAMMER:2:proper:primary', 'HAMMER:2:primary', 'INSA:2:proper:primary'],
+            list(parse(u"Per bend sinister sable and argent, a spur rowel Or and two smith's hammers in saltire proper.").describe()))
 
 if __name__ == "__main__":
     unittest.main()
