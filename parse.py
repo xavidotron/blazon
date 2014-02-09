@@ -22,7 +22,9 @@ def proc(x, b, next):
                 raise BlazonException(
                     "I don't know if a '%s %s' is a %s or a %s!"
                     % (x.unspecified[-1].blazon, b,
-                       x.unspecified[-1].name, CHARGES[b].name))
+                       x.unspecified[-1].name, CHARGES[b].name),
+                    'http://oanda.sca.org/oanda_bp.cgi?p=%s+%s&a=enabled'
+                    % (x.unspecified[-1].blazon, b))
         if x.betweenness is not None:
             assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
             g = x.betweenness

@@ -45,7 +45,7 @@ BETWEEN = frozenset(('between',))
 
 MAJOR_DETAILS = {'winged': 'winged object'}
 
-DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames',
+DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'wings displayed', 'wings elevated', 'wings addorsed', 
            'wings elevated and addorsed',
            'contourney', 'contourny',
@@ -68,6 +68,7 @@ LINES = {'grady': 'indented',
 
 BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {'rising': 'rousant'}
+BIRD_TYPES = {}
 
 POSTURES = {}
 POSTURE_ALIASES = {'rampant': ['segreant'],
@@ -80,25 +81,28 @@ DEFAULT_CHARGE = Charge('?', '?')
 #SYMBOLS = {'elder futhark'}
 
 ALIASES = {
-    'cross, as charge': ['cross'],
-    'mullet': ['mullet, charged', 'spur rowel'],
     'bird, whole': ['bird'],
-    'gate': ['torii gate'],
     'caltrap': ['caltrop'],
-    'roundel, whole': ['roundel'],
-    'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
-    'knot': ['quatrefoil knot'],
-    'quill': ['quill pen'],
-    'field treatment, seme, crusily': ['field treatment, seme, crusilly'],
     'charge treatment, seme, crusily': ['charge treatment, seme, crusilly'],
-    'field treatment, vairy': ['field treatment, vair'],
+    'cross, as charge': ['cross'],
     'cross, throughout': ['cross throughout'],
-    'tree, rounded shape': ['tree'], # This is the default tree.
-    'plant, wheat': ['ears of wheat'],
-    'paw print': ['pawprint'],
+    'field treatment, seme, crusily': ['field treatment, seme, crusilly'],
+    'field treatment, vairy': ['field treatment, vair'],
+    'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
+    'gate': ['torii gate'],
     'jewelry': ['rosary'],
+    'knot': ['quatrefoil knot'],
+    'mullet': ['mullet, charged', 'spur rowel'],
+    'paw print': ['pawprint'],
+    'plant, wheat': ['ears of wheat'],
+    'quill': ['quill pen'],
+    'roundel, whole': ['roundel'],
+    'tree, rounded shape': ['tree'], # This is the default tree.
 }
-MULTI = {'bow and arrow': ['bow', 'arrow']}
+MULTI = {
+    'bow and arrow': ['bow', 'arrow'],
+    'holly sprig': ['holly', 'sprig'],
+}
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
 
@@ -146,6 +150,15 @@ def loadwords():
                         tinct, rest = tinct.split('<', 1)
                     if tinct not in TINCTURES and tinct != 'brown':
                         TINCTURES[tinct] = Tincture(tinct)
+                elif l.startswith('|bird_type:'):
+                    typ, post = l.split(':')
+                    if '<' in post:
+                        post, rest = post.split('<', 1)
+                    if post.endswith(' shaped'):
+                        key = post[:-len(' shaped')]
+                    else:
+                        key = post
+                    BIRD_TYPES[key] = post
                 elif l.startswith('|bird_posture:'):
                     typ, post = l.split(':')
                     if '<' in post:
@@ -250,6 +263,8 @@ def loadwords():
                     if name in ALIASES:
                         for alt in ALIASES[name]:
                             CHARGES[alt] = CHARGES[name]
+                if 'bird' in seenames and name in BIRD_TYPES:
+                    CHARGES[name].tags.append(BIRD_TYPES[name])
                 for s in sees:
                     CHARGES[name].seealso.append(s)
                 if ', ' in name:
