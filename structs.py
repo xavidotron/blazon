@@ -122,9 +122,11 @@ class Charge(Thingy):
                 # sig diffness
                 yield "%s:%s" % (self.desc, ':'.join(primtags))
             for c in self.tincture.chargeextras:
-                yield c
+                for d in c.describe():
+                    yield d
         for c in self.mods:
             for d in c.describe(as_mod=True):
+                assert isinstance(d, basestring), d
                 yield d
 
     def __repr__(self):

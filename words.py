@@ -59,6 +59,7 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'erect',
            'nowed in', 'nowed',
            'fretted with',
+           'rising from',
            'throughout', 'reversed',
            'in her vanity', 'in its piety',
            'crined'}
@@ -108,6 +109,7 @@ CATEGORIES = {}
 
 EXPLICIT_CATEGORIES = {'human figure': 'human'}
 
+IMPLIED_NUMBER = {'flames': 1}
 IMPLIED_TINCTURES = {'bezant': 'or',
                      'plate': 'argent',
                      'hurt': 'azure',

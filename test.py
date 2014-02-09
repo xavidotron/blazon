@@ -117,5 +117,9 @@ class TestCases(unittest.TestCase):
             [u'PBS:sable:~and argent', 'STAR:1:or:primary', 'CALTRAP:1:or:primary', 'ESTOILE:1:or:primary', 'SUN-DEMI:1:or:primary', 'SUN:1:or:primary', 'STAR:1:primary', 'HAMMER:2:proper:primary', 'HAMMER:2:primary', 'INSA:2:proper:primary'],
             list(parse(u"Per bend sinister sable and argent, a spur rowel Or and two smith's hammers in saltire proper.").describe()))
 
+        self.assertEquals(
+            ['AR', 'MONSTER-PHOENIX:1:gules:primary', 'MONSTER-PHOENIX:1:primary', 'FIRE AND FLAME:1:proper', 'BORDURE:1:gules', 'ROUNDEL:seme:or'],
+            list(parse(u'Argent, a phoenix gules rising from flames proper and a bordure gules semy of bezants').describe()))
+
 if __name__ == "__main__":
     unittest.main()

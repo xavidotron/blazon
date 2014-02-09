@@ -303,7 +303,12 @@ def parse(blaz):
             assert charge in CHARGES, charge
             chg = copy.deepcopy(CHARGES[charge])
             chg.number = 'seme'
-            x.unspecified.append(chg)
+            if charge in IMPLIED_TINCTURES:
+                assert not x.unspecified, x.unspecified
+                chg.tincture = copy.deepcopy(
+                    TINCTURES[IMPLIED_TINCTURES[charge]])
+            else:
+                x.unspecified.append(chg)
             x.lasttincture.add_extra(chg)
             x.was_charge_word = False
             if x.lasttincture.on_field:
@@ -338,6 +343,7 @@ def parse(blaz):
         elif b in DETAILS:
             x.was_detail = True
             x.was_charge_word = False
+            x.primary = False
             continue
         elif b in ARRANGEMENTS:
             print 'ARRANGEMENT'
@@ -352,6 +358,9 @@ def parse(blaz):
             continue
 
         clear_fielddivision(x)
+
+        if x.number is None and b in IMPLIED_NUMBER:
+            x.number = IMPLIED_NUMBER[b]
 
         next = blist[0] if blist else None
         res = proc(x, depluralize(b), next)
@@ -406,7 +415,7 @@ def parse(blaz):
                     x.was_charge_word = False
                     pass
                 else:
-                    assert False,("Unknown noncharge word %s!"%b, x.unspecified)
+                    raise BlazonException("Unknown noncharge word %s!" % b)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision
