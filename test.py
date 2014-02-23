@@ -59,7 +59,7 @@ class TestCases(unittest.TestCase):
             ['GU', 'FDL:3:or:primary', 'FDL:3:primary', 'ARRANGEMENT-IN BEND:or', 'BORDURE:1:or:embattled'], 
             list(parse(u'Gules, in bend three fleurs-de-lis within a bordure embattled Or.\n').describe()))
         self.assertEquals(
-            ['GYRONNY:argent:~and gules', 'CUP:1:purpure:primary', 'CUP:1:primary', 'BEAST-WEASEL AND OTTER:1:sable:primary', 'BEAST-WEASEL AND OTTER:1:primary', 'BEAST9DEMI:1:sable'], 
+            ['GYRONNY:argent:~and gules', 'CUP:1:purpure:primary', 'CUP:1:primary', 'BEAST-WEASEL AND OTTER:1:sable', 'BEAST9DEMI:1:sable'], 
             list(parse(u'Gyronny argent and gules, issuant from a mug purpure a demi-weasel sable.\n\n').describe()))
         self.assertEquals(
             ['PB:azure:~and argent', 'ROSE:1:argent:primary', 'ROSE:1:primary', 'DOG:1:proper:primary:passant:bendwise', 'DOG:1:primary:passant:bendwise', 'CHIEF:1:argent', 'BIRD:3:sable'], 
@@ -67,9 +67,6 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             ['FIELD TREATMENT-VAIRY', 'PALL*7:1:gules:primary', 'PALL*7:1:primary'], 
             list(parse(u'Vair, a pall inverted gules\n').describe()))
-        self.assertEquals(
-            ['GYRONNY:argent:~and gules', 'CUP:1:purpure:primary', 'CUP:1:primary', 'BEAST-WEASEL AND OTTER:1:sable:primary', 'BEAST-WEASEL AND OTTER:1:primary', 'BEAST9DEMI:1:sable'], 
-            list(parse(u'Gyronny argent and gules, issuant from a mug purpure a demi-weasel sable.\n\n').describe()))
         self.assertEquals(
             ['VT', 'ARROW:2:or:primary', 'ARROW:2:primary', 'INSA:2:or:primary', 'CHIEF:1:or', 'LEAF:3:vert'], 
             list(parse(u'Vert, two arrows in saltire and on a chief Or, three poplar leaves vert.\n\n').describe()))
@@ -120,6 +117,14 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             ['AR', 'MONSTER-PHOENIX:1:gules:primary', 'MONSTER-PHOENIX:1:primary', 'FIRE AND FLAME:1:proper', 'BORDURE:1:gules', 'ROUNDEL:seme:or'],
             list(parse(u'Argent, a phoenix gules rising from flames proper and a bordure gules semy of bezants').describe()))
+
+        self.assertEquals(
+            ['VT', 'CAULDRON AND COOKING POT:1:or:primary', 'CAULDRON AND COOKING POT:1:primary', 'FIRE AND FLAME:1:or', 'CHIEF:1:or', 'FORK AND SPOON:2:vert', 'INSA:2:vert'],
+            list(parse(u'Vert, a cauldron issuant from a flame and on a chief Or two ladles in saltire vert\n\n').describe()))
+
+        self.assertEquals(
+            [u'QLY:sable:~and or', 'BEND:1:argent:primary', 'FIELD DIV.-BENDY:1:argent:primary', 'BEND:1:primary', 'DOG:2:sable:rampant', 'PAW PRINT:5 or more:sable'],
+            list(parse(u'Quarterly sable and Or, on a bend argent between two wolves rampant contourney five paw prints sable.\n\n').describe()))
 
 if __name__ == "__main__":
     unittest.main()

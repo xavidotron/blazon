@@ -1,4 +1,4 @@
-import copy
+import copy, urllib
 
 from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
@@ -19,12 +19,17 @@ def proc(x, b, next):
             assert x.was_charge_word,("No number/a/an for a charge:", b,
                                       x.unspecified)
             if x.unspecified[-1].name != CHARGES[b].name:
+                if x.was_charge_word is True:
+                    glued = '%s %s' % (x.unspecified[-1].blazon, b)
+                else:
+                    glued = '%s %s %s' % (x.unspecified[-1].blazon, 
+                                          x.was_charge_word, b)
                 raise BlazonException(
-                    "I don't know if a '%s %s' is a %s or a %s!"
-                    % (x.unspecified[-1].blazon, b,
+                    "I don't know if a '%s' is a %s or a %s!"
+                    % (glued,
                        x.unspecified[-1].name, CHARGES[b].name),
-                    'http://oanda.sca.org/oanda_bp.cgi?p=%s+%s&a=enabled'
-                    % (x.unspecified[-1].blazon, b))
+                    'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
+                    % (urllib.quote_plus(glued)))
         if x.betweenness is not None:
             assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
             g = x.betweenness
@@ -68,16 +73,22 @@ def proc(x, b, next):
         return False
     return True
 
+PLURAL_MAP = {
+    'ies': 'y',
+    'ves': 'f',
+}
+
 def depluralize(chargename):
     if chargename not in CHARGES:
         if chargename.endswith('s') and chargename[:-1] in CHARGES:
             return chargename[:-1]
         if chargename.endswith('es') and chargename[:-2] in CHARGES:
             return chargename[:-2]
-        if chargename.endswith('ies'):
-            poss = chargename[:-len('ies')] + 'y'
-            if poss in CHARGES:
-                return poss
+        for suf in PLURAL_MAP:
+            if chargename.endswith(suf):
+                poss = chargename[:-len(suf)] + PLURAL_MAP[suf]
+                if poss in CHARGES:
+                    return poss
     return chargename
 
 def clear_fielddivision(x):
@@ -399,13 +410,17 @@ def parse(blaz):
                 x.primary = False
                 x.mod = b
                 x.was_charge_word = False
-            elif b in ('on'):
-                x.commadeprim = True
+            elif b in ('on', 'issuant', 'elongated'):
+                if x.was_charge_word:
+                    x.primary = False
+                else:
+                    x.commadeprim = True
                 x.mod = b
                 x.was_charge_word = False
-            elif b in ('of', 'issuant', 'elongated'):
+            elif b == 'of':
                 x.mod = b
-                x.was_charge_word = False
+                if x.was_charge_word:
+                    x.was_charge_word = b
             elif b == 'maintaining':
                 x.maintained = True
                 x.primary = False
