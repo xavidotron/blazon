@@ -23,7 +23,7 @@ class TestCases(unittest.TestCase):
             ['AZ', 'CRAC:1:or:primary:moline', 'CRAC:1:primary:moline', 'CHIEF:1:or', 'BIRD:3:azure:volant to dexter'], 
             list(parse(u'Azure, a cross moline and on a chief Or three martlets volant azure').describe()))
         self.assertEquals(
-            ['OR', 'FIELD TREATMENT-SEME (CRUSILLY):sable', 'CRAC:sable', 'CROSS:1:gules:primary', 'CROSS:1:primary', 'BIRD:1:or:eagle:displayed'], 
+            ['OR', 'FIELD TREATMENT-SEME (CRUSILLY):sable', 'CRAC:sable', 'CROSS:1:gules:primary', 'CROSS:1:primary', 'BIRD:1:or:displayed:eagle'], 
             list(parse(u'Or, crusilly sable, on a cross throughout gules, an eagle displayed Or.\n\n').describe()))
         self.assertEquals(
             ['OR', 'ARROW:2:vert:primary', 'ARROW:2:primary', 'INSA:2:vert:primary', 'JEWELS AND JEWELRY:1:gules', 'CROWN:1:gules'], 

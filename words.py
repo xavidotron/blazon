@@ -45,7 +45,8 @@ BETWEEN = frozenset(('between',))
 
 MAJOR_DETAILS = {'winged': 'winged object'}
 
-DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
+DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed', 
+           'seeded',
            'wings displayed', 'wings elevated', 'wings addorsed', 
            'wings elevated and addorsed',
            'contourney', 'contourny',
@@ -61,14 +62,18 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'fretted with',
            'rising from',
            'throughout', 'reversed',
-           'in her vanity', 'in its piety',
+           'transfixed by',
+           'in her vanity', 'in its piety', 'in her plentitude',
            'crined'}
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye'}
 
 BIRD_POSTURES = {}
-BIRD_POSTURE_ALIASES = {'rising': 'rousant'}
+BIRD_POSTURE_ALIASES = {
+    'rising': 'rousant',
+    'volant': 'volant guardant',
+    }
 BIRD_TYPES = {}
 
 POSTURES = {}
@@ -96,14 +101,17 @@ ALIASES = {
     'monster, sea, other': ['sea-stag'],
     'mullet': ['mullet, charged', 'spur rowel'],
     'paw print': ['pawprint'],
+    'plant, heather': ['sprig of heather'],
     'plant, wheat': ['ears of wheat', 'ear of wheat'],
     'quill': ['quill pen'],
     'roundel, whole': ['roundel'],
     'tree, rounded shape': ['tree'], # This is the default tree.
+    'wreath, not laurel': ['wreath'],
 }
 MULTI = {
     'bow and arrow': ['bow', 'arrow'],
     'holly sprig': ['holly', 'sprig'],
+    'wreath of thorns': ['wreath', 'thorn'],
 }
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
@@ -267,7 +275,7 @@ def loadwords():
                         for alt in ALIASES[name]:
                             CHARGES[alt] = CHARGES[name]
                 if 'bird' in seenames and name in BIRD_TYPES:
-                    CHARGES[name].tags.append(BIRD_TYPES[name])
+                    CHARGES[name].iffy_tags.append(BIRD_TYPES[name])
                 for s in sees:
                     CHARGES[name].seealso.append(s)
                 if ', ' in name:

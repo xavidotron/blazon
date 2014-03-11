@@ -25,7 +25,7 @@ def proc(x, b, next):
                     glued = '%s %s %s' % (x.unspecified[-1].blazon, 
                                           x.was_charge_word, b)
                 raise BlazonException(
-                    "I don't know if a '%s' is a %s or a %s!"
+                    "I don't know if a '%s' is a %s or a %s (or both)!"
                     % (glued,
                        x.unspecified[-1].name, CHARGES[b].name),
                     'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
@@ -61,6 +61,7 @@ def proc(x, b, next):
             c.tincture = copy.deepcopy(TINCTURES[IMPLIED_TINCTURES[b]])
         else:
             x.unspecified.append(c)
+            x.lastcharge = c
         x.number = None
         x.adj = None
         x.nextmods = []
@@ -110,7 +111,7 @@ def pop_blist(blist):
         poss = ' '.join([b]+blist[:ln])
         if (depluralize(poss) in CHARGES
             or poss in DETAILS or poss in ARRANGEMENTS 
-            or poss in ORIENTATIONS or poss in POSTURES
+            or poss in ORIENTATIONS or poss in POSTURES or poss in BIRD_POSTURES
             or poss in NUMBERS
             or poss in ('charged with',)):
             del blist[:ln]
@@ -142,6 +143,7 @@ def parse(blaz):
     x.arrangement = None
     x.fielddivision = []
     x.fdunspec = None
+    x.lastcharge = None
     x.lasttincture = None
     x.maintained = False
     x.primary = True
@@ -156,7 +158,13 @@ def parse(blaz):
         b = pop_blist(blist)
         print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
-            assert b in LOCATIONS, b
+            if b in ('her', 'his', 'its'):
+                raise BlazonException(
+                    "Unknown modifier 'in %s %s'" % (b, blist[0]),
+                    'http://oanda.sca.org/oanda_bp.cgi?p=in+%s+%s&a=enabled'
+                    % (b, blist[0]))
+            else:
+                assert b in LOCATIONS, b
             x.mod = None
             continue
 
@@ -166,56 +174,57 @@ def parse(blaz):
         
         if 'arrangement, %s' % b in CHARGES:
             chg = CHARGES['arrangement, %s' % b]
-            if x.unspecified:
-                x.unspecified[-1].mods.append(chg)
-                chg.number = x.unspecified[-1].number
-                chg.tags = x.unspecified[-1].tags
+            if x.lastcharge:
+                x.lastcharge.mods.append(chg)
+                chg.number = x.lastcharge.number
+                chg.tags = x.lastcharge.tags
             else:
                 x.arrangement = chg
             x.unspecified.append(chg)
+            x.lastcharge = chg
             continue
-        elif (x.unspecified or x.adj) and b in ORIENTATIONS:
-            if x.unspecified:
-                x.unspecified[-1].tags.append(ORIENTATIONS[b])
+        elif (x.lastcharge or x.adj) and b in ORIENTATIONS:
+            if x.lastcharge:
+                x.lastcharge.tags.append(ORIENTATIONS[b])
             else:
                 raise BlazonException(
                     "Unknown charge: %s" % x.adj,
                     'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
                     % x.adj)
             continue
-        elif x.unspecified and b in LINES:
-            x.unspecified[-1].tags.append(LINES[b])
+        elif x.lastcharge and b in LINES:
+            x.lastcharge.tags.append(LINES[b])
             continue
         elif x.fielddivision and b in LINES:
             x.fielddivision[-1].fielddesc += ':' + LINES[b]
             continue
-        elif (x.unspecified 
-              and x.unspecified[-1].category in ('monster', 'beast', 'bird')
+        elif (x.lastcharge 
+              and x.lastcharge.category in ('monster', 'beast', 'bird')
               and 'arrangement, creature, %s' % b in CHARGES):
-            x.unspecified[-1].mods.append(
+            x.lastcharge.mods.append(
                 CHARGES['arrangement, creature, %s' % b])
             continue
-        elif (x.unspecified
-              and x.unspecified[-1].category
-              and x.unspecified[-1].category.startswith('head, ')
+        elif (x.lastcharge
+              and x.lastcharge.category
+              and x.lastcharge.category.startswith('head, ')
               and 'arrangement, head, %s' % b in CHARGES):
-            x.unspecified[-1].mods.append(
+            x.lastcharge.mods.append(
                 CHARGES['arrangement, head, %s' % b])
             continue
-        elif (x.unspecified
-              and x.unspecified[-1].category in ('monster', 'beast', 'human')
+        elif (x.lastcharge
+              and x.lastcharge.category in ('monster', 'beast', 'human')
               and b in POSTURES):
-            x.unspecified[-1].tags.append(POSTURES[b])
+            x.lastcharge.tags.append(POSTURES[b])
             continue
-        elif (x.unspecified
-              and x.unspecified[-1].category in ('bird',)
+        elif (x.lastcharge
+              and x.lastcharge.category in ('bird',)
               and b in BIRD_POSTURES):
-            x.unspecified[-1].tags.append(BIRD_POSTURES[b])
+            x.lastcharge.tags.append(BIRD_POSTURES[b])
             continue
-        elif (x.unspecified
-              and x.unspecified[-1].name == 'cross, as charge'
+        elif (x.lastcharge
+              and x.lastcharge.name == 'cross, as charge'
               and b in CROSS_FAMILIES):
-            x.unspecified[-1].tags.append(CROSS_FAMILIES[b])
+            x.lastcharge.tags.append(CROSS_FAMILIES[b])
             continue
         elif 'field division, %s' % b in CHARGES:
             x.fielddivision.append(
@@ -248,7 +257,7 @@ def parse(blaz):
             if x.mod == 'of':
                 num = NUMBERS[b]
                 assert num in xrange(1,10), num
-                x.unspecified[-1].tags.append('of %d' % num)
+                x.lastcharge.tags.append('of %d' % num)
                 x.mod = None
                 if blist[0] in ('rays', 'points'):
                     blist.pop(0)
@@ -320,6 +329,7 @@ def parse(blaz):
                     TINCTURES[IMPLIED_TINCTURES[charge]])
             else:
                 x.unspecified.append(chg)
+                x.lastcharge = chg
             x.lasttincture.add_extra(chg)
             x.was_charge_word = False
             if x.lasttincture.on_field:
@@ -391,6 +401,7 @@ def parse(blaz):
                 demi.number = chg.number
                 chg.mods.append(demi)
                 x.unspecified.append(demi)
+                x.lastcharge = demi
         if res:
             x.mod = None
         else:
@@ -436,7 +447,10 @@ def parse(blaz):
                     x.was_charge_word = False
                     pass
                 else:
-                    raise BlazonException("Unknown noncharge word %s!" % b)
+                    raise BlazonException(
+                        "Unknown noncharge word %s!" % b,
+                        'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
+                        % b)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

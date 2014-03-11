@@ -76,12 +76,15 @@ class Charge(Thingy):
         self.category = category
         self.mods = []
         self.tags = []
+        # Ones where we'r moore likely to conflict with something without
+        self.iffy_tags = []
         self.seealso = []
 
     def combinable_with(self, other):
         return (other.name == self.name and other.maintained == self.maintained
                 and self.tincture == other.tincture and self.mods == other.mods
-                and self.tags == other.tags and self.between == other.between)
+                and self.tags == other.tags and self.between == other.between
+                and self.iffy_tags == other.iffy_tags)
     
     def render(self):
         return """<circle cx="50" cy="50" r="50" fill="%s" /><text x="5" y="40" fill="grey">%s</text>""" % (self.tincture, self.name)
@@ -96,6 +99,7 @@ class Charge(Thingy):
         tagbit = ''
         tags = list(self.tags)
         primtags = list(tags)
+        tags += self.iffy_tags
         if self.tincture:
             tags = [self.tincture.tincture] + tags
 
