@@ -113,7 +113,8 @@ def pop_blist(blist):
             or poss in DETAILS or poss in ARRANGEMENTS 
             or poss in ORIENTATIONS or poss in POSTURES or poss in BIRD_POSTURES
             or poss in NUMBERS
-            or poss in ('charged with',)):
+            or poss in ANDS
+            or poss in CHARGED_WITHS):
             del blist[:ln]
             return poss
     return b
@@ -246,7 +247,7 @@ def parse(blaz):
                 x.mod = None
                 continue
         else:
-            assert x.mod in (None, 'of', 'within', 'on', 'charged with'), x.mod
+            assert x.mod in (None, 'of', 'within', 'on') or x.mod in CHARGED_WITHS, x.mod
 
         if b in NUMBERS:
             assert x.number is None,"Multiple numbers without a charge between: %s"%x.number
@@ -262,7 +263,7 @@ def parse(blaz):
                 if blist[0] in ('rays', 'points'):
                     blist.pop(0)
             else:
-                assert x.mod in (None, 'within', 'on', 'charged with'), x.mod
+                assert x.mod in (None, 'within', 'on') or x.mod in CHARGED_WITHS, x.mod
                 x.number = NUMBERS[b]
             continue
 
@@ -343,7 +344,7 @@ def parse(blaz):
             x.number = 'the'
             x.was_charge_word = False
             continue
-        elif b == 'and':
+        elif b in ANDS:
             if x.primary is None:
                 x.primary = True
             x.was_charge_word = False
@@ -417,7 +418,7 @@ def parse(blaz):
                 #x.number = None
                 x.adj = b
                 x.was_charge_word = False
-            elif b in ('in', 'within', 'charged with'):
+            elif b in ('in', 'within') or b in CHARGED_WITHS:
                 x.primary = False
                 x.mod = b
                 x.was_charge_word = False

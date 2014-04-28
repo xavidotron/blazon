@@ -15,6 +15,17 @@ TINCTURES = {
     '(fieldless)': Fieldless(),
     }
 
+ANDS = {
+    'and',
+    'conjoined with',
+    'conjoined in pale with'
+}
+
+CHARGED_WITHS = {
+    'charged with',
+    'charged on the head with',
+}
+
 NUMBERS = {
     'a': 1,
     'an': 1,
@@ -47,11 +58,13 @@ MAJOR_DETAILS = {'winged': 'winged object'}
 
 DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed', 
            'seeded',
+           'collared',
+           'vented',
            'wings displayed', 'wings elevated', 'wings addorsed', 
            'wings elevated and addorsed',
-           'contourney', 'contourny',
+           'paw upraised',
            'inverted',
-           'affronty', 'reguardant',
+           'affronty', 'regardant', 'reguardant',
            'gowned',
            'eradicated',
            'fimbriated',
@@ -105,6 +118,7 @@ ALIASES = {
     'plant, wheat': ['ears of wheat', 'ear of wheat'],
     'quill': ['quill pen'],
     'roundel, whole': ['roundel'],
+    'sun, whole': ['sun, whole, charged'],
     'tree, rounded shape': ['tree'], # This is the default tree.
     'wreath, not laurel': ['wreath'],
 }
@@ -198,7 +212,11 @@ def loadwords():
                         if name.startswith(a):
                             for v in POSTURE_ALIASES[a]:
                                 names.append(v + name[len(a):])
-                    
+                    if name.endswith(' to sinister'):
+                        stem = name[:-len(' to sinister')]
+                        names.append(stem + ' contourney')
+                        names.append(stem + ' contourny')
+
                     for n in names:
                         POSTURES[n] = post
                 elif l.startswith('|cross_family:'):
@@ -274,7 +292,7 @@ def loadwords():
                     if name in ALIASES:
                         for alt in ALIASES[name]:
                             CHARGES[alt] = CHARGES[name]
-                if 'bird' in seenames and name in BIRD_TYPES:
+                if 'bird, whole' in seenames and name in BIRD_TYPES:
                     CHARGES[name].iffy_tags.append(BIRD_TYPES[name])
                 for s in sees:
                     CHARGES[name].seealso.append(s)
