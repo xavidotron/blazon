@@ -17,8 +17,43 @@ print """Content-Type: text/html; charset=utf-8
 </head>
 <body>
 
+<h1>Kihō's Blazon to Complex Search Form Parser</h1>
+
+<h2>About</h2>
+
+<p>This page is a convenice interface to the <a href="http://oanda.sca.org/oanda_complex.cgi">Complex Search Form</a> for searching the <a href="http://oanda.sca.org/">SCA Armorial</a>.  Blazon is a highly structured language, and it
+takes advantage of that to automatically interpret blazon and convert
+it into the armory descriptions used in the Armorial.  This is primarily
+useful for conflict-checking.</p>
+
+<p>This is a work in progress; not all tags will be included and it
+<emph>will</emph> make mistakes in weird cases.  If you have suggestions
+or find bugs, please let me know at kihou at xavid dot us so I can improve
+it.</p>
+
+<h3>Nota Bene!</h3>
+
+<p>This page is here for convenience.  It does not replace
+understanding the SCA rules for conflict checking and knowledge of how
+to use the Complex Search Form.  For information about both these
+topics, see the materials available at <a href="http://yehudaheraldry.com/ekhu/">East Kingdom Herald University</a>.</p>
+
+<p>The parser makes heavy use of the "see also" references in the Ordinary
+(i.e., <a href="http://oanda.sca.org/my.cat">my.cat</a>).  This means
+that a single charge in your blazon may be represented by multiple armory
+descriptions, so keep this in mind when counting distinct changes from
+Complex Search Form score totals.</p>
+
+<p>In additon, for primary charge groups, the parser will generally
+generate two descriptions: a precise one and a simpler one without
+tags like tincture.  This helps highlight armory that doesn't have
+exactly your primary charge group, but has a primary charge group
+close enough that it's not a substantial change.</p>
+
+<h2>Blazon Search</h2>
+
 <form method="get">
-<label>Blazon:<br /><textarea name="blazon" cols="100" rows="5">%s</textarea></label><br />
+<textarea name="blazon" cols="100" rows="5">%s</textarea><br />
 <input type="submit" value="Parse" />
 </form>""" % (cgi.escape(blazon) if blazon
               else "Or, a Laurel wreath vert.")
@@ -26,7 +61,7 @@ print """Content-Type: text/html; charset=utf-8
 if blazon:
     import complexify
     from parse import parse, BlazonException
-    print '<h2>%s</h2>' % cgi.escape(blazon)
+    print '<h2>Result for: %s</h2>' % cgi.escape(blazon)
     try:
         p = parse(unicode(blazon, 'utf-8'))
         lst = list(p.describe())

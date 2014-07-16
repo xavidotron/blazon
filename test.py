@@ -136,7 +136,7 @@ class TestCases(unittest.TestCase):
              'FIELD DIV.-BENDY:1:argent:primary',
              'BEND:1:primary',
              'DOG:2:sable:rampant to sinister',
-             'PAW PRINT:5 or more:sable'],
+             'PAW PRINT:5:sable'],
             list(parse(u'Quarterly sable and Or, on a bend argent between two wolves rampant contourney five paw prints sable.\n\n').describe()))
 
         self.assertEquals(

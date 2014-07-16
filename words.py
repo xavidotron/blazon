@@ -168,6 +168,12 @@ SEMYS = {
 
 CHARGE_ADJ = {'winged': 'monster, winged'}
 
+DETAIL_ADJ = {
+    'empty',
+    'bottom-whorl',
+    'elder futhark'
+    }
+
 BLACKLIST = {'throughout'}
 
 LOADED = False

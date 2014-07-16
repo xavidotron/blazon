@@ -122,7 +122,8 @@ def pop_blist(blist):
             or poss in NUMBERS
             or poss in ANDS
             or poss in WITHINS
-            or poss in CHARGED_WITHS):
+            or poss in CHARGED_WITHS
+            or poss in DETAIL_ADJ):
             del blist[:ln]
             return poss
     return b
@@ -443,7 +444,8 @@ def parse(blaz):
                 if x.adj is not None:
                     raise BlazonException("I don't understand '%s %s' here!"
                                           % (x.adj, b))
-                x.adj = b
+                if b not in DETAIL_ADJ:
+                    x.adj = b
                 x.was_charge_word = False
             elif b in ('in',) or b in WITHINS or b in CHARGED_WITHS:
                 x.primary = False
