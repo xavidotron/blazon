@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import copy
 
 from structs import Tincture, Fieldless, Charge
@@ -20,6 +21,12 @@ ANDS = {
     'conjoined with',
     'conjoined in pale with'
 }
+
+WITHINS = {
+    'within',
+    'all within',
+    'within and conjoined to',
+    }
 
 CHARGED_WITHS = {
     'charged with',
@@ -74,7 +81,8 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'nowed in', 'nowed',
            'fretted with',
            'rising from',
-           'throughout', 'reversed',
+           'throughout', 'reversed', 'contourny', 'contourney',
+           'conjoined',
            'transfixed by',
            'in her vanity', 'in its piety', 'in her plentitude',
            'crined'}
@@ -91,7 +99,7 @@ BIRD_TYPES = {}
 
 POSTURES = {}
 POSTURE_ALIASES = {'rampant': ['segreant'],
-                   'passant': ['courant', 'passant guardant']}
+                   'passant': ['courant']}
 
 CROSS_FAMILIES = {}
 
@@ -111,6 +119,7 @@ ALIASES = {
     'gate': ['torii gate'],
     'jewelry': ['rosary'],
     'knot': ['quatrefoil knot'],
+    'mollusk, octopus': ['polypus'],
     'monster, sea, other': ['sea-stag'],
     'mullet': ['mullet, charged', 'spur rowel'],
     'paw print': ['pawprint'],
@@ -126,6 +135,7 @@ MULTI = {
     'bow and arrow': ['bow', 'arrow'],
     'holly sprig': ['holly', 'sprig'],
     'wreath of thorns': ['wreath', 'thorn'],
+    'annulet of ivy': ['annulet', 'plant, vine'],
     'elm hurst': ['tree, multiple', 'tree, rounded shape'],
 }
 ALSOS = {'flower, few petals'}
@@ -166,7 +176,7 @@ def loadwords():
     global LOADED
     if LOADED:
         return
-    with open('my.cat') as mydotcat:
+    with open(os.path.join(os.path.dirname(__file__), 'my.cat')) as mydotcat:
         for l in mydotcat:
             l = l.strip()
             if l.startswith('|'):
@@ -217,6 +227,8 @@ def loadwords():
                         stem = name[:-len(' to sinister')]
                         names.append(stem + ' contourney')
                         names.append(stem + ' contourny')
+                    else:
+                        names.append(name + ' guardant')
 
                     for n in names:
                         POSTURES[n] = post

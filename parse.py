@@ -4,9 +4,17 @@ from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
 
 class BlazonException(Exception):
-    def __init__(self, text, url=None):
-        if url:
+    def __init__(self, text, word=None):
+        self.text = text
+        if word:
+            url = 'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled' % urllib.quote_plus(word)
+            self.url = url
+            self.linktext = ("Search the Blazon Pattern Search Form for '%s'"
+                             % word)
             text += '\n' + url
+        else:
+            self.url = None
+            self.linktext = None
         Exception.__init__(self, text)
 
 class stor(object):
@@ -14,7 +22,7 @@ class stor(object):
 
 def proc(x, b, next):
     if b in CHARGES:
-        print 'CHARGE', b
+        #print 'CHARGE', b
         if x.number is None:
             assert x.was_charge_word,("No number/a/an for a charge:", b,
                                       x.unspecified)
@@ -28,8 +36,7 @@ def proc(x, b, next):
                     "I don't know if a '%s' is a %s or a %s (or both)!"
                     % (glued,
                        x.unspecified[-1].name, CHARGES[b].name),
-                    'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                    % (urllib.quote_plus(glued)))
+                    glued)
         if x.betweenness is not None:
             assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
             g = x.betweenness
@@ -114,6 +121,7 @@ def pop_blist(blist):
             or poss in ORIENTATIONS or poss in POSTURES or poss in BIRD_POSTURES
             or poss in NUMBERS
             or poss in ANDS
+            or poss in WITHINS
             or poss in CHARGED_WITHS):
             del blist[:ln]
             return poss
@@ -157,13 +165,12 @@ def parse(blaz):
 
     while len(blist) > 0:
         b = pop_blist(blist)
-        print b, [x.unspecified[-1].category if x.unspecified else None]
+        #print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
             if b in ('her', 'his', 'its'):
                 raise BlazonException(
                     "Unknown modifier 'in %s %s'" % (b, blist[0]),
-                    'http://oanda.sca.org/oanda_bp.cgi?p=in+%s+%s&a=enabled'
-                    % (b, blist[0]))
+                    'in %s %s' % (b, blist[0]))
             else:
                 assert b in LOCATIONS, b
             x.mod = None
@@ -188,10 +195,7 @@ def parse(blaz):
             if x.lastcharge:
                 x.lastcharge.tags.append(ORIENTATIONS[b])
             else:
-                raise BlazonException(
-                    "Unknown charge: %s" % x.adj,
-                    'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                    % x.adj)
+                raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
             continue
         elif x.lastcharge and b in LINES:
             x.lastcharge.tags.append(LINES[b])
@@ -218,7 +222,7 @@ def parse(blaz):
             x.lastcharge.tags.append(POSTURES[b])
             continue
         elif (x.lastcharge
-              and x.lastcharge.category in ('bird',)
+              and x.lastcharge.category in ('bird', 'monster')
               and b in BIRD_POSTURES):
             x.lastcharge.tags.append(BIRD_POSTURES[b])
             continue
@@ -247,10 +251,15 @@ def parse(blaz):
                 x.mod = None
                 continue
         else:
-            assert x.mod in (None, 'of', 'within', 'on') or x.mod in CHARGED_WITHS, x.mod
+            assert x.mod in (None, 'of', 'on') or x.mod in WITHINS or x.mod in CHARGED_WITHS, x.mod
 
         if b in NUMBERS:
-            assert x.number is None,"Multiple numbers without a charge between: %s"%x.number
+            if x.number is not None:
+                if x.adj == 'sets' and x.mod == 'of':
+                    x.number *= NUMBERS[b]
+                    continue
+                else:
+                    raise BlazonException("Multiple numbers without a charge between: %s and %s" % (x.number, b))
             if x.numdeprim:
                 x.primary = False
             elif x.commadeprim:
@@ -263,7 +272,7 @@ def parse(blaz):
                 if blist[0] in ('rays', 'points'):
                     blist.pop(0)
             else:
-                assert x.mod in (None, 'within', 'on') or x.mod in CHARGED_WITHS, x.mod
+                assert x.mod in (None, 'on') or x.mod in WITHINS or x.mod in CHARGED_WITHS, x.mod
                 x.number = NUMBERS[b]
             continue
 
@@ -275,10 +284,7 @@ def parse(blaz):
                 continue
             if len(x.unspecified) == 0:
                 if x.adj:
-                    raise BlazonException(
-                        "Unknown charge: %s" % x.adj,
-                        'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                        % x.adj)
+                    raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
                     x.number = None
                     continue
                 elif x.was_detail or x.was_field_treatment:
@@ -302,10 +308,7 @@ def parse(blaz):
         elif b == 'counterchanged':
             if len(x.unspecified) == 0:
                 if x.adj:
-                    raise BlazonException(
-                        "Unknown charge: %s" % x.adj,
-                        'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                        % x.adj)
+                    raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
                     x.number = None
                     continue
                 elif x.was_detail or x.was_field_treatment:
@@ -328,19 +331,19 @@ def parse(blaz):
             continue
         x.was_detail = False
         x.was_field_treatment = True
-        print ':'
+        #print ':'
         if ('field treatment, %s' % b in CHARGES 
             or 'field treatment, seme, %s' % b in CHARGES):
             assert x.lasttincture is not None
             chgs = x.lasttincture.add_treatment(b)
-            print 'TREATMENT', chgs
+            #print 'TREATMENT', chgs
             x.unspecified += chgs
             x.was_charge_word = False
             clear_fielddivision(x)
             continue
         elif b == 'semy':
             assert blist.pop(0) == 'of'
-            print 'SEMY'
+            #print 'SEMY'
             charge = depluralize(pop_blist(blist))
             assert charge in CHARGES, charge
             chg = copy.deepcopy(CHARGES[charge])
@@ -395,11 +398,11 @@ def parse(blaz):
             x.primary = None  # Not primary until "and"
             continue
         elif b in ARRANGEMENTS:
-            print 'ARRANGEMENT'
+            #print 'ARRANGEMENT'
             x.was_charge_word = False
             continue
         elif x.number is not None and b in CHARGE_ADJ:
-            print 'CHARGE_ADJ'
+            #print 'CHARGE_ADJ'
             adj = copy.deepcopy(CHARGES[CHARGE_ADJ[b]])
             x.unspecified.append(adj)
             x.nextmods.append(adj)
@@ -413,7 +416,7 @@ def parse(blaz):
 
         next = blist[0] if blist else None
         res = proc(x, depluralize(b), next)
-        print res, depluralize(b)
+        #print res, depluralize(b)
         if not res and b.startswith('demi-'):
             res = proc(x, depluralize(b[len('demi-'):]), next)
             if res:
@@ -427,7 +430,7 @@ def parse(blaz):
         if res:
             x.mod = None
         else:
-            if x.number is not None:
+            if x.number is not None and x.adj != 'sets':
                 #if x.on.kid is None:
                 #    x.on.kid = Group()
                 #else:
@@ -437,9 +440,12 @@ def parse(blaz):
                 #    x.on.kid.append(c)
                 #    x.unspecified.append(c)
                 #x.number = None
+                if x.adj is not None:
+                    raise BlazonException("I don't understand '%s %s' here!"
+                                          % (x.adj, b))
                 x.adj = b
                 x.was_charge_word = False
-            elif b in ('in', 'within') or b in CHARGED_WITHS:
+            elif b in ('in',) or b in WITHINS or b in CHARGED_WITHS:
                 x.primary = False
                 x.mod = b
                 x.was_charge_word = False
@@ -469,10 +475,12 @@ def parse(blaz):
                     x.was_charge_word = False
                     pass
                 else:
-                    raise BlazonException(
-                        "Unknown noncharge word %s!" % b,
-                        'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
-                        % b)
+                    if b in BIRD_POSTURES:
+                        raise BlazonException("%s is a bird posture, but a '%s' is not a bird!" % (b, x.lastcharge.name), b)
+                    elif b in ('to',):
+                        raise BlazonException("I don't understand '%s %s' in this context!" % (b, blist[0]), "%s %s" % (b, blist[0]))
+                    else:
+                        raise BlazonException("Unknown noncharge word %s!" % b, b)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

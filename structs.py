@@ -107,12 +107,12 @@ class Charge(Thingy):
             tags = ['seme'] + tags
         elif self.number in (None, 'the'):
             pass
-        elif self.number < 5:
+        elif self.number < 10:
             tags = ['%s' % self.number] + tags
             if self.number < 4:
                 primtags = ['%s' % self.number] + primtags
         else:
-            tags = ['5 or more'] + tags
+            tags = ['10 or more'] + tags
 
         if tags:
             tagbit = ':' + ':'.join(tags)
