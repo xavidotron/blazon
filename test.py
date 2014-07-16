@@ -103,7 +103,15 @@ class TestCases(unittest.TestCase):
             list(parse(u'Quarterly sable and vairy sable, argent, gules and Or, in bend three towers palewise Or\n\n').describe()))
 
         self.assertEquals(
-            ['OR', 'BEND:1:azure:primary:cotised', 'FIELD DIV.-BENDY:1:azure:primary:cotised', 'BEND:1:primary:cotised', 'FDL:1:or:palewise', 'ROSE:2:or', 'CHIEF:1:gules', 'CAT:1:or:passant'],
+            ['OR',
+             'BEND:1:azure:primary:cotised',
+             'FIELD DIV.-BENDY:1:azure:primary:cotised',
+             'BEND:1:primary:cotised',
+             'FDL:1:or:palewise',
+             'FOIL-5:2:or',
+             'ROSE:2:or',
+             'CHIEF:1:gules',
+             'CAT:1:or:passant'],
             list(parse(u'Or, on a bend cotised azure a fleur-de-lys palewise between two cinquefoils Or and on a chief gules a lion passant guardant Or\n\n').describe()))
 
         self.assertEquals(
@@ -123,8 +131,17 @@ class TestCases(unittest.TestCase):
             list(parse(u'Vert, a cauldron issuant from a flame and on a chief Or two ladles in saltire vert\n\n').describe()))
 
         self.assertEquals(
-            [u'QLY:sable:~and or', 'BEND:1:argent:primary', 'FIELD DIV.-BENDY:1:argent:primary', 'BEND:1:primary', 'DOG:2:sable:rampant', 'PAW PRINT:5 or more:sable'],
+            [u'QLY:sable:~and or',
+             'BEND:1:argent:primary',
+             'FIELD DIV.-BENDY:1:argent:primary',
+             'BEND:1:primary',
+             'DOG:2:sable:rampant to sinister',
+             'PAW PRINT:5 or more:sable'],
             list(parse(u'Quarterly sable and Or, on a bend argent between two wolves rampant contourney five paw prints sable.\n\n').describe()))
+
+        self.assertEquals(
+            [u'PFESS:azure:~and or', 'MONSTER-SEA LION:1:multicolor:primary', 'MONSTER-SEA LION:1:primary'],
+            list(parse(u'Per fess azure and Or, a sea lion maintaining a spiked mace counterchanged\n\n').describe()))
 
 if __name__ == "__main__":
     unittest.main()

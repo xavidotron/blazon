@@ -57,7 +57,7 @@ BETWEEN = frozenset(('between',))
 MAJOR_DETAILS = {'winged': 'winged object'}
 
 DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed', 
-           'seeded',
+           'barbed', 'seeded',
            'collared',
            'vented',
            'wings displayed', 'wings elevated', 'wings addorsed', 
@@ -126,6 +126,7 @@ MULTI = {
     'bow and arrow': ['bow', 'arrow'],
     'holly sprig': ['holly', 'sprig'],
     'wreath of thorns': ['wreath', 'thorn'],
+    'elm hurst': ['tree, multiple', 'tree, rounded shape'],
 }
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}

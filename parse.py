@@ -300,6 +300,27 @@ def parse(blaz):
             x.was_charge_word = False
             continue
         elif b == 'counterchanged':
+            if len(x.unspecified) == 0:
+                if x.adj:
+                    raise BlazonException(
+                        "Unknown charge: %s" % x.adj,
+                        'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled'
+                        % x.adj)
+                    x.number = None
+                    continue
+                elif x.was_detail or x.was_field_treatment:
+                    raise BlazonException("Weird counterchange!")
+                    continue
+                else:
+                    raise BlazonException(
+                        "Counterchange without anything to color: %s" % b)
+            if x.primary is not False:
+                if not isinstance(x.field.tincture, ComplexTincture):
+                    raise BlazonException(
+                        "Counterchange over a simple field!")
+                unspec = [u for u in x.unspecified if not u.maintained]
+                if len(unspec) == 1:
+                    unspec[0].tincture = Tincture('multicolor')
             x.lasttincture = None
             x.unspecified = []
             x.was_detail = False
@@ -435,7 +456,7 @@ def parse(blaz):
                     x.was_charge_word = b
             elif b == 'maintaining':
                 x.maintained = True
-                x.primary = False
+                x.primary = None
                 x.was_charge_word = False
             elif x.mod == 'of':
                 x.was_charge_word = False

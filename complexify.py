@@ -11,9 +11,9 @@ if __name__ == '__main__':
     lst = list(p.describe())
     for l in lst:
         print l
-    print 'self.assertEquals('
-    print '    %s,' % repr(lst)
-    print '    list(parse(%s).describe()))' % repr(blaz)
+    print '        self.assertEquals('
+    print '            %s,' % repr(lst).replace(', ', '\n             ')
+    print '            list(parse(%s).describe()))' % repr(blaz)
     url = 'http://oanda.sca.org/oanda_complex.cgi?'
     idx = 1
     for l in lst:
