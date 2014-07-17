@@ -121,6 +121,7 @@ def pop_blist(blist):
             or poss in ORIENTATIONS or poss in POSTURES or poss in BIRD_POSTURES
             or poss in NUMBERS
             or poss in ANDS
+            or poss in SUSTAININGS
             or poss in WITHINS
             or poss in CHARGED_WITHS
             or poss in DETAIL_ADJ):
@@ -222,7 +223,8 @@ def parse(blaz):
                 CHARGES['arrangement, head, %s' % b])
             continue
         elif (x.lastcharge
-              and x.lastcharge.category in ('monster', 'beast', 'human')
+              and x.lastcharge.category in ('monster', 'beast', 'human',
+                                            'reptile')
               and b in POSTURES):
             x.lastcharge.tags.append(POSTURES[b])
             continue
@@ -373,7 +375,7 @@ def parse(blaz):
                 x.primary = True
             x.was_charge_word = False
             continue
-        elif b == 'sustaining':
+        elif b in SUSTAININGS:
             x.primary = False
             x.was_charge_word = False
             continue
@@ -442,7 +444,7 @@ def parse(blaz):
                 #x.number = None
                 if x.adj is not None:
                     raise BlazonException("I don't understand '%s %s' here!"
-                                          % (x.adj, b))
+                                          % (x.adj, b), '%s %s' % (x.adj, b))
                 if b not in DETAIL_ADJ:
                     x.adj = b
                 x.was_charge_word = False
@@ -476,7 +478,9 @@ def parse(blaz):
                     x.was_charge_word = False
                     pass
                 else:
-                    if b in BIRD_POSTURES:
+                    if b in POSTURES:
+                        raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, x.lastcharge.name), b)
+                    elif b in BIRD_POSTURES:
                         raise BlazonException("%s is a bird posture, but a '%s' is not a bird!" % (b, x.lastcharge.name), b)
                     elif b in ('to',):
                         raise BlazonException("I don't understand '%s %s' in this context!" % (b, blist[0]), "%s %s" % (b, blist[0]))

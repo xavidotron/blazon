@@ -20,7 +20,12 @@ ANDS = {
     'and',
     'and for augmentation',
     'conjoined with',
-    'conjoined in pale with'
+    'conjoined in pale with',
+}
+
+SUSTAININGS = {
+    'sustaining',
+    'sustained by',
 }
 
 WITHINS = {
@@ -86,7 +91,8 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'conjoined',
            'transfixed by',
            'in her vanity', 'in its piety', 'in her plentitude',
-           'crined'}
+           'crined',
+           'in fess point'}
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye'}
@@ -120,6 +126,7 @@ ALIASES = {
     'gate': ['torii gate'],
     'jewelry': ['rosary'],
     'knot': ['quatrefoil knot'],
+    'leg, monster': ["dragon's jamb"],
     'mollusk, octopus': ['polypus'],
     'monster, sea, other': ['sea-stag'],
     'mullet': ['mullet, charged', 'spur rowel'],

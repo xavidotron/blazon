@@ -143,5 +143,18 @@ class TestCases(unittest.TestCase):
             [u'PFESS:azure:~and or', 'MONSTER-SEA LION:1:multicolor:primary', 'MONSTER-SEA LION:1:primary'],
             list(parse(u'Per fess azure and Or, a sea lion maintaining a spiked mace counterchanged\n\n').describe()))
 
+        self.assertEquals(
+            [u'PC:vert:~and argent',
+             'FLOWER-TRUMPET SHAPE:2:primary',
+             'REPTILE-TURTLE:1:primary:statant',
+             'LOZENGE:1:or',
+             'MASCLE AND RUSTRE:1:or',
+             'FIELD DIV.-VETU:1:or',
+             'FIELD DIV.-LOZENGY OR FUSILY:1:or',
+             'HARP:1:sable',
+             'LEG AND FOOT-MONSTER:1:vert:fesswise',
+             'CLAW:1:vert:fesswise'],
+            list(parse(u"Per chevron vert and argent, two lilies and a turtle statant counterchanged, and for augmentation in fess point on a lozenge Or, a harp sable sustained by a dragon's jamb fesswise vert.\n\n").describe()))
+
 if __name__ == "__main__":
     unittest.main()
