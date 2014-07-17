@@ -85,7 +85,11 @@ if blazon:
         print '<p><a href="%s">Search the Complex Search Form with these descriptions</a></p>' % (url)
 
 print """
-<small>Written by Kihou (at xavid dot us).  Powered by <a href="http://scripts.mit.edu/">scripts</a>.</small>
+<hr />
+
+<p>Source for this site is available on Github at <a href="https://github.com/xavidotron/blazon">https://github.com/xavidotron/blazon</a>.
+
+<p><small>Written by Kihou (at xavid dot us).  Powered by <a href="http://scripts.mit.edu/">scripts</a>.</small></p>
 
 </body>
 </html>"""
