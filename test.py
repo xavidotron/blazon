@@ -156,5 +156,11 @@ class TestCases(unittest.TestCase):
              'CLAW:1:vert:fesswise'],
             list(parse(u"Per chevron vert and argent, two lilies and a turtle statant counterchanged, and for augmentation in fess point on a lozenge Or, a harp sable sustained by a dragon's jamb fesswise vert.\n\n").describe()))
 
+        self.assertEquals(
+                        [u'GYRONNY:sable:~and vert',
+                         'DRAGON:1:argent:primary:rampant',
+                         'DRAGON:1:primary:rampant'],
+                        list(parse(u'Gyronny of eight, sable and vert a wyvern rampant argent langued gules, maintaining in dexter claw a sword erect Or.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

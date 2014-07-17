@@ -136,7 +136,7 @@ def unknown(typ, word):
         else:
             sugg = suggest(word)
             if sugg:
-                dym.append("Did you mean: %s" % (typ, word, ', '.join(sugg)))
+                dym.append("Did you mean: %s" % (', '.join(sugg)))
     raise BlazonException("Unknown %s: %s." % (typ, word), word, dym)
 
 def dont_understand(w1, w2):
@@ -208,8 +208,13 @@ def parse(blaz):
                 raise BlazonException(
                     "Unknown modifier 'in %s %s'" % (b, blist[0]),
                     'in %s %s' % (b, blist[0]))
-            else:
-                assert b in LOCATIONS, b
+            elif b in ('dexter', 'sinister'):
+                continue
+            elif b in CHARGES:
+                # We don't care about details like 'in dexter claw'
+                pass
+            elif b not in LOCATIONS:
+                raise BlazonException("Unknown location '%s'!" % b, b)
             x.mod = None
             continue
 
@@ -307,7 +312,13 @@ def parse(blaz):
             if x.mod == 'of':
                 num = NUMBERS[b]
                 assert num in xrange(1,10), num
-                x.lastcharge.tags.append('of %d' % num)
+                if x.lastcharge is not None:
+                    x.lastcharge.tags.append('of %d' % num)
+                elif x.fielddivision:
+                    pass
+                else:
+                    raise BlazonException("Weird use of 'of %s'!" % num)
+                    
                 x.mod = None
                 if blist[0] in ('rays', 'points'):
                     blist.pop(0)
@@ -463,7 +474,8 @@ def parse(blaz):
             x.was_field_treatment = False
             continue
 
-        clear_fielddivision(x)
+        if b not in ('of',):
+            clear_fielddivision(x)
 
         if x.number is None and b in IMPLIED_NUMBER:
             x.number = IMPLIED_NUMBER[b]
