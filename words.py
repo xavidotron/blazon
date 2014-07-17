@@ -18,6 +18,7 @@ TINCTURES = {
 
 ANDS = {
     'and',
+    'and for augmentation',
     'conjoined with',
     'conjoined in pale with'
 }

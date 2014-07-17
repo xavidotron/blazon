@@ -128,6 +128,10 @@ def pop_blist(blist):
             return poss
     return b
 
+def check_no_adj(x):
+    if x.adj:
+        raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
+
 def parse(blaz):
     loadwords()
 
@@ -233,13 +237,14 @@ def parse(blaz):
             x.lastcharge.tags.append(CROSS_FAMILIES[b])
             continue
         elif 'field division, %s' % b in CHARGES:
+            check_no_adj(x)
             x.fielddivision.append(
                 ComplexTincture(CHARGES['field division, %s' % b]))
             x.lasttincture = x.fielddivision[-1]
             if not x.fdunspec:
                 x.fdunspec = x.unspecified
                 x.unspecified = []
-            if isinstance(x.fdunspec[0], Field):
+            if x.fdunspec and isinstance(x.fdunspec[0], Field):
                 x.lasttincture.on_field = True
             continue
         elif x.mod in ('issuant', 'elongated'):
@@ -284,11 +289,8 @@ def parse(blaz):
                     fd.add_tincture(b)
                 continue
             if len(x.unspecified) == 0:
-                if x.adj:
-                    raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
-                    x.number = None
-                    continue
-                elif x.was_detail or x.was_field_treatment:
+                check_no_adj(x)
+                if x.was_detail or x.was_field_treatment:
                     continue
                 else:
                     raise BlazonException(
@@ -308,11 +310,8 @@ def parse(blaz):
             continue
         elif b == 'counterchanged':
             if len(x.unspecified) == 0:
-                if x.adj:
-                    raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
-                    x.number = None
-                    continue
-                elif x.was_detail or x.was_field_treatment:
+                check_no_adj(x)
+                if x.was_detail or x.was_field_treatment:
                     raise BlazonException("Weird counterchange!")
                     continue
                 else:
