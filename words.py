@@ -16,6 +16,11 @@ TINCTURES = {
     '(fieldless)': Fieldless(),
     }
 
+COUNTERCHANGEDS = {
+    'counterchanged',
+    'counter-changed',
+    }
+
 ANDS = {
     'and',
     'and for augmentation',
@@ -71,18 +76,19 @@ MAJOR_DETAILS = {'winged': 'winged object'}
 
 DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed', 
            'barbed', 'seeded',
-           'collared', 'langued',
+           'collared', 'langued', 'orbed',
            'vented',
            'wings displayed', 'wings elevated', 'wings addorsed', 
            'wings elevated and addorsed',
            'paw upraised',
            'inverted',
            'affronty', 'regardant', 'reguardant',
+           'apaumy',
            'gowned',
            'eradicated',
            'fimbriated',
            'queue-forchy', 'fitchy',
-           'couped', 'erased', 'cabossed',
+           'couped', 'couped at the wrist', 'erased', 'cabossed',
            'erect',
            'nowed in', 'nowed',
            'fretted with',
@@ -105,10 +111,13 @@ BIRD_POSTURE_ALIASES = {
 BIRD_TYPES = {}
 
 POSTURES = {}
-POSTURE_ALIASES = {'rampant': ['segreant'],
+POSTURE_ALIASES = {'rampant': ['segreant', 'salient'],
                    'passant': ['courant']}
 
 CROSS_FAMILIES = {}
+CROSS_ALIASES = {
+    'flory': ['patonce']
+    }
 
 DEFAULT_CHARGE = Charge('?', '?')
 
@@ -125,7 +134,7 @@ ALIASES = {
     'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
     'gate': ['torii gate'],
     'head, human': ['head'],
-    'jewelry': ['rosary'],
+    'jewelry': ['rosary', 'paternoster'],
     'knot': ['quatrefoil knot'],
     'leg, monster': ["dragon's jamb"],
     'mollusk, octopus': ['polypus'],
@@ -191,6 +200,8 @@ DETAIL_ADJ = {
     }
 
 BLACKLIST = {'throughout'}
+
+MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its'}
 
 ALL_WORDS = set()
 
@@ -259,6 +270,9 @@ def loadwords():
                 elif l.startswith('|cross_family:'):
                     typ, fam = l.split(':')
                     CROSS_FAMILIES[fam] = fam
+                    if fam in CROSS_ALIASES:
+                        for a in CROSS_ALIASES[fam]:
+                            CROSS_FAMILIES[a] = fam
                 elif l.startswith('|orientation:'):
                     typ, orient = l.split(':')
                     if '<' in orient:
@@ -359,6 +373,7 @@ def loadwords():
 
     ALL_WORDS.update(CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, WITHINS,
-                     CHARGED_WITHS, DETAIL_ADJ)
+                     CHARGED_WITHS, DETAIL_ADJ, COUNTERCHANGEDS,
+                     MISC_WORDS)
 
     LOADED = True

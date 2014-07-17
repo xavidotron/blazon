@@ -137,7 +137,7 @@ def unknown(typ, word):
             sugg = suggest(word)
             if sugg:
                 dym.append("Did you mean: %s" % (', '.join(sugg)))
-    raise BlazonException("Unknown %s: %s." % (typ, word), word, dym)
+    raise BlazonException("Unknown %s: %s" % (typ, word), word, dym)
 
 def dont_understand(w1, w2):
     dym = []
@@ -311,9 +311,14 @@ def parse(blaz):
                 x.numdeprim = True
             if x.mod == 'of':
                 num = NUMBERS[b]
-                assert num in xrange(1,10), num
+                if (blist[0] == 'greater' and blist[1] == 'and'
+                    and blist[3] == 'lesser'):
+                    num += NUMBERS[blist[2]]
+                    blist = blist[4:]
+                if num >= 9:
+                    num = '9 or more'
                 if x.lastcharge is not None:
-                    x.lastcharge.tags.append('of %d' % num)
+                    x.lastcharge.tags.append('of %s' % num)
                 elif x.fielddivision:
                     pass
                 else:
@@ -330,7 +335,11 @@ def parse(blaz):
         if b in TINCTURES:
             t = copy.deepcopy(TINCTURES[b])
             if not x.unspecified:
-                if x.fielddivision:
+                check_no_adj(x)
+                #assert False, (x.was_detail, x.was_field_treatment)
+                if x.was_detail or x.was_field_treatment:
+                    continue
+                elif x.fielddivision:
                     for fd in x.fielddivision:
                         fd.add_tincture(b)
                     continue
@@ -340,11 +349,6 @@ def parse(blaz):
                         x.multi.tincture.add_tincture(t)
                     else:
                         x.multi.tincture = MultiTincture([x.multi.tincture, t])
-                    continue
-            if len(x.unspecified) == 0:
-                check_no_adj(x)
-                #assert False, (x.was_detail, x.was_field_treatment)
-                if x.was_detail or x.was_field_treatment:
                     continue
                 else:
                     raise BlazonException(
@@ -365,7 +369,7 @@ def parse(blaz):
             x.was_detail = False
             x.was_charge_word = False
             continue
-        elif b == 'counterchanged':
+        elif b in COUNTERCHANGEDS:
             if len(x.unspecified) == 0:
                 check_no_adj(x)
                 if x.was_detail or x.was_field_treatment:

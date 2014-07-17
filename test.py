@@ -157,10 +157,29 @@ class TestCases(unittest.TestCase):
             list(parse(u"Per chevron vert and argent, two lilies and a turtle statant counterchanged, and for augmentation in fess point on a lozenge Or, a harp sable sustained by a dragon's jamb fesswise vert.\n\n").describe()))
 
         self.assertEquals(
-                        [u'GYRONNY:sable:~and vert',
-                         'DRAGON:1:argent:primary:rampant',
-                         'DRAGON:1:primary:rampant'],
-                        list(parse(u'Gyronny of eight, sable and vert a wyvern rampant argent langued gules, maintaining in dexter claw a sword erect Or.').describe()))
+            [u'GYRONNY:sable:~and vert',
+             'DRAGON:1:argent:primary:rampant',
+             'DRAGON:1:primary:rampant'],
+            list(parse(u'Gyronny of eight, sable and vert a wyvern rampant argent langued gules, maintaining in dexter claw a sword erect Or.').describe()))
+
+        self.assertEquals(
+            [u'PPALE:azure:~and or',
+             'EYE:seme:argent:seme on field',
+             'FIELD TREATMENT-SEME (9OTHER):argent',
+             'HAND AND GAUNTLET:1:multicolor:primary',
+             'HAND AND GAUNTLET:1:primary'],
+            list(parse(u'Per pale azure semy of eyes argent orbed sable and Or, a sinister hand counter-changed.\n').describe()))
+
+        self.assertEquals(
+            ['OR',
+             'STAR:1:sable:primary:of 9 or more',
+             'CALTRAP:1:sable:primary:of 9 or more',
+             'ESTOILE:1:sable:primary:of 9 or more',
+             'SUN-DEMI:1:sable:primary:of 9 or more',
+             'SUN:1:sable:primary:of 9 or more',
+             'STAR:1:primary:of 9 or more',
+             'BORDURE:1:sable'],
+            list(parse(u'Or, a mullet of five greater and five lesser points within a bordure sable.\n\n').describe()))
 
 if __name__ == "__main__":
     unittest.main()

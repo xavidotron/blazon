@@ -22,7 +22,7 @@ if __name__ == '__main__':
     lst = list(p.describe())
     for l in lst:
         print l
-    print '        self.assertEquals('
-    print '            %s,' % repr(lst).replace(', ', ',\n             ')
-    print '            list(parse(%s).describe()))' % repr(blaz)
+    print '\tself.assertEquals('
+    print '\t%s,' % repr(lst).replace(', ', ',\n\t')
+    print '\tlist(parse(%s).describe()))' % repr(blaz)
     print url_for(lst)
