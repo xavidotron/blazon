@@ -33,6 +33,11 @@ SUSTAININGS = {
     'sustained by',
 }
 
+MAINTAININGS = {
+    'maintaining',
+    'maintaining between them',
+    }
+
 WITHINS = {
     'within',
     'all within',
@@ -76,7 +81,7 @@ MAJOR_DETAILS = {'winged': 'winged object'}
 
 DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed', 
            'barbed', 'seeded',
-           'collared', 'langued', 'orbed',
+           'collared', 'langued', 'orbed', 'marked',
            'vented',
            'wings displayed', 'wings elevated', 'wings addorsed', 
            'wings elevated and addorsed',
@@ -137,6 +142,7 @@ ALIASES = {
     'jewelry': ['rosary', 'paternoster'],
     'knot': ['quatrefoil knot'],
     'leg, monster': ["dragon's jamb"],
+    'lock': ['padlock'],
     'mollusk, octopus': ['polypus'],
     'monster, sea, other': ['sea-stag'],
     'mullet': ['mullet, charged', 'spur rowel'],
@@ -372,7 +378,8 @@ def loadwords():
                     tinct.fielddesc = CHARGES[ftkey].desc
 
     ALL_WORDS.update(CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
-                     BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, WITHINS,
+                     BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
+                     WITHINS,
                      CHARGED_WITHS, DETAIL_ADJ, COUNTERCHANGEDS,
                      MISC_WORDS)
 

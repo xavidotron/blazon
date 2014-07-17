@@ -535,7 +535,7 @@ def parse(blaz):
                 if x.was_charge_word:
                     x.was_charge_word = b
                 x.was_field_treatment = False
-            elif b == 'maintaining':
+            elif b in MAINTAININGS:
                 x.maintained = True
                 x.primary = None
                 x.was_charge_word = False
