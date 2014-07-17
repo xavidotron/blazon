@@ -22,7 +22,7 @@ class stor(object):
     pass
 
 def proc(x, b, next):
-    if b in CHARGES:
+    if b in CHARGES and CHARGES[b] is not None:
         #print 'CHARGE', b
         if x.number is None:
             if not x.was_charge_word:
