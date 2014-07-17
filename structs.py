@@ -279,3 +279,6 @@ class MultiTincture(Tincture):
         for t in self.tincts:
             for d in t.fielddescription():
                 yield d
+    
+    def add_tincture(self, tincture):
+        self.tincts.append(tincture)

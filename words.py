@@ -163,6 +163,10 @@ IMPLIED_TINCTURES = {'bezant': 'or',
                      'pomme': 'vert',
                      'golpe': 'purpure'}
 
+MULTIPLE_TINCTURES = {
+    'flower, rose',  # for double rose
+}
+
 SEMYS = {
     'billety': 'billet',
     'billetty': 'billet',
