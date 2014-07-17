@@ -63,7 +63,7 @@ ARRANGEMENTS = {
 }
 ORIENTATIONS = {}
 
-PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore'}
+PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore', 'flaunch'}
 
 BETWEEN = frozenset(('between',))
 
@@ -151,7 +151,10 @@ CATEGORIES = {}
 
 EXPLICIT_CATEGORIES = {'human figure': 'human'}
 
-IMPLIED_NUMBER = {'flames': 1}
+IMPLIED_NUMBER = {
+    'flames': 1,
+    'flaunches': 2,
+    }
 IMPLIED_TINCTURES = {'bezant': 'or',
                      'plate': 'argent',
                      'hurt': 'azure',

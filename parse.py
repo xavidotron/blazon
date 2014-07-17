@@ -24,8 +24,8 @@ def proc(x, b, next):
     if b in CHARGES:
         #print 'CHARGE', b
         if x.number is None:
-            assert x.was_charge_word,("No number/a/an for a charge:", b,
-                                      x.unspecified)
+            if not x.was_charge_word:
+                raise BlazonException("No number/a/an for a charge: %s" % b)
             if x.unspecified[-1].name != CHARGES[b].name:
                 if x.was_charge_word is True:
                     glued = '%s %s' % (x.unspecified[-1].blazon, b)
