@@ -4,7 +4,7 @@ from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
 
 class BlazonException(Exception):
-    def __init__(self, text, word=None):
+    def __init__(self, text, word=None, dym=[]):
         self.text = text
         if word:
             url = 'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled' % urllib.quote_plus(word)
@@ -15,6 +15,7 @@ class BlazonException(Exception):
         else:
             self.url = None
             self.linktext = None
+        self.dym = dym
         Exception.__init__(self, text)
 
 class stor(object):
@@ -117,25 +118,53 @@ def pop_blist(blist):
     
     for ln in xrange(4, 0, -1):
         poss = ' '.join([b]+blist[:ln])
-        if (depluralize(poss) in CHARGES
-            or poss in DETAILS or poss in ARRANGEMENTS 
-            or poss in ORIENTATIONS or poss in POSTURES or poss in BIRD_POSTURES
-            or poss in NUMBERS
-            or poss in ANDS
-            or poss in SUSTAININGS
-            or poss in WITHINS
-            or poss in CHARGED_WITHS
-            or poss in DETAIL_ADJ):
+        if depluralize(poss) in CHARGES or poss in ALL_WORDS:
             del blist[:ln]
             return poss
     return b
 
+def suggest(word):
+    ret = PWL.suggest(word)
+    return ret
+
+def unknown(typ, word):
+    dym = []
+    if PWL:
+        if PWL.check(word):
+            raise BlazonException("'%s' is not a %s expected here!"
+                                  % (word, typ), word)
+        else:
+            sugg = suggest(word)
+            if sugg:
+                dym.append("Did you mean: %s" % (typ, word, ', '.join(sugg)))
+    raise BlazonException("Unknown %s: %s." % (typ, word), word, dym)
+
+def dont_understand(w1, w2):
+    dym = []
+    if PWL:
+        if not PWL.check(w1):
+            dym.append("Should '%s' be: %s?" % (w1, ', '.join(suggest(w1))))
+        if not PWL.check(w2):
+            dym.append("Should '%s' be: %s?" % (w2, ', '.join(suggest(w2))))
+    raise BlazonException("I don't understand '%s %s' here!"
+                          % (w1, w2), '%s %s' % (w1, w2), dym)
+
 def check_no_adj(x):
     if x.adj:
-        raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
+        unknown("charge", x.adj)
 
 def parse(blaz):
+    global PWL
     loadwords()
+
+    try:
+        from enchant import PyPWL
+    except ImportError:
+        PWL = None
+    else:
+        PWL = PyPWL()
+        for word in ALL_WORDS:
+            PWL.add(word)
 
     assert isinstance(blaz, unicode), repr(blaz)
 
@@ -204,7 +233,7 @@ def parse(blaz):
             if x.lastcharge:
                 x.lastcharge.tags.append(ORIENTATIONS[b])
             else:
-                raise BlazonException("Unknown charge: %s" % x.adj, x.adj)
+                unknown("charge", x.adj)
             continue
         elif x.lastcharge and b in LINES:
             x.lastcharge.tags.append(LINES[b])
@@ -467,8 +496,7 @@ def parse(blaz):
                 #    x.unspecified.append(c)
                 #x.number = None
                 if x.adj is not None:
-                    raise BlazonException("I don't understand '%s %s' here!"
-                                          % (x.adj, b), '%s %s' % (x.adj, b))
+                    dont_understand(x.adj, b)
                 if b not in DETAIL_ADJ:
                     x.adj = b
                 x.was_charge_word = False
@@ -515,9 +543,9 @@ def parse(blaz):
                     elif b in BIRD_POSTURES:
                         raise BlazonException("%s is a bird posture, but a '%s' is not a bird!" % (b, x.lastcharge.name), b)
                     elif b in ('to',):
-                        raise BlazonException("I don't understand '%s %s' in this context!" % (b, blist[0]), "%s %s" % (b, blist[0]))
+                        dont_understand(b, blist[0])
                     else:
-                        raise BlazonException("Unknown noncharge word %s!" % b, b)
+                        unknown("noncharge word", b)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

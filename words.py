@@ -63,7 +63,7 @@ ARRANGEMENTS = {
 }
 ORIENTATIONS = {}
 
-PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore', 'flaunch'}
+PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore', 'flaunch', 'fillet'}
 
 BETWEEN = frozenset(('between',))
 
@@ -190,6 +190,8 @@ DETAIL_ADJ = {
     }
 
 BLACKLIST = {'throughout'}
+
+ALL_WORDS = set()
 
 LOADED = False
 
@@ -353,5 +355,9 @@ def loadwords():
                 ftkey = 'field treatment, %s' % tinct.tincture
                 if ftkey in CHARGES:
                     tinct.fielddesc = CHARGES[ftkey].desc
-    
+
+    ALL_WORDS.update(CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
+                     BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, WITHINS,
+                     CHARGED_WITHS, DETAIL_ADJ)
+
     LOADED = True
