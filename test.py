@@ -181,5 +181,13 @@ class TestCases(unittest.TestCase):
              'BORDURE:1:sable'],
             list(parse(u'Or, a mullet of five greater and five lesser points within a bordure sable.\n\n').describe()))
 
+        self.assertEquals(
+                    ['AR',
+                     'HAMMER:1:sable:primary',
+                     'HAMMER:1:primary',
+                     'CRESCENT:2:sable',
+                     'ARRANGEMENT-IN BEND:sable'],
+                    list(parse(u"Argent, a Thor's hammer between in bend two increscents sable.").describe()))
+
 if __name__ == "__main__":
     unittest.main()

@@ -79,6 +79,7 @@ def proc(x, b, next):
         assert x.on.kid is not None,"Between with nothing before it!"
         x.primary = False
         x.betweenness = x.on.kid.between = Group()
+        x.lastcharge = None
     else:
         return False
     return True
