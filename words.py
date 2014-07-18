@@ -78,6 +78,7 @@ LOCATIONS = {
 ARRANGEMENTS = {
     'one and two', 'two and one',
     'two , two and two',
+    'two , two , and two',
 }
 ORIENTATIONS = {}
 
@@ -162,6 +163,7 @@ ALIASES = {
     'roundel, whole': ['roundel'],
     'ship, part': ['sail'],
     'sun, whole': ['sun, whole, charged'],
+    'tool, other': ["baker's peel"],
     'tree, rounded shape': ['tree'], # This is the default tree.
     'wreath, not laurel': ['wreath'],
 }

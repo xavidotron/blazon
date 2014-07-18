@@ -116,7 +116,7 @@ def clear_fielddivision(x):
 def pop_blist(blist):
     b = blist.pop(0)
     
-    for ln in xrange(4, 0, -1):
+    for ln in xrange(5, 0, -1):
         poss = ' '.join([b]+blist[:ln])
         if depluralize(poss) in CHARGES or poss in ALL_WORDS:
             del blist[:ln]

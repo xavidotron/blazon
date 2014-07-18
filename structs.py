@@ -5,7 +5,8 @@ def coalesce(l):
     idx = 0
     while idx < len(l) - 1:
         if l[idx].combinable_with(l[idx + 1]):
-            l[idx].number += l[idx + 1].number
+            if l[idx + 1].number is not None:
+                l[idx].number += l[idx + 1].number
             del l[idx + 1]
         else:
             idx += 1

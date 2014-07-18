@@ -197,5 +197,15 @@ class TestCases(unittest.TestCase):
              'ROSE:3:primary'],
             list(parse(u'Per bend sinister argent and gules, a brunette Caucasian maiden proper vested azure and three roses argent.').describe()))
 
+        self.assertEquals(
+            ['OR',
+             'TOOL9OTHER:1:sable:primary:bendwise sinister',
+             'ANVIL:1:sable:primary:bendwise sinister',
+             'TOOL9OTHER:1:primary:bendwise sinister',
+             'FOODSTUFF:3:or',
+             'ARM:1:proper:embowed',
+             'CHIEF:1:gules:rayonny'],
+            list(parse(u"Or, a baker's peel bendwise sinister sable charged with three loaves of bread Or sustained by an arm embowed issuant from sinister proper vested sable, a chief rayonny gules.").describe()))
+
 if __name__ == "__main__":
     unittest.main()
