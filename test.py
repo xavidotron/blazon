@@ -230,5 +230,12 @@ class TestCases(unittest.TestCase):
              'INPALE:or'],
             list(parse(u"Gules, in fess two lamb's heads fesswise respectant erased conjoined at the forehead argent between in pale two mullets Or.").describe()))
 
+        self.assertEquals(
+            [u'FIELD DIV.-VETU:argent:ploye:~and azure',
+             'REPTILE-SNAKE:2:sable:primary',
+             'REPTILE-SNAKE:2:primary',
+             'ARRANGEMENT9BEAST&MONSTER,RESPECTANT'],
+            list(parse(u'Argent v\xeatu ploy\xe9 azure, two serpents erect respectant entwined sable.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

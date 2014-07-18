@@ -211,11 +211,15 @@ class Tincture(object):
         self.fieldextras = []
         self.chargeextras = []
         self.on_field = False
+        self.fieldcharge = None
+        self.tcnt = None
 
     def __str__(self):
         return self.css
     
     def add_treatment(self, treatment):
+        if self.is_complex():
+            self.add_tincture('multicolor')
         from words import CHARGES
         if 'field treatment, %s' % treatment in CHARGES:
             a = copy.deepcopy(CHARGES['field treatment, %s' % treatment])
@@ -245,20 +249,19 @@ class Tincture(object):
             for d in e.describe():
                 yield d
 
-class Fieldless(Tincture):
-    def __init__(self):
-        Tincture.__init__(self, None)
-
-    def fielddescription(self):
-        return ()
-
-class ComplexTincture(Tincture):
-    def __init__(self, fieldcharge):
-        Tincture.__init__(self, 'multicolor', fielddesc=fieldcharge.desc)
+    def complicate(self, fieldcharge):
+        self.fielddesc = fieldcharge.desc
         self.fieldcharge = fieldcharge
         self.tcnt = 0
-    
+        if self.tincture != 'multicolor':
+            self.add_tincture(self.tincture)
+            self.tincture = 'multicolor'
+
+    def is_complex(self):
+        return self.fieldcharge is not None
+
     def add_tincture(self, tincture):
+        assert self.is_complex()
         if self.tcnt == 0:
             self.fielddesc += ':' + tincture
         elif self.tcnt == 1:
@@ -266,10 +269,18 @@ class ComplexTincture(Tincture):
         else:
             assert False, (self.fielddesc, self.tcnt, tincture)
         self.tcnt += 1
-    
-    def add_treatment(self, treatment):
-        self.add_tincture('multicolor')
-        return Tincture.add_treatment(self, treatment)
+
+class Fieldless(Tincture):
+    def __init__(self):
+        Tincture.__init__(self, None)
+
+    def fielddescription(self):
+        return ()
+
+def ComplexTincture(fieldcharge):
+    ret = Tincture('multicolor')
+    ret.complicate(fieldcharge)
+    return ret
 
 class MultiTincture(Tincture):
     def __init__(self, tincts):

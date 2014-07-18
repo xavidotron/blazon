@@ -66,14 +66,14 @@ if blazon:
         p = parse(unicode(blazon, 'utf-8'))
         lst = list(p.describe())
     except BlazonException, e:
-        print '<h3>Error: %s</h3>' % cgi.escape(e.text)
+        print '<h3>Error: %s</h3>' % cgi.escape(e.text.encode('utf-8'))
         if e.dym:
             print '<ul>'
             for d in e.dym:
                 print '<li>%s</li>' % cgi.escape(d)
             print '</ul>'
         if e.url:
-            print '<a href="%s">%s</a>' % (e.url, e.linktext)
+            print '<a href="%s">%s</a>' % (e.url, e.linktext.encode('utf-8'))
         print "<p>Try simplifying your blazon, removing unnecessary detail or using more common names for charges.  If you think this is something that should be fixed, feel free to email kihou at xavid dot us with your blazon.</p>"
     else:
         print '<h3>Armory descriptions:</h3>'

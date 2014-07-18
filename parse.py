@@ -7,7 +7,7 @@ class BlazonException(Exception):
     def __init__(self, text, word=None, dym=[]):
         self.text = text
         if word:
-            url = 'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled' % urllib.quote_plus(word)
+            url = 'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled' % urllib.quote_plus(word.encode('iso-8859-1'))
             self.url = url
             self.linktext = ("Search the Blazon Pattern Search Form for '%s'"
                              % word)
@@ -104,13 +104,14 @@ def depluralize(chargename):
 def clear_fielddivision(x):
     if x.fielddivision:
         # Done describing a complex tincture
-        assert len(x.fdunspec) > 0
-        for s in x.fdunspec:
-            if len(x.fielddivision) == 1:
-                s.tincture = x.fielddivision[0]
-            else:
-                s.tincture = MultiTincture(x.fielddivision)
-        x.fdunspec = []
+        if x.fdunspec is not None:
+            assert len(x.fdunspec) > 0
+            for s in x.fdunspec:
+                if len(x.fielddivision) == 1:
+                    s.tincture = x.fielddivision[0]
+                else:
+                    s.tincture = MultiTincture(x.fielddivision)
+        x.fdunspec = None
         x.fielddivision = []
 
 def pop_blist(blist):
@@ -255,7 +256,8 @@ def parse(blaz):
             x.fielddivision[-1].fielddesc += ':' + LINES[b]
             continue
         elif (x.lastcharge 
-              and x.lastcharge.category in ('monster', 'beast', 'bird')
+              and x.lastcharge.category in ('monster', 'beast', 'bird',
+                                            'reptile')
               and 'arrangement, creature, %s' % b in CHARGES):
             x.lastcharge.mods.append(
                 CHARGES['arrangement, creature, %s' % b])
@@ -285,12 +287,17 @@ def parse(blaz):
             continue
         elif 'field division, %s' % b in CHARGES:
             check_no_adj(x)
-            x.fielddivision.append(
-                ComplexTincture(CHARGES['field division, %s' % b]))
-            x.lasttincture = x.fielddivision[-1]
+            charge = CHARGES['field division, %s' % b]
             if not x.fdunspec:
-                x.fdunspec = x.unspecified
-                x.unspecified = []
+                if x.unspecified:
+                    x.fdunspec = x.unspecified
+                    x.unspecified = []
+                    x.lasttincture = ComplexTincture(charge)
+                else:
+                    x.lasttincture.complicate(charge)
+            else:
+                x.lasttincture = ComplexTincture(charge)
+            x.fielddivision.append(x.lasttincture)
             if x.fdunspec and isinstance(x.fdunspec[0], Field):
                 x.lasttincture.on_field = True
             continue
@@ -384,7 +391,7 @@ def parse(blaz):
                     raise BlazonException(
                         "Counterchange without anything to color: %s" % b)
             if x.primary is not False:
-                if not isinstance(x.field.tincture, ComplexTincture):
+                if not x.field.tincture.is_complex():
                     raise BlazonException(
                         "Counterchange over a simple field!")
                 unspec = [u for u in x.unspecified if not u.maintained]
