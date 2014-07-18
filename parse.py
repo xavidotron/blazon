@@ -293,7 +293,8 @@ def parse(blaz):
             elif b in ('a', 'an'):
                 x.mod = None
             else:
-                assert b in LOCATIONS, b
+                if b not in LOCATIONS:
+                    unknown('location', b)
                 x.mod = None
                 continue
         else:
@@ -477,6 +478,9 @@ def parse(blaz):
             x.nextmods.append(adj)
             x.was_charge_word = False
             x.was_field_treatment = False
+            continue
+        elif b == 'at' and blist[0] == 'the' and blist[1].endswith('s'):
+            del blist[:2]
             continue
 
         if b not in ('of',):

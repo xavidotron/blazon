@@ -36,6 +36,7 @@ SUSTAININGS = {
 MAINTAININGS = {
     'maintaining',
     'maintaining between them',
+    'maintaining on the outer swirl',
     }
 
 WITHINS = {
@@ -66,7 +67,14 @@ NUMBERS = {
 
 CHARGES = {}
 
-LOCATIONS = {'base', 'chief'}
+LOCATIONS = {
+    'base',
+    'chief',
+    'dexter',
+    'sinister',
+    'dexter chief',
+    'sinister chief',
+    }
 ARRANGEMENTS = {
     'one and two', 'two and one',
     'two , two and two',
@@ -151,6 +159,7 @@ ALIASES = {
     'plant, wheat': ['ears of wheat', 'ear of wheat'],
     'quill': ['quill pen'],
     'roundel, whole': ['roundel'],
+    'ship, part': ['sail'],
     'sun, whole': ['sun, whole, charged'],
     'tree, rounded shape': ['tree'], # This is the default tree.
     'wreath, not laurel': ['wreath'],
@@ -207,7 +216,7 @@ DETAIL_ADJ = {
 
 BLACKLIST = {'throughout'}
 
-MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its'}
+MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at'}
 
 ALL_WORDS = set()
 
