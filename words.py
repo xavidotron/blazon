@@ -148,6 +148,7 @@ ALIASES = {
     'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
     'flower, cup shape': ['tulip blossom'],
     'gate': ['torii gate'],
+    'head, beast, goat': ["lamb's head"],
     'head, human': ['head'],
     'jewelry': ['rosary', 'paternoster'],
     'knot': ['quatrefoil knot'],

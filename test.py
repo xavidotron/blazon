@@ -216,5 +216,19 @@ class TestCases(unittest.TestCase):
              'GARB:1:sable'],
             list(parse(u"(Fieldless) In pale a baker's peel sable charged with three loaves of bread argent issuant palewise from a garb sable.").describe()))
 
+        self.assertEquals(
+            ['GU',
+             'HEAD-BEAST,RAM AND GOAT:2:argent:primary:fesswise',
+             'HEAD-BEAST,RAM AND GOAT:2:primary:fesswise',
+             'ARRANGEMENT-IN FESS:argent',
+             'ARRANGEMENT9HEAD,RESPECTANT',
+             'STAR:2:or',
+             'CALTRAP:2:or',
+             'ESTOILE:2:or',
+             'SUN-DEMI:2:or',
+             'SUN:2:or',
+             'INPALE:or'],
+            list(parse(u"Gules, in fess two lamb's heads fesswise respectant erased conjoined at the forehead argent between in pale two mullets Or.").describe()))
+
 if __name__ == "__main__":
     unittest.main()

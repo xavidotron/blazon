@@ -472,7 +472,10 @@ def parse(blaz):
             x.nextmods.append(adj)
             x.was = 'adjective'
             continue
-        elif b == 'at' and blist[0] == 'the' and blist[1].endswith('s'):
+        elif b == 'at' and blist[0] == 'the':
+            if not blist[1].endswith('s') and blist[1] in ALL_WORDS:
+                raise BlazonException("I don't understand 'at the %s'!"
+                                      % (blist[1]), 'at the %s' % blist[1])
             del blist[:2]
             continue
         elif b == 'at' and blist[0] in LOCATIONS:
