@@ -207,5 +207,14 @@ class TestCases(unittest.TestCase):
              'CHIEF:1:gules:rayonny'],
             list(parse(u"Or, a baker's peel bendwise sinister sable charged with three loaves of bread Or sustained by an arm embowed issuant from sinister proper vested sable, a chief rayonny gules.").describe()))
 
+        self.assertEquals(
+            ['TOOL9OTHER:1:sable:primary',
+             'ANVIL:1:sable:primary',
+             'TOOL9OTHER:1:primary',
+             'INPALE:sable',
+             'FOODSTUFF:3:argent',
+             'GARB:1:sable'],
+            list(parse(u"(Fieldless) In pale a baker's peel sable charged with three loaves of bread argent issuant palewise from a garb sable.").describe()))
+
 if __name__ == "__main__":
     unittest.main()

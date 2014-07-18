@@ -220,7 +220,17 @@ def parse(blaz):
             blist = ['of', SEMYS[b]] + blist
             b = 'semy'
         
-        if 'arrangement, %s' % b in CHARGES:
+        if x.mod in ('issuant', 'elongated'):
+            if b in ('from', 'to', 'palewise', 'fesswise'):
+                continue
+            elif b in ('a', 'an'):
+                x.mod = None
+            else:
+                if b not in LOCATIONS:
+                    unknown('location', b)
+                x.mod = None
+                continue
+        elif 'arrangement, %s' % b in CHARGES:
             chg = CHARGES['arrangement, %s' % b]
             if x.lastcharge:
                 x.lastcharge.mods.append(chg)
@@ -284,16 +294,6 @@ def parse(blaz):
             if x.fdunspec and isinstance(x.fdunspec[0], Field):
                 x.lasttincture.on_field = True
             continue
-        elif x.mod in ('issuant', 'elongated'):
-            if b in ('from', 'to'):
-                continue
-            elif b in ('a', 'an'):
-                x.mod = None
-            else:
-                if b not in LOCATIONS:
-                    unknown('location', b)
-                x.mod = None
-                continue
         else:
             assert x.mod in (None, 'of', 'on') or x.mod in WITHINS or x.mod in CHARGED_WITHS, x.mod
 
