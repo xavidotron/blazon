@@ -25,14 +25,13 @@ def proc(x, b, next):
     if b in CHARGES and CHARGES[b] is not None:
         #print 'CHARGE', b
         if x.number is None:
-            if not x.was_charge_word:
+            if x.was not in ('charge', 'charge of'):
                 raise BlazonException("No number/a/an for a charge: %s" % b)
             if x.unspecified[-1].name != CHARGES[b].name:
-                if x.was_charge_word is True:
+                if x.was == 'charge':
                     glued = '%s %s' % (x.unspecified[-1].blazon, b)
                 else:
-                    glued = '%s %s %s' % (x.unspecified[-1].blazon, 
-                                          x.was_charge_word, b)
+                    glued = '%s of %s' % (x.unspecified[-1].blazon, b)
                 raise BlazonException(
                     "I don't know if a '%s' is a %s or a %s (or both)!"
                     % (glued,
@@ -74,7 +73,7 @@ def proc(x, b, next):
         x.number = None
         x.adj = None
         x.nextmods = []
-        x.was_charge_word = True
+        x.was = 'charge'
     elif b in BETWEEN:
         assert x.on.kid is not None,"Between with nothing before it!"
         x.primary = False
@@ -196,9 +195,7 @@ def parse(blaz):
     x.primary = True
     x.commadeprim = False
     x.numdeprim = False
-    x.was_detail = False
-    x.was_field_treatment = False
-    x.was_charge_word = False
+    x.was = None
     x.nextmods = []
 
     while len(blist) > 0:
@@ -338,8 +335,7 @@ def parse(blaz):
             t = copy.deepcopy(TINCTURES[b])
             if not x.unspecified:
                 check_no_adj(x)
-                #assert False, (x.was_detail, x.was_field_treatment)
-                if x.was_detail or x.was_field_treatment:
+                if x.was in ('detail', 'field treatment'):
                     continue
                 elif x.fielddivision:
                     for fd in x.fielddivision:
@@ -359,22 +355,21 @@ def parse(blaz):
                 t.on_field = True
             x.lasttincture = t
             if len(x.unspecified) == 1 and x.unspecified[0].category == 'field treatment':
-                x.was_field_treatment = True
+                x.was = 'field treatment'
             else:
                 for s in x.unspecified:
                     s.tincture = t
+                x.was = 'tincture'
             if len(x.unspecified) == 1 and x.unspecified[0].name in MULTIPLE_TINCTURES:
                 x.multi = x.unspecified[0]
             else:
                 x.multi = None
             x.unspecified = []
-            x.was_detail = False
-            x.was_charge_word = False
             continue
         elif b in COUNTERCHANGEDS:
             if len(x.unspecified) == 0:
                 check_no_adj(x)
-                if x.was_detail or x.was_field_treatment:
+                if x.was in ('detail', 'field treatment'):
                     raise BlazonException("Weird counterchange!")
                     continue
                 else:
@@ -389,10 +384,8 @@ def parse(blaz):
                     unspec[0].tincture = Tincture('multicolor')
             x.lasttincture = None
             x.unspecified = []
-            x.was_detail = False
-            x.was_charge_word = False
+            x.was = 'tincture'
             continue
-        x.was_detail = False
         #print ':', b
         if ('field treatment, %s' % b in CHARGES 
             or 'field treatment, seme, %s' % b in CHARGES):
@@ -400,8 +393,7 @@ def parse(blaz):
             chgs = x.lasttincture.add_treatment(b)
             #print 'TREATMENT', chgs
             x.unspecified += chgs
-            x.was_charge_word = False
-            x.was_field_treatment = True
+            x.was = 'field treatment'
             clear_fielddivision(x)
             continue
         elif b == 'semy':
@@ -420,8 +412,7 @@ def parse(blaz):
                 x.lastcharge = chg
             x.multi = None
             x.lasttincture.add_extra(chg)
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'tincture'
             if x.lasttincture.on_field:
                 ft = copy.deepcopy(CHARGES['field treatment, seme, other'])
                 x.unspecified.append(ft)
@@ -431,18 +422,17 @@ def parse(blaz):
 
         if b == 'the':
             x.number = 'the'
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'number'
             continue
         elif b in ANDS:
             if x.primary is None:
                 x.primary = True
-            x.was_charge_word = False
+            if x.was not in ('field treatment',):
+                x.was = 'and'
             continue
         elif b in SUSTAININGS:
             x.primary = False
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'sustaining'
             continue
         elif b == ',':
             if x.commadeprim:
@@ -452,32 +442,27 @@ def parse(blaz):
             assert x.betweenness is None or len(x.betweenness) > 0, "Unfilled between!"
             #x.on = x.onstack.pop()
             x.betweenness = None
-            x.was_charge_word = False
+            if x.was not in ('field treatment',):
+                x.was = 'comma'
             continue
         elif x.number is None and b in MAJOR_DETAILS:
             x.on.kid.append(copy.deepcopy(CHARGES[MAJOR_DETAILS[b]]))
-            x.was_detail = True
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'detail'
             continue
         elif b in DETAILS:
-            x.was_detail = True
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'detail'
             x.primary = None  # Not primary until "and"
             continue
         elif b in ARRANGEMENTS:
             #print 'ARRANGEMENT'
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'arrangement'
             continue
         elif x.number is not None and b in CHARGE_ADJ:
             #print 'CHARGE_ADJ'
             adj = copy.deepcopy(CHARGES[CHARGE_ADJ[b]])
             x.unspecified.append(adj)
             x.nextmods.append(adj)
-            x.was_charge_word = False
-            x.was_field_treatment = False
+            x.was = 'adjective'
             continue
         elif b == 'at' and blist[0] == 'the' and blist[1].endswith('s'):
             del blist[:2]
@@ -520,43 +505,37 @@ def parse(blaz):
                     dont_understand(x.adj, b)
                 if b not in DETAIL_ADJ:
                     x.adj = b
-                x.was_charge_word = False
-                x.was_field_treatment = False
+                x.was = 'adjective'
             elif b in ('in',) or b in WITHINS or b in CHARGED_WITHS:
                 x.primary = False
                 x.mod = b
-                x.was_charge_word = False
-                x.was_field_treatment = False
+                x.was = 'in'
             elif b in ('on', 'issuant', 'elongated'):
-                if x.was_charge_word:
+                if x.was == 'charge':
                     x.primary = False
                 else:
                     x.commadeprim = True
                 x.mod = b
-                x.was_charge_word = False
-                x.was_field_treatment = False
+                x.was = 'on'
             elif b == 'of':
                 x.mod = b
-                if x.was_charge_word:
-                    x.was_charge_word = b
-                x.was_field_treatment = False
+                if x.was == 'charge':
+                    x.was = 'charge of'
+                else:
+                    x.was = 'of'
             elif b in MAINTAININGS:
                 x.maintained = True
                 x.primary = None
-                x.was_charge_word = False
-                x.was_field_treatment = False
+                x.was = 'maintaining'
             elif x.mod == 'of':
-                x.was_charge_word = False
-                x.was_field_treatment = False
+                x.was = 'of'
                 pass
             elif b == '.':
-                x.was_charge_word = False
-                x.was_field_treatment = False
+                x.was = 'period'
                 pass
             else:
                 if x.unspecified and x.unspecified[-1].name == 'symbol':
-                    x.was_charge_word = False
-                    x.was_field_treatment = False
+                    x.was = 'symbol'
                     pass
                 else:
                     if b in POSTURES:
@@ -565,6 +544,10 @@ def parse(blaz):
                         raise BlazonException("%s is a bird posture, but a '%s' is not a bird!" % (b, x.lastcharge.name), b)
                     elif b in ('to',):
                         dont_understand(b, blist[0])
+                    elif (b.endswith('ed') and x.was == 'tincture'
+                          and blist[0] in TINCTURES):
+                        # X sable vested azure
+                        del blist[0]
                     else:
                         unknown("noncharge word", b)
 

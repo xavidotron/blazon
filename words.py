@@ -124,7 +124,7 @@ BIRD_POSTURE_ALIASES = {
 BIRD_TYPES = {}
 
 POSTURES = {}
-POSTURE_ALIASES = {'rampant': ['segreant', 'salient'],
+POSTURE_ALIASES = {'rampant': ['segreant', 'salient', 'clymant'],
                    'passant': ['courant']}
 
 CROSS_FAMILIES = {}
@@ -145,6 +145,7 @@ ALIASES = {
     'field treatment, seme, crusily': ['field treatment, seme, crusilly'],
     'field treatment, vairy': ['field treatment, vair'],
     'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
+    'flower, cup shape': ['tulip blossom'],
     'gate': ['torii gate'],
     'head, human': ['head'],
     'jewelry': ['rosary', 'paternoster'],
@@ -211,7 +212,9 @@ CHARGE_ADJ = {'winged': 'monster, winged'}
 DETAIL_ADJ = {
     'empty',
     'bottom-whorl',
-    'elder futhark'
+    'elder futhark',
+    'brunette',
+    'caucasian',
     }
 
 BLACKLIST = {'throughout'}
