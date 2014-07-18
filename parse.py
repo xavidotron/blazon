@@ -343,14 +343,22 @@ def parse(blaz):
                     continue
                 elif x.multi is not None:
                     x.lasttincture = t
+                    x.was = 'tincture'
                     if isinstance(x.multi.tincture, MultiTincture):
                         x.multi.tincture.add_tincture(t)
                     else:
                         x.multi.tincture = MultiTincture([x.multi.tincture, t])
                     continue
+                elif (x.lastcharge and x.lastcharge.number == 2
+                      and not isinstance(x.lastcharge.tincture, MultiTincture)):
+                    x.lasttincture = t
+                    x.was = 'tincture'
+                    x.lastcharge.tincture = MultiTincture([
+                        x.lastcharge.tincture, t])
+                    continue
                 else:
                     raise BlazonException(
-                        "Tincture without anything to color: %s" % b)
+                        "Tincture without anything to color: %s" % (b))
             if isinstance(x.unspecified[0], Field):
                 t.on_field = True
             x.lasttincture = t
@@ -466,6 +474,9 @@ def parse(blaz):
             continue
         elif b == 'at' and blist[0] == 'the' and blist[1].endswith('s'):
             del blist[:2]
+            continue
+        elif b == 'at' and blist[0] in LOCATIONS:
+            del blist[0]
             continue
 
         if b not in ('of',):
