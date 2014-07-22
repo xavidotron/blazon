@@ -153,6 +153,7 @@ ALIASES = {
     'gate': ['torii gate'],
     'head, beast, goat': ["lamb's head"],
     'head, human': ['head'],
+    'helmet': ['sallet'],
     'jewelry': ['rosary', 'paternoster'],
     'knot': ['quatrefoil knot'],
     'leg, monster': ["dragon's jamb"],
@@ -225,7 +226,9 @@ DETAIL_ADJ = {
 
 BLACKLIST = {'throughout'}
 
-MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at'}
+# These we want to treat as words for purposes of spellchecking, but we only
+# understand them in certain manually-coded contexts.
+MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with'}
 
 ALL_WORDS = set()
 

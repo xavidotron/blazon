@@ -534,6 +534,8 @@ def parse(blaz):
                 if b not in DETAIL_ADJ:
                     x.adj = b
                 x.was = 'adjective'
+            elif b in ('overall',):
+                x.primary = False
             elif b in ('in',) or b in WITHINS or b in CHARGED_WITHS:
                 # Could still be a primary if this is:
                 # Sable, in base a wombat Or.

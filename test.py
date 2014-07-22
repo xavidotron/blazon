@@ -244,6 +244,12 @@ class TestCases(unittest.TestCase):
              'INPALE:argent'],
             list(parse(u"Per pale gules and Or, in dexter in pale two hawk's bells argent.").describe()))
 
+        self.assertEquals(
+            [u'PC:azure:~and gules',
+             'CHEVRON:1:or:primary',
+             'CHEVRON:1:primary',
+             'HEAD-MONSTER,DRAGON:1:argent'],
+            list(parse(u"Per chevron azure and gules, a chevron Or and overall a dragon's head cabossed argent.").describe()))
 
 if __name__ == "__main__":
     unittest.main()
