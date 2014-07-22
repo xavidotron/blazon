@@ -208,10 +208,14 @@ def parse(blaz):
                     "Unknown modifier 'in %s %s'" % (b, blist[0]),
                     'in %s %s' % (b, blist[0]))
             elif b in ('dexter', 'sinister'):
+                # You can say "in dexter a wombat" or
+                # "in dexter chief a wombat".
+                if blist[0] not in LOCATIONS:
+                    x.mod = None
+                if blist[0] in CHARGES:
+                    # We don't care about details like 'in dexter claw'
+                    del blist[0]
                 continue
-            elif b in CHARGES:
-                # We don't care about details like 'in dexter claw'
-                pass
             elif b not in LOCATIONS:
                 raise BlazonException("Unknown location '%s'!" % b, b)
             x.mod = None
@@ -488,6 +492,9 @@ def parse(blaz):
         elif b == 'at' and blist[0] in LOCATIONS:
             del blist[0]
             continue
+        elif b == 'atop' and blist[0] == 'its' and blist[1] not in ALL_WORDS:
+            del blist[:2]
+            continue
 
         if b not in ('of',):
             clear_fielddivision(x)
@@ -528,7 +535,12 @@ def parse(blaz):
                     x.adj = b
                 x.was = 'adjective'
             elif b in ('in',) or b in WITHINS or b in CHARGED_WITHS:
-                x.primary = False
+                # Could still be a primary if this is:
+                # Sable, in base a wombat Or.
+                # or
+                # Vert, within an annulet an acorn argent.
+                if x.lastcharge:
+                    x.primary = False
                 x.mod = b
                 x.was = 'in'
             elif b in ('on', 'issuant', 'elongated'):

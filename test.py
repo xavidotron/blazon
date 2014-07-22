@@ -237,5 +237,13 @@ class TestCases(unittest.TestCase):
              'ARRANGEMENT9BEAST&MONSTER,RESPECTANT'],
             list(parse(u'Argent v\xeatu ploy\xe9 azure, two serpents erect respectant entwined sable.').describe()))
 
+        self.assertEquals(
+            [u'PPALE:gules:~and or',
+             'BELL:2:argent:primary',
+             'BELL:2:primary',
+             'INPALE:argent'],
+            list(parse(u"Per pale gules and Or, in dexter in pale two hawk's bells argent.").describe()))
+
+
 if __name__ == "__main__":
     unittest.main()

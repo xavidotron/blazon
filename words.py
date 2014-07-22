@@ -113,7 +113,8 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'transfixed by',
            'in her vanity', 'in its piety', 'in her plentitude',
            'crined',
-           'in fess point'}
+           'in fess point',
+           'all'}
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye'}
@@ -167,7 +168,7 @@ ALIASES = {
     'ship, part': ['sail'],
     'sun, whole': ['sun, whole, charged'],
     'tool, other': ["baker's peel"],
-    'tree, rounded shape': ['tree'], # This is the default tree.
+    'tree, rounded shape': ['tree', 'tree blasted'], # This is the default tree.
     'wreath, not laurel': ['wreath'],
 }
 MULTI = {
