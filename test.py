@@ -270,5 +270,23 @@ class TestCases(unittest.TestCase):
              'CRAC:1:doubled'],
             list(parse(u'Per pale purpure and argent, on a chevron four pawprints and in base a Russian Orthodox cross, all counterchanged').describe()))
 
+        self.assertEquals(
+            [u'PPALE:argent:~and azure',
+             'DOG:2:multicolor:primary',
+             'DOG:2:primary',
+             'COMBAT'],
+            list(parse(u'Per pale argent and azure, two wolves combattant counterchanged sable and argent.').describe()))
+
+        self.assertEquals(
+            [u'PC:or:~and vert',
+             'ROUNDEL:2:vert:primary',
+             'ROUNDEL:2:primary',
+             'TRISKELION:1:or',
+             'LEG AND FOOT-HUMAN:3:or',
+             'SEAWOLF:1:argent:primary:naiant to dexter',
+             'SEAWOLF:1:primary:naiant to dexter',
+             'MONSTER9WINGED:argent'],
+            list(parse(u'Per chevron Or and vert, two pommes each charged with a triskelion of armored legs Or and a winged sea-fox naiant argent.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

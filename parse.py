@@ -33,9 +33,9 @@ def proc(x, b, orig_b, next):
                 raise BlazonException("No number/a/an for a charge: %s" % b)
             if x.unspecified[-1].name != CHARGES[b].name:
                 if x.was == 'charge':
-                    glued = '%s %s' % (x.unspecified[-1].blazon, b)
+                    glued = '%s %s' % (x.unspecified[-1].blazon, orig_b)
                 else:
-                    glued = '%s of %s' % (x.unspecified[-1].blazon, b)
+                    glued = '%s of %s' % (x.unspecified[-1].blazon, orig_b)
                 raise BlazonException(
                     "I don't know if a '%s' is a %s or a %s (or both)!"
                     % (glued,
@@ -230,7 +230,7 @@ def parse(blaz):
         if b in SEMYS:
             blist = ['of', SEMYS[b]] + blist
             b = 'semy'
-        
+
         if x.mod in ('issuant', 'elongated'):
             if b in ('from', 'to', 'palewise', 'fesswise'):
                 continue
@@ -291,6 +291,11 @@ def parse(blaz):
             x.lastcharge.tags.append(BIRD_POSTURES[b])
             continue
         elif (x.lastcharge
+              and x.lastcharge.category in ('monster, sea',) 
+              and b in FISH_POSTURES):
+            x.lastcharge.tags.append(FISH_POSTURES[b])
+            continue
+        elif (x.lastcharge
               and x.lastcharge.name == 'cross, as charge'
               and b in CROSS_FAMILIES):
             x.lastcharge.tags.append(CROSS_FAMILIES[b])
@@ -315,6 +320,7 @@ def parse(blaz):
             assert x.mod in (None, 'of', 'on') or x.mod in WITHINS or x.mod in CHARGED_WITHS, x.mod
 
         if b in NUMBERS:
+            #print 'NUMBER', b, x.mod
             if x.number is not None:
                 if x.adj == 'sets' and x.mod == 'of':
                     x.number *= NUMBERS[b]
@@ -352,7 +358,7 @@ def parse(blaz):
             t = copy.deepcopy(TINCTURES[b])
             if not x.unspecified:
                 check_no_adj(x)
-                if x.was in ('field treatment',):
+                if x.was in ('field treatment', 'counterchange'):
                     continue
                 old_was = x.was
                 x.was = 'tincture'
@@ -413,9 +419,9 @@ def parse(blaz):
                     unspec[0].tincture = Tincture('multicolor')
             x.lasttincture = None
             x.unspecified = []
-            x.was = 'tincture'
+            x.was = 'counterchange'
             continue
-        #print ':', b
+        #print ':', b, x.number
         if ('field treatment, %s' % b in CHARGES 
             or 'field treatment, seme, %s' % b in CHARGES):
             assert x.lasttincture is not None
@@ -580,9 +586,6 @@ def parse(blaz):
                 x.maintained = True
                 x.primary = None
                 x.was = 'maintaining'
-            elif x.mod == 'of':
-                x.was = 'of'
-                pass
             elif b == '.':
                 x.was = 'period'
                 pass
@@ -591,10 +594,9 @@ def parse(blaz):
                     x.was = 'symbol'
                     pass
                 else:
-                    if b in POSTURES:
+                    if (b in POSTURES or b in BIRD_POSTURES 
+                        or b in FISH_POSTURES):
                         raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, x.lastcharge.name), b)
-                    elif b in BIRD_POSTURES:
-                        raise BlazonException("%s is a bird posture, but a '%s' is not a bird!" % (b, x.lastcharge.name), b)
                     elif b in ('to',):
                         dont_understand(b, blist[0])
                     elif (b.endswith('ed') and x.was == 'tincture'

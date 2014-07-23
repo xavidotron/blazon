@@ -66,10 +66,21 @@ class Field(Parent):
         ret += """</svg>""" 
         return ret
 
+def numtag_for(num):
+    if num == 'seme':
+        return 'seme'
+    elif num in (None, 'the'):
+        return None
+    elif num < 10:
+        return '%d' % num
+    else:
+        return '10 or more'
+
 class Charge(Thingy):
     name = None
     number = None
     maintained = False
+    multiplier = None
 
     def __init__(self, name, desc, category=False):
         self.name = name
@@ -97,30 +108,31 @@ class Charge(Thingy):
         assert self.between is None, self.between
         if self.maintained:
             return
-        tagbit = ''
         tags = list(self.tags)
         primtags = list(tags)
         tags += self.iffy_tags
         if self.tincture:
             tags = [self.tincture.tincture] + tags
 
-        if self.number == 'seme':
-            tags = ['seme'] + tags
-        elif self.number in (None, 'the'):
-            pass
-        elif self.number < 10:
-            tags = ['%s' % self.number] + tags
-            if self.number < 4:
-                primtags = ['%s' % self.number] + primtags
-        else:
-            tags = ['10 or more'] + tags
+        numtag = numtag_for(self.number)
+        if self.number and self.number != 'the' and self.number < 4:
+            primtags = ['%d' % self.number] + primtags
 
+        tagbit = ''
         if tags:
             tagbit = ':' + ':'.join(tags)
-        yield "%s%s" % (self.desc, tagbit)
+        numtagbit = ''
+        if numtag:
+            numtagbit = ':' + numtag
+        yield "%s%s%s" % (self.desc, numtagbit, tagbit)
         if not as_mod:
             for c in self.seealso:
-                yield "%s%s" % (c.desc, tagbit)
+                if c.multiplier and numtagbit:
+                    yield "%s:%s%s" % (c.desc,
+                                       numtag_for(self.number * c.multiplier),
+                                       tagbit)
+                else:
+                    yield "%s%s%s" % (c.desc, numtagbit, tagbit)
         if self.tincture:
             if 'primary' in self.tags and not as_mod:
                 # Add an additonal instance, without the tincture, for 

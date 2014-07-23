@@ -116,6 +116,9 @@ BIRD_POSTURE_ALIASES = {
     }
 BIRD_TYPES = {}
 
+FISH_POSTURES = {}
+FISH_POSTURE_ALIASES = {}
+
 POSTURES = {}
 POSTURE_ALIASES = {'rampant': ['segreant', 'salient', 'clymant'],
                    'passant': ['courant']}
@@ -137,6 +140,7 @@ MULTI = {
     'wreath of thorns': ['wreath', 'thorn'],
     'annulet of ivy': ['annulet', 'plant, vine'],
     'elm hurst': ['tree, multiple', 'tree, rounded shape'],
+    'triskelion of armored legs': ['triskelion', 'leg, human*3'],
 }
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
@@ -251,6 +255,24 @@ def loadwords():
                     
                     for n in names:
                         BIRD_POSTURES[n] = post
+                elif l.startswith('|fish_posture:'):
+                    typ, post = l.split(':')
+                    if '<' in post:
+                        post, rest = post.split('<', 1)
+                    name = post
+                    if name.startswith('fish '):
+                        name = name[len('fish '):]
+                    names = [name]
+                    for a in FISH_POSTURE_ALIASES:
+                        if name.startswith(a):
+                            names.append(FISH_POSTURE_ALIASES[a] 
+                                         + name[len(a):])
+                    for n in list(names):
+                        if n.endswith(' to dexter'):
+                            names.append(n[:-len(' to dexter')])
+                    
+                    for n in names:
+                        FISH_POSTURES[n] = post
                 elif l.startswith('|posture:'):
                     typ, post = l.split(':')
                     if '<' in post:
@@ -361,7 +383,14 @@ def loadwords():
     for w in MULTI:
         assert w not in CHARGES
         CHARGES[w] = copy.deepcopy(CHARGES[MULTI[w][0]])
-        CHARGES[w].seealso += [CHARGES[a] for a in MULTI[w][1:]]
+        for a in MULTI[w][1:]:
+            if '*' in a:
+                a, multiplier = a.split('*')
+                charge = copy.deepcopy(CHARGES[a])
+                charge.multiplier = int(multiplier)
+            else:
+                charge = CHARGES[a]
+            CHARGES[w].seealso.append(charge)
 
     for n in TINCTURES:
         tinct = TINCTURES[n]

@@ -39,3 +39,8 @@ tool, other: baker's peel
 tree, rounded shape: tree
 tree, rounded shape: tree blasted 
 wreath, not laurel: wreath
+horn, creature: ram's horns respectant
+monster, sea, horse: sea-horse
+tree, rounded shape: ash-tree
+monster, sea, wolf: sea-fox
+leg, human: armored leg

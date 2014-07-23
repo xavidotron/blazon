@@ -48,3 +48,6 @@ crined
 in fess point
 in profile
 all
+triple-towered
+with bevor reversed
+each
