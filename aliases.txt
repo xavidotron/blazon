@@ -1,0 +1,41 @@
+bird, whole: bird
+caltrap: caltrop
+charge treatment, seme, crusily: charge treatment, seme, crusilly
+cross, as charge: cross
+cross, throughout: cross throughout
+field division, vetu: field division, vêtu
+field treatment, seme, crusily: field treatment, seme, crusilly
+field treatment, vairy: field treatment, vair
+fleur de lys: fleurs-de-lis
+fleur de lys: fleur-de-lys
+fleur de lys: fleurs-de-lys
+flower, cup shape: tulip blossom
+flower, multifloreted: foxglove
+gate: torii gate
+head, beast, goat: lamb's head
+head, human: head
+helmet: sallet
+jewelry: rosary
+jewelry: paternoster
+knot: quatrefoil knot
+leg, monster: dragon's jamb
+lock: padlock
+mollusk, octopus: polypus
+monster, humanoid: frauenadler
+monster, sea, other: sea-stag
+mullet: mullet, charged
+mullet: spur rowel
+paw print: pawprint
+plant, heather: sprig of heather
+plant, wheat: ears of wheat
+plant, wheat: ear of wheat
+quill: quill pen
+roundel, whole: roundel
+ship, part: sail
+sun, whole: sun, whole, charged
+sun, whole: sun
+tool, other: baker's peel
+# This is the default tree.
+tree, rounded shape: tree
+tree, rounded shape: tree blasted 
+wreath, not laurel: wreath

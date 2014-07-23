@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os
+import os, codecs
 import copy
 
 from structs import Tincture, Fieldless, Charge
@@ -130,41 +130,7 @@ DEFAULT_CHARGE = Charge('?', '?')
 
 #SYMBOLS = {'elder futhark'}
 
-ALIASES = {
-    'bird, whole': ['bird'],
-    'caltrap': ['caltrop'],
-    'charge treatment, seme, crusily': ['charge treatment, seme, crusilly'],
-    'cross, as charge': ['cross'],
-    'cross, throughout': ['cross throughout'],
-    'field division, vetu': [u'field division, vêtu'],
-    'field treatment, seme, crusily': ['field treatment, seme, crusilly'],
-    'field treatment, vairy': ['field treatment, vair'],
-    'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
-    'flower, cup shape': ['tulip blossom'],
-    'flower, multifloreted': ['foxglove'],
-    'gate': ['torii gate'],
-    'head, beast, goat': ["lamb's head"],
-    'head, human': ['head'],
-    'helmet': ['sallet'],
-    'jewelry': ['rosary', 'paternoster'],
-    'knot': ['quatrefoil knot'],
-    'leg, monster': ["dragon's jamb"],
-    'lock': ['padlock'],
-    'mollusk, octopus': ['polypus'],
-    'monster, humanoid': ['frauenadler'],
-    'monster, sea, other': ['sea-stag'],
-    'mullet': ['mullet, charged', 'spur rowel'],
-    'paw print': ['pawprint'],
-    'plant, heather': ['sprig of heather'],
-    'plant, wheat': ['ears of wheat', 'ear of wheat'],
-    'quill': ['quill pen'],
-    'roundel, whole': ['roundel'],
-    'ship, part': ['sail'],
-    'sun, whole': ['sun, whole, charged', 'sun'],
-    'tool, other': ["baker's peel"],
-    'tree, rounded shape': ['tree', 'tree blasted'], # This is the default tree.
-    'wreath, not laurel': ['wreath'],
-}
+ALIASES = {}
 MULTI = {
     'bow and arrow': ['bow', 'arrow'],
     'holly sprig': ['holly', 'sprig'],
@@ -232,10 +198,21 @@ def loadwords():
     if LOADED:
         return
     
-    with open(os.path.join(os.path.dirname(__file__), 'details.txt')) as fil:
+    with codecs.open(os.path.join(os.path.dirname(__file__), 'details.txt'),
+              encoding='utf-8') as fil:
         for l in fil:
             if l.strip() and not l.startswith('#'):
                 DETAILS.add(l.strip())
+
+    with codecs.open(os.path.join(os.path.dirname(__file__), 'aliases.txt'),
+              encoding='utf-8') as fil:
+        for l in fil:
+            if l.strip() and not l.startswith('#'):
+                k, v = l.strip().split(': ')
+                if k in ALIASES:
+                    ALIASES[k].append(v)
+                else:
+                    ALIASES[k] = [v]
 
     with open(os.path.join(os.path.dirname(__file__), 'my.cat')) as mydotcat:
         for l in mydotcat:
