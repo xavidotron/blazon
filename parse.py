@@ -4,7 +4,7 @@ from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
 
 class BlazonException(Exception):
-    def __init__(self, text, word=None, dym=[]):
+    def __init__(self, text, word=None, dym=[], options=[], blist=None):
         self.text = text
         if word:
             self.word = word
@@ -18,12 +18,14 @@ class BlazonException(Exception):
             self.url = None
             self.linktext = None
         self.dym = dym
+        self.options = options
+        self.blist = blist
         Exception.__init__(self, text)
 
 class stor(object):
     pass
 
-def proc(x, b, next):
+def proc(x, b, orig_b, next):
     if b in CHARGES and CHARGES[b] is not None:
         #print 'CHARGE', b
         if x.number is None:
@@ -38,7 +40,7 @@ def proc(x, b, next):
                     "I don't know if a '%s' is a %s or a %s (or both)!"
                     % (glued,
                        x.unspecified[-1].name, CHARGES[b].name),
-                    glued)
+                    glued, options=[x.unspecified[-1].name, CHARGES[b].name])
         if x.betweenness is not None:
             assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
             g = x.betweenness
@@ -48,7 +50,7 @@ def proc(x, b, next):
             assert isinstance(x.on.kid, Group)
             g = x.on.kid
         c = copy.deepcopy(CHARGES[b])
-        c.blazon = b
+        c.blazon = orig_b
         g.append(c)
         c.number = x.number
         if b in PERIPHERALS:
@@ -132,12 +134,12 @@ def suggest(word):
     ret = PWL.suggest(word)
     return ret
 
-def unknown(typ, word):
+def unknown(typ, word, blist=None):
     dym = []
     if PWL:
         if PWL.check(word):
             raise BlazonException("'%s' is not a %s expected here!"
-                                  % (word, typ), word)
+                                  % (word, typ), word, blist=blist)
         else:
             sugg = suggest(word)
             if sugg:
@@ -236,7 +238,7 @@ def parse(blaz):
                 x.mod = None
             else:
                 if b not in LOCATIONS:
-                    unknown('location', b)
+                    unknown('location', b, blist)
                 x.mod = None
                 continue
         elif 'arrangement, %s' % b in CHARGES:
@@ -519,10 +521,10 @@ def parse(blaz):
             x.number = IMPLIED_NUMBER[b]
 
         next = blist[0] if blist else None
-        res = proc(x, depluralize(b), next)
+        res = proc(x, depluralize(b), b, next)
         #print res, depluralize(b)
         if not res and b.startswith('demi-'):
-            res = proc(x, depluralize(b[len('demi-'):]), next)
+            res = proc(x, depluralize(b[len('demi-'):]), b, next)
             if res:
                 chg = x.unspecified[-1]
                 assert chg.category in ('monster', 'beast', 'bird'), chg
@@ -600,7 +602,7 @@ def parse(blaz):
                         # X sable vested azure
                         del blist[0]
                     else:
-                        unknown("noncharge word after a %s" % x.was, b)
+                        unknown("noncharge word after a %s" % x.was, b, blist)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision
