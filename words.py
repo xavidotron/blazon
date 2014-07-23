@@ -26,6 +26,8 @@ ANDS = {
     'and for augmentation',
     'conjoined with',
     'conjoined in pale with',
+    'conjoined to',
+    'enfiling',
 }
 
 SUSTAININGS = {
@@ -96,12 +98,14 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'wings elevated and addorsed',
            'paw upraised',
            'inverted',
+           'issuant from the line of division',
            'affronty', 'regardant', 'reguardant',
            'entwined',
            'apaumy',
            'gowned',
            'eradicated',
            'fimbriated',
+           'irradiated',
            'queue-forchy', 'fitchy',
            'couped', 'couped at the wrist', 'erased', 'cabossed',
            'erect',
@@ -117,7 +121,8 @@ DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed',
            'all'}
 
 LINES = {'grady': 'indented',
-         u'ployé': 'ploye'}
+         u'ployé': 'ploye',
+         'doubly-enarched': 'enarched'}
 
 BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {
@@ -132,7 +137,8 @@ POSTURE_ALIASES = {'rampant': ['segreant', 'salient', 'clymant'],
 
 CROSS_FAMILIES = {}
 CROSS_ALIASES = {
-    'flory': ['patonce']
+    'flory': ['patonce'],
+    'doubled': ['russian orthodox'],
     }
 
 DEFAULT_CHARGE = Charge('?', '?')
@@ -150,6 +156,7 @@ ALIASES = {
     'field treatment, vairy': ['field treatment, vair'],
     'fleur de lys': ['fleurs-de-lis', 'fleur-de-lys', 'fleurs-de-lys'],
     'flower, cup shape': ['tulip blossom'],
+    'flower, multifloreted': ['foxglove'],
     'gate': ['torii gate'],
     'head, beast, goat': ["lamb's head"],
     'head, human': ['head'],
@@ -159,6 +166,7 @@ ALIASES = {
     'leg, monster': ["dragon's jamb"],
     'lock': ['padlock'],
     'mollusk, octopus': ['polypus'],
+    'monster, humanoid': ['frauenadler'],
     'monster, sea, other': ['sea-stag'],
     'mullet': ['mullet, charged', 'spur rowel'],
     'paw print': ['pawprint'],
@@ -167,7 +175,7 @@ ALIASES = {
     'quill': ['quill pen'],
     'roundel, whole': ['roundel'],
     'ship, part': ['sail'],
-    'sun, whole': ['sun, whole, charged'],
+    'sun, whole': ['sun, whole, charged', 'sun'],
     'tool, other': ["baker's peel"],
     'tree, rounded shape': ['tree', 'tree blasted'], # This is the default tree.
     'wreath, not laurel': ['wreath'],
@@ -400,7 +408,7 @@ def loadwords():
 
     ALL_WORDS.update(CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
-                     WITHINS,
+                     WITHINS, CROSS_FAMILIES,
                      CHARGED_WITHS, DETAIL_ADJ, COUNTERCHANGEDS,
                      MISC_WORDS)
 

@@ -119,7 +119,15 @@ class TestCases(unittest.TestCase):
             list(parse(u'Azure semy of ears of wheat, on a pale Or a sword azure').describe()))
 
         self.assertEquals(
-            [u'PBS:sable:~and argent', 'STAR:1:or:primary', 'CALTRAP:1:or:primary', 'ESTOILE:1:or:primary', 'SUN-DEMI:1:or:primary', 'SUN:1:or:primary', 'STAR:1:primary', 'HAMMER:2:proper:primary', 'HAMMER:2:primary', 'INSA:2:proper:primary'],
+            [u'PBS:sable:~and argent',
+             'STAR:1:or:primary',
+             'CALTRAP:1:or:primary',
+             'ESTOILE:1:or:primary',
+             'SUN:1:or:primary',
+             'STAR:1:primary',
+             'HAMMER:2:proper:primary',
+             'HAMMER:2:primary',
+             'INSA:2:proper:primary'],
             list(parse(u"Per bend sinister sable and argent, a spur rowel Or and two smith's hammers in saltire proper.").describe()))
 
         self.assertEquals(
@@ -175,7 +183,6 @@ class TestCases(unittest.TestCase):
              'STAR:1:sable:primary:of 9 or more',
              'CALTRAP:1:sable:primary:of 9 or more',
              'ESTOILE:1:sable:primary:of 9 or more',
-             'SUN-DEMI:1:sable:primary:of 9 or more',
              'SUN:1:sable:primary:of 9 or more',
              'STAR:1:primary:of 9 or more',
              'BORDURE:1:sable'],
@@ -225,7 +232,6 @@ class TestCases(unittest.TestCase):
              'STAR:2:or',
              'CALTRAP:2:or',
              'ESTOILE:2:or',
-             'SUN-DEMI:2:or',
              'SUN:2:or',
              'INPALE:or'],
             list(parse(u"Gules, in fess two lamb's heads fesswise respectant erased conjoined at the forehead argent between in pale two mullets Or.").describe()))
@@ -250,6 +256,12 @@ class TestCases(unittest.TestCase):
              'CHEVRON:1:primary',
              'HEAD-MONSTER,DRAGON:1:argent'],
             list(parse(u"Per chevron azure and gules, a chevron Or and overall a dragon's head cabossed argent.").describe()))
+
+        self.assertEquals(
+            [u'PBS:nebuly:or:~and azure',
+             'HARP:2:multicolor:primary',
+             'HARP:2:primary'],
+            list(parse(u'Per bend sinister nebuly Or and azure, two harps counterchanged.').describe()))
 
 if __name__ == "__main__":
     unittest.main()

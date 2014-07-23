@@ -400,6 +400,8 @@ def parse(blaz):
                         "Counterchange over a simple field!")
                 unspec = [u for u in x.unspecified if not u.maintained]
                 if len(unspec) == 1:
+                    # Do this even if unspec[0].number != 1; that's how
+                    # oanda does it.
                     unspec[0].tincture = Tincture('multicolor')
             x.lasttincture = None
             x.unspecified = []
@@ -493,6 +495,9 @@ def parse(blaz):
             del blist[0]
             continue
         elif b == 'atop' and blist[0] == 'its' and blist[1] not in ALL_WORDS:
+            del blist[:2]
+            continue
+        elif b == 'with' and blist[0] == 'its' and blist[1] in CHARGES:
             del blist[:2]
             continue
 
