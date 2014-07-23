@@ -39,6 +39,7 @@ MAINTAININGS = {
     'maintaining',
     'maintaining between them',
     'maintaining on the outer swirl',
+    'gorged of',
     }
 
 WITHINS = {
@@ -50,6 +51,12 @@ WITHINS = {
 CHARGED_WITHS = {
     'charged with',
     'charged on the head with',
+}
+
+ATOPS = {
+    'atop',
+    'fastened to',
+    'hanging from',
 }
 
 NUMBERS = {
@@ -90,35 +97,13 @@ BETWEEN = frozenset(('between',))
 
 MAJOR_DETAILS = {'winged': 'winged object'}
 
-DETAILS = {'slipped', 'leaved', 'bellied', 'breathing flames', 'fructed', 
-           'barbed', 'seeded',
-           'collared', 'langued', 'orbed', 'marked',
-           'vented',
-           'wings displayed', 'wings elevated', 'wings addorsed', 
-           'wings elevated and addorsed',
-           'paw upraised',
-           'inverted',
-           'issuant from the line of division',
-           'affronty', 'regardant', 'reguardant',
-           'entwined',
-           'apaumy',
-           'gowned',
-           'eradicated',
-           'fimbriated',
-           'irradiated',
-           'queue-forchy', 'fitchy',
-           'couped', 'couped at the wrist', 'erased', 'cabossed',
-           'erect',
-           'nowed in', 'nowed',
-           'fretted with',
-           'rising from',
-           'throughout', 'reversed', 'contourny', 'contourney',
-           'conjoined',
-           'transfixed by',
-           'in her vanity', 'in its piety', 'in her plentitude',
-           'crined',
-           'in fess point',
-           'all'}
+DETAILS = set()
+CONTOURNYS = {
+    'contourny',
+    'contourney',
+    'countourny',
+}
+DETAILS.update(CONTOURNYS)
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye',
@@ -246,6 +231,12 @@ def loadwords():
     global LOADED
     if LOADED:
         return
+    
+    with open(os.path.join(os.path.dirname(__file__), 'details.txt')) as fil:
+        for l in fil:
+            if l.strip() and not l.startswith('#'):
+                DETAILS.add(l.strip())
+
     with open(os.path.join(os.path.dirname(__file__), 'my.cat')) as mydotcat:
         for l in mydotcat:
             l = l.strip()
@@ -295,8 +286,8 @@ def loadwords():
                                 names.append(v + name[len(a):])
                     if name.endswith(' to sinister'):
                         stem = name[:-len(' to sinister')]
-                        names.append(stem + ' contourney')
-                        names.append(stem + ' contourny')
+                        for c in CONTOURNYS:
+                            names.append(stem + ' ' + c)
                     else:
                         names.append(name + ' guardant')
 
@@ -409,7 +400,8 @@ def loadwords():
     ALL_WORDS.update(CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
                      WITHINS, CROSS_FAMILIES,
-                     CHARGED_WITHS, DETAIL_ADJ, COUNTERCHANGEDS,
+                     CHARGED_WITHS, ATOPS,
+                     DETAIL_ADJ, COUNTERCHANGEDS,
                      MISC_WORDS)
 
     LOADED = True

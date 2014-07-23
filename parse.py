@@ -7,12 +7,14 @@ class BlazonException(Exception):
     def __init__(self, text, word=None, dym=[]):
         self.text = text
         if word:
+            self.word = word
             url = 'http://oanda.sca.org/oanda_bp.cgi?p=%s&a=enabled' % urllib.quote_plus(word.encode('iso-8859-1'))
             self.url = url
             self.linktext = ("Search the Blazon Pattern Search Form for '%s'"
                              % word)
             text += '\n' + url
         else:
+            self.word = None
             self.url = None
             self.linktext = None
         self.dym = dym
@@ -348,7 +350,11 @@ def parse(blaz):
             t = copy.deepcopy(TINCTURES[b])
             if not x.unspecified:
                 check_no_adj(x)
-                if x.was in ('detail', 'field treatment'):
+                if x.was in ('field treatment',):
+                    continue
+                old_was = x.was
+                x.was = 'tincture'
+                if old_was in ('detail',):
                     continue
                 elif x.fielddivision:
                     for fd in x.fielddivision:
@@ -356,7 +362,6 @@ def parse(blaz):
                     continue
                 elif x.multi is not None:
                     x.lasttincture = t
-                    x.was = 'tincture'
                     if isinstance(x.multi.tincture, MultiTincture):
                         x.multi.tincture.add_tincture(t)
                     else:
@@ -365,7 +370,6 @@ def parse(blaz):
                 elif (x.lastcharge and x.lastcharge.number == 2
                       and not isinstance(x.lastcharge.tincture, MultiTincture)):
                     x.lasttincture = t
-                    x.was = 'tincture'
                     x.lastcharge.tincture = MultiTincture([
                         x.lastcharge.tincture, t])
                     continue
@@ -488,18 +492,23 @@ def parse(blaz):
             x.was = 'adjective'
             continue
         elif b == 'at' and blist[0] == 'the':
+            # e.g., "conjoined at the bells"
             if not blist[1].endswith('s') and blist[1] in ALL_WORDS:
                 raise BlazonException("I don't understand 'at the %s'!"
                                       % (blist[1]), 'at the %s' % blist[1])
             del blist[:2]
             continue
         elif b == 'at' and blist[0] in LOCATIONS:
+            # e.g., "conjoined at base"
             del blist[0]
             continue
-        elif b == 'atop' and blist[0] == 'its' and blist[1] not in ALL_WORDS:
+        elif b in ATOPS and blist[0] == 'its' and blist[1] not in ALL_WORDS:
+            # e.g., "atop its back"
             del blist[:2]
+            x.was = 'detail'
             continue
         elif b == 'with' and blist[0] == 'its' and blist[1] in CHARGES:
+            # e.g., "enfiling with its tail"
             del blist[:2]
             continue
 
@@ -591,7 +600,7 @@ def parse(blaz):
                         # X sable vested azure
                         del blist[0]
                     else:
-                        unknown("noncharge word", b)
+                        unknown("noncharge word after a %s" % x.was, b)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision
