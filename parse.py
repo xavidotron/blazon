@@ -55,6 +55,8 @@ def proc(x, b, next):
             assert not x.maintained
             assert 'primary' not in c.tags, c.tags
             c.tags.append('primary')
+        if c.name == 'cross, as charge' and x.adj in CROSS_FAMILIES:
+            c.tags.append(CROSS_FAMILIES[x.adj])
         if x.arrangement is not None:
             c.mods.append(x.arrangement)
             x.arrangement = None

@@ -263,5 +263,12 @@ class TestCases(unittest.TestCase):
              'HARP:2:primary'],
             list(parse(u'Per bend sinister nebuly Or and azure, two harps counterchanged.').describe()))
 
+        self.assertEquals(
+            [u'PPALE:purpure:~and argent',
+             'CHEVRON:1:primary',
+             'PAW PRINT:4',
+             'CRAC:1:doubled'],
+            list(parse(u'Per pale purpure and argent, on a chevron four pawprints and in base a Russian Orthodox cross, all counterchanged').describe()))
+
 if __name__ == "__main__":
     unittest.main()
