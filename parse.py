@@ -116,10 +116,10 @@ def clear_fielddivision(x):
         if x.fdunspec is not None:
             assert len(x.fdunspec) > 0
             for s in x.fdunspec:
-                if len(x.fielddivision) == 1:
-                    s.tincture = x.fielddivision[0]
-                else:
-                    s.tincture = MultiTincture(x.fielddivision)
+                #if len(x.fielddivision) == 1:
+                s.tincture = x.fielddivision[0]
+                #else:
+                #    s.tincture = MultiTincture(x.fielddivision)
         x.fdunspec = None
         x.fielddivision = []
 
@@ -306,6 +306,7 @@ def parse(blaz):
             x.lastcharge.tags.append(CROSS_FAMILIES[b])
             continue
         elif 'field division, %s' % b in CHARGES:
+            #print 'field division', b
             check_no_adj(x)
             charge = CHARGES['field division, %s' % b]
             if not x.fdunspec:
@@ -317,6 +318,8 @@ def parse(blaz):
                     x.lasttincture.complicate(charge)
             else:
                 x.lasttincture = ComplexTincture(charge)
+            if x.fielddivision:
+                x.fielddivision[-1].add_tincture('multicolor')
             x.fielddivision.append(x.lasttincture)
             if x.fdunspec and isinstance(x.fdunspec[0], Field):
                 x.lasttincture.on_field = True
@@ -370,8 +373,7 @@ def parse(blaz):
                 if old_was in ('detail',):
                     continue
                 elif x.fielddivision:
-                    for fd in x.fielddivision:
-                        fd.add_tincture(b)
+                    x.fielddivision[-1].add_tincture(b)
                     continue
                 elif x.multi is not None:
                     x.lasttincture = t

@@ -296,5 +296,13 @@ class TestCases(unittest.TestCase):
              'BELL:3:argent'],
             list(parse(u"Per pale argent and sable, four\n  roundels counterchanged two and two and on a chief engrailed vert\n  three hawk's bells argent.\n").describe()))
 
+        self.assertEquals(
+            [u'PFESS:azure:~and multicolor',
+             'FESS:1:argent:primary',
+             'FIELD DIV.-BARRY:1:argent:primary',
+             'FESS:1:primary',
+             'DICE:2:azure'],
+            list(parse(u'Per fess azure and checky argent and\n  azure, on a fess argent two dice azure marked argent.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
