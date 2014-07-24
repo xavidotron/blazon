@@ -54,3 +54,6 @@ each
 armored
 edge to sinister
 opening to dexter
+points to center
+interlaced
+wards to base

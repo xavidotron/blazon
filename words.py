@@ -41,6 +41,7 @@ MAINTAININGS = {
     'maintaining between them',
     'maintaining on the outer swirl',
     'gorged of',
+    'perched upon',
     }
 
 WITHINS = {
@@ -109,7 +110,8 @@ DETAILS.update(CONTOURNYS)
 
 LINES = {'grady': 'indented',
          u'ployé': 'ploye',
-         'doubly-enarched': 'enarched'}
+         'doubly-enarched': 'enarched',
+         'endorsed': 'cotised'}
 
 BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {

@@ -29,9 +29,11 @@ def proc(x, b, orig_b, next):
     if b in CHARGES and CHARGES[b] is not None:
         #print 'CHARGE', b
         if x.number is None:
-            if x.was not in ('charge', 'charge of'):
+            if x.maintained:
+                pass
+            elif x.was not in ('charge', 'charge of'):
                 raise BlazonException("No number/a/an for a charge: %s" % b)
-            if x.unspecified[-1].name != CHARGES[b].name:
+            elif x.unspecified[-1].name != CHARGES[b].name:
                 if x.was == 'charge':
                     glued = '%s %s' % (x.unspecified[-1].blazon, orig_b)
                 else:
@@ -147,7 +149,7 @@ def unknown(typ, word, blist=None):
     raise BlazonException("Unknown %s: %s" % (typ, word), word, dym,
                           blist=blist)
 
-def dont_understand(w1, w2):
+def dont_understand(w1, w2, blist=None):
     dym = []
     if PWL:
         if not PWL.check(w1):
@@ -155,7 +157,7 @@ def dont_understand(w1, w2):
         if not PWL.check(w2):
             dym.append("Should '%s' be: %s?" % (w2, ', '.join(suggest(w2))))
     raise BlazonException("I don't understand '%s %s' here!"
-                          % (w1, w2), '%s %s' % (w1, w2), dym)
+                          % (w1, w2), '%s %s' % (w1, w2), dym, blist=blist)
 
 def check_no_adj(x):
     if x.adj:
@@ -217,11 +219,12 @@ def parse(blaz):
             elif b in ('dexter', 'sinister'):
                 # You can say "in dexter a wombat" or
                 # "in dexter chief a wombat".
-                if blist[0] not in LOCATIONS:
-                    x.mod = None
                 if blist[0] in CHARGES:
                     # We don't care about details like 'in dexter claw'
                     del blist[0]
+                    x.mod = None
+                elif blist[0] not in LOCATIONS:
+                    x.mod = None
                 continue
             elif b not in LOCATIONS:
                 raise BlazonException("Unknown location '%s'!" % b, b)
@@ -555,7 +558,7 @@ def parse(blaz):
                 #    x.unspecified.append(c)
                 #x.number = None
                 if x.adj is not None:
-                    dont_understand(x.adj, b)
+                    dont_understand(x.adj, b, blist)
                 if b not in DETAIL_ADJ:
                     x.adj = b
                 x.was = 'adjective'
@@ -599,7 +602,7 @@ def parse(blaz):
                         or b in FISH_POSTURES):
                         raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, x.lastcharge.name), b)
                     elif b in ('to',):
-                        dont_understand(b, blist[0])
+                        dont_understand(b, blist[0], blist[1:])
                     elif (b.endswith('ed') and x.was == 'tincture'
                           and blist[0] in TINCTURES):
                         # X sable vested azure

@@ -33,6 +33,14 @@ def add_entry(typ, entry):
         print 'Adding "%s" to the %s list.' % (entry, typ)
         fil.write(entry + '\n')
 
+def prompt_n(letter, pattern, word, blist):
+    print '%s.' % letter, pattern % word
+    if blist:
+        print '%s2.' % letter, pattern % (word + ' ' + blist[0])
+        if len(blist) > 1:
+            print '%s3.' % letter, pattern % (word + ' ' + blist[0] + ' ' +
+                                              blist[1])
+
 def prompt_for_edit(e):
     word = e.word
     options = e.options
@@ -41,21 +49,18 @@ def prompt_for_edit(e):
         for d in e.dym:
             print d
         print
-    print 'a. Treat "%s" as an alias for a charge.' % word
+    prompt_n('a', 'Treat "%s" as an alias for a charge.', word, e.blist)
     if options:
         for i in xrange(len(options)):
             print '%s. Treat "%s" as an alias for "%s".' % (i+1, word,
                                                             options[i])
         if len(options) == 2:
             print 'b. both'
-    print 'd. Treat "%s" as detail.' % word
-    if e.blist:
-        print 'd2. Treat "%s %s" as detail.' % (word, e.blist[0])
-        if len(e.blist) > 1:
-            print 'd3. Treat "%s %s %s" as detail.' % (word, e.blist[0], 
-                                                       e.blist[1])
+    prompt_n('d', 'Treat "%s" as detail.', word, e.blist)
     print 'x. quit'
     action = raw_input("Action: ")
+    if len(action) > 1:
+        word += ' ' + ' '.join(e.blist[:int(action[1:]) - 1])
     if action.startswith('a'):
         import words
         charge = None
@@ -70,10 +75,7 @@ def prompt_for_edit(e):
             name = words.CHARGES[charge].name
         add_entry('aliases', '%s: %s' % (name, word))
     elif action.startswith('d'):
-        entry = word
-        if len(action) > 1:
-            entry += ' ' + ' '.join(e.blist[:int(action[1:]) - 1])
-        add_entry('details', entry)
+        add_entry('details', word)
     elif action.isdigit():
         i = int(action) - 1
         add_entry('aliases', '%s: %s' % (options[i], word))

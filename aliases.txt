@@ -47,3 +47,6 @@ leg, human: armored leg
 tool, eating: fork
 head, beast, bear: bears heads
 sword: head knife
+spear: boar spear
+roundel, whole: wooden round shield
+tool, other: bakers peel
