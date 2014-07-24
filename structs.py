@@ -127,7 +127,9 @@ class Charge(Thingy):
         yield "%s%s%s" % (self.desc, numtagbit, tagbit)
         if not as_mod:
             for c in self.seealso:
-                if c.multiplier and numtagbit:
+                if c.number:
+                    yield "%s:%s%s" % (c.desc, numtag_for(c.number), tagbit)
+                elif c.multiplier and numtagbit:
                     yield "%s:%s%s" % (c.desc,
                                        numtag_for(self.number * c.multiplier),
                                        tagbit)

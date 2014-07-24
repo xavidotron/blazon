@@ -202,17 +202,17 @@
 |number:2 or more=4 or fewer
 |number:2<2 or more<4 or fewer
 |number:3 or more<2 or more=4 or fewer
-|number:3<3 or more<4 or fewer
+|number:3<3 or more<4 or fewer<2 or more
 |number:4 or fewer=2 or more=3 or more=4 or more
 |number:4 or more<3 or more=4 or fewer
-|number:4<4 or fewer<4 or more
+|number:4<4 or fewer<4 or more<2 or more
 |number:5 or more<4 or more
-|number:5<5 or more
-|number:6<5 or more
-|number:7<5 or more
-|number:8<5 or more
-|number:9<5 or more
-|number:seme<5 or more
+|number:5<5 or more<2 or more
+|number:6<5 or more<2 or more
+|number:7<5 or more<2 or more
+|number:8<5 or more<2 or more
+|number:9<5 or more<2 or more
+|number:seme<5 or more<2 or more
 |orientation:bendwise
 |orientation:bendwise sinister
 |orientation:chevronwise inverted<fesswise
@@ -234,6 +234,9 @@
 |posture:rampant
 |posture:rampant to dexter<rampant
 |posture:rampant to sinister<rampant
+|posture:salient to dexter<rampant<rampant to dexter
+|posture:salient to sinister<rampant<rampant to sinister
+|posture:salient<rampant
 |posture:sejant
 |posture:sejant to dexter<sejant
 |posture:sejant to sinister<sejant
@@ -310,6 +313,7 @@
 |tincture:proper
 |tincture:purpure<dark
 |tincture:sable<dark
+|tincture:tinctureless=light=dark=neutral
 |tincture:vair<multicolor neutral
 |tincture:vert<dark
 abacus|ABACUS
@@ -437,6 +441,7 @@ clothing, fool's motley|CLOTHING-FOOL'S MOTLEY
 clothing, footgear|CLOTHING-BOOT AND SHOE
 clothing, gown|CLOTHING-GOWN AND ROBE
 clothing, headgear|CLOTHING-HAT
+clothing, other|CLOTHING-OTHER
 clothing, pouch|CLOTHING-POUCH
 cloud|CLOUDS AND WIND
 coffin|COFFIN
@@ -445,6 +450,7 @@ compass rose|COMPASS ROSE
 cornucopia|CORNUCOPIA
 counterermine field|CE
 cradle|CRADLE
+crampet|CRAMPET
 crescent|CRESCENT
 cross, as charge|CRAC
 cross, throughout|CROSS
@@ -815,6 +821,7 @@ angel - see monster, humanoid
 angelfish - see fish, angelfish
 angle - see tool, other and chevron
 ankh - see cross
+ankh - see cross, as charge, other cross
 ankhus - see staff
 annulet - see also torse
 annulo - see arrangement, in annulo
@@ -823,11 +830,13 @@ anole - see reptile, lizard
 ant - see arthropod, ant
 anteater - see beast, anteater
 antelope - see monster, antelope
+antelope, heraldic - see monster, antelope
 antelope, natural - see beast, deer
 antler - see horn, creature
 ape - see beast, monkey
 apothecary jar - see ewer
 apple - see fruit, apple
+apple blossom - see flower, rose
 apple tree - see tree, rounded shape
 arachnid - see arthropod
 arch - see architecture and arrangement, in arch
@@ -879,6 +888,7 @@ astrolabe - see tool, astronomical
 astronomical tool - see tool, astronomical
 athanor - see tool, other
 attire - see horn, creature
+auk - see bird, whole and bird, demi
 aurochs - see beast, bull
 avosetta - see bird, whole and bird, demi
 axe - see also pole axe
@@ -957,6 +967,7 @@ beast, fawn - see beast, deer
 beast, feline - see beast, cat
 beast, ferret - see beast, weasel
 beast, fish - see fish
+beast, foal - see beast, horse
 beast, fox - see beast, dog
 beast, frog - see amphibian
 beast, gazelle - see beast, deer
@@ -1059,6 +1070,8 @@ berry - see fruit, berry
 besom - see broom
 bezant - see roundel
 bezanty - see roundel, whole
+bicapitate - see monster, multiheaded
+bicorporate - see monster, multibodied
 billetty - see billet
 billhook - see pole axe
 birch - see tree, elongated shape
@@ -1068,7 +1081,7 @@ bird's egg - see cartouche and foodstuff
 bird's feather - see feather
 bird's head - see head, bird
 bird's leg - see leg, bird
-bird, sea - see bird and monster, other
+bird, sea - see bird, whole and bird, demi and monster, other
 bird, whole - see also monster, phoenix
 bison - see beast, bull
 bison's head - see head, beast, bull
@@ -1103,18 +1116,24 @@ bookroll - see book
 boot - see clothing, footgear
 borage flower - see flower, few petals
 borage plant - see plant, herb
+border - see bordure
 bordure of flame - see fire and bordure
 bordure of flowers - see bordure and wreath and orle
 boreas - see cloud and head, human
 boreyne - see monster, other
+bottle nosed dolphin - see fish, dolphin
+bottlenosed dolphin - see fish, dolphin
 bouget - see water bouget
 bough - see tree branch
 boulder - see rock
 bouquet - see flower, bouquet
 bourchier knot - see knot
 bow - see also musical instrument, lute and rainbow
+Bowen cross - see cross, as charge, other cross
 bowen cross - see knot and cross
 bowen knot - see knot
+Bowen knot crosswise - see cross, as charge, other cross
+bowen knot in cross - see cross, as charge, other cross
 bowl - see cup and cauldron
 boy - see human figure
 brachet - see beast, dog
@@ -1134,14 +1153,17 @@ broadaxe - see axe
 brock - see beast, badger
 brock's head - see head, beast, badger
 brooch - see jewelry
-brooklime blossom - see flower, few petals
+brooklime blossom - see flower, few petals and foil, quatrefoil
 broom plant - see plant, other
 brush - see tool, artistic
+bryony flower - see flower, few petals
 buck - see beast, deer
 bucket - see basket
 bud - see flower
 buffalo - see beast, bull
 bugle - see musical instrument, horn
+bugle horn - see musical instrument, horn
+buglehorn - see musical instrument, horn
 bull - see beast, bull
 bull seal - see beast, seal
 bull's head - see head, beast, bull
@@ -1163,6 +1185,7 @@ cairn - see architecture
 caliper - see also tool, other
 calla lily - see flower, trumpet shape
 caltrap - see also mullet
+caltrop - see caltrap
 calygreyhound - see monster, other
 camel - see beast, camel
 camellia - see flower, multipetaled
@@ -1174,6 +1197,7 @@ can - see cup
 canine - see beast, dog
 cannon - see gun
 canoe - see ship
+Canterbury cross - see cross, as charge, other cross
 cap - see clothing, headgear
 cape - see clothing, gown
 carabao - see beast, bull
@@ -1199,6 +1223,15 @@ catnip - see plant, herb
 cattail - see plant, reed and tail
 cedar - see tree, pine tree shape
 celery stalk - see fruit, other
+Celtic cross - see cross, as charge, other cross
+Celtic cross bottonny - see cross, as charge, crosslet
+Celtic cross clechy - see cross, as charge, flory
+Celtic cross couped plain - see cross, as charge, other cross
+Celtic cross flory - see cross, as charge, flory
+Celtic cross formy - see cross, as charge, formy
+Celtic cross patty - see cross, as charge, formy
+celtic cross pommety - see cross, as charge, pomelly
+Celtic cross potent - see cross, as charge, potent
 centaur - see monster, centaur
 centauress - see monster, centaur
 chalice - see cup
@@ -1218,7 +1251,7 @@ cheese - see foodstuff
 cheetah - see beast, cat
 chequy - see field division, checky
 cherry - see fruit, other
-cherry blossom - see flower, few petals
+cherry blossom - see flower, rose
 cherry tree - see tree, rounded shape
 cherub - see head, human and winged object
 cherub's face - see head, human and winged object
@@ -1281,6 +1314,8 @@ clothing, scrip - see clothing, pouch
 clothing, shoe - see clothing, footgear
 clothing, slipper - see clothing, footgear
 clothing, strap - see clothing, belt
+clothing, trews - see clothing, other
+clothing, trousers - see clothing, other
 clothing, veil - see clothing, headgear
 clove - see fruit, other
 clover bud - see flower, rose
@@ -1333,16 +1368,165 @@ crest - see helm crest
 crocodile - see reptile, lizard
 crocus - see flower, trumpet shape
 crook - see staff
+cross - see cross, as charge, plain cross and cross, throughout
+cross alis{e'}e - see cross, as charge, formy
+cross annulety arms formy and voided - see cross, as charge, other cross
+cross argent griffee-de-loup, pierced - see cross, as charge, other cross
+cross avellane - see cross, as charge, other cross
+cross barby - see cross, as charge, other cross
+cross barby nowy - see cross, as charge, other cross
+cross botanny - see cross, as charge, crosslet
+cross botonny - see cross, as charge, crosslet
+cross bottonny - see cross, as charge, crosslet
+cross bottony - see cross, as charge, crosslet
+cross bourdonny - see cross, as charge, pomelly
+cross bretessed couped - see cross, as charge, other cross
+cross calvary - see cross, as charge, calvary
+cross clechy - see cross, as charge, flory
+cross clechy pommetty - see cross, as charge, flory and cross, as charge, pomelly
+cross couped - see cross, as charge, plain cross
+cross couped of chain - see cross, as charge, other cross
+cross couped of three crossbars missing the dexter base arm - see cross, as charge, doubled
+cross couped parted and fretted - see cross, as charge, plain cross
+cross couped rayonnant - see cross, as charge, other cross
+cross couped voided ending in four two-towered castles - see cross, as charge, other cross
+cross crescenty - see cross, as charge, other cross
+cross crosslet - see cross, as charge, crosslet
+cross crosslet Calvary - see cross, as charge, crosslet and cross, as charge, calvary
+cross crosslet fleury concave - see cross, as charge, flory and cross, as charge, crosslet
+cross crosslet flory - see cross, as charge, flory
+cross crosslet formy - see cross, as charge, crosslet and cross, as charge, formy
+cross doubly pommeled - see cross, as charge, pomelly
+cross ending in four pheons - see cross, as charge, other cross
+cross erminy - see cross, as charge, other cross
+cross fitchy - see cross, as charge, plain cross
+cross fleuretty - see cross, as charge, flory
+cross fleury - see cross, as charge, flory
+cross fleury fitchy - see cross, as charge, flory
+cross floretty - see cross, as charge, flory
+cross flory - see cross, as charge, flory
+cross forch{e'}es - see cross, as charge, moline
+cross formy - see cross, as charge, formy
+cross formy convex - see cross, as charge, formy
+cross formy fitched at the foot - see cross, as charge, formy
+cross formy floretty - see cross, as charge, flory
+cross formy floretty - see cross, as charge, flory and cross, as charge, formy
+cross formy floretty - see cross, as charge, formy
+cross formy nowy - see cross, as charge, formy
+cross formy swallowtail - see cross, as charge, formy
+cross formy swallowtailed - see cross, as charge, formy
+cross fourchetty - see cross, as charge, moline
+cross fourchy - see cross, as charge, moline
+cross gammadion saltirewise - see cross, as charge, potent
+cross glandular saltirewise - see cross, as charge, other cross
+cross gringol{e'} - see cross, as charge, gringoly
+cross gurgitee - see cross, as charge, other cross
+cross gurgity - see cross, as charge, other cross
+cross humetty - see cross, as charge, plain cross
+cross inverted - see cross, as charge, plain cross
+cross issuant to chief - see cross, as charge, plain cross
+cross Latin bottony - see cross, as charge, crosslet
+cross Lorraine - see cross, as charge, doubled
+cross mill-rind - see cross, as charge, moline
+cross miller - see cross, as charge, moline
+cross moline - see cross, as charge, moline
 cross monogram - see symbol and cross
+cross nowy pierced - see cross, as charge, plain cross
 cross of - see cross and arrangement, in cross and cross
+cross of bones - see cross, as charge, other cross
+cross of Calatrava - see cross, as charge, flory
+cross of Calvary - see cross, as charge, calvary
+cross of Calvary potent - see cross, as charge, calvary and cross, as charge, potent
+cross of Canterbury - see cross, as charge, other cross
+cross of Cerdana - see cross, as charge, other cross
+cross of chains couped - see cross, as charge, other cross
+cross of Cleves - see cross, as charge, other cross
+cross of four anchors conjoined at the ring - see cross, as charge, moline
+cross of four fleurs-de-lys conjoined at their bases - see cross, as charge, flory
+cross of Jerusalem - see cross, as charge, potent
+cross of Lorraine - see cross, as charge, doubled
+cross of Saint Bridget - see cross, as charge, other cross
+cross of Saint Brigid - see cross, as charge, other cross
+cross of Saint Julian - see cross, as charge, crosslet
+cross of Samildanach - see cross, as charge, other cross
+cross of Santiago - see cross, as charge, flory
+cross of six annulets interlaced - see cross, as charge, other cross
+cross of St. Antony - see cross, as charge, tau
+cross of St. Brigid - see cross, as charge, other cross
+cross of St. Julian - see cross, as charge, crosslet
+cross of Toulouse - see cross, as charge, toulouse
+cross patee quadrate - see cross, as charge, formy
+cross patonce - see cross, as charge, flory
+cross patoncy - see cross, as charge, flory
+cross patriarchal - see cross, as charge, doubled
+cross patriarchal bottony - see cross, as charge, crosslet and cross, as charge, doubled
+cross pattee - see cross, as charge, formy
+cross pattonce - see cross, as charge, flory
+cross patty - see cross, as charge, formy
+cross patty sarcelled - see cross, as charge, other cross and cross, as charge, formy
+cross paty - see cross, as charge, formy
+cross pointed - see cross, as charge, other cross
+cross pomelly - see cross, as charge, pomelly
+cross pomelly at the foot - see cross, as charge, pomelly
+cross pometty - see cross, as charge, pomelly
+cross pommetty - see cross, as charge, pomelly
+cross potent - see cross, as charge, potent
+cross potent rebated - see cross, as charge, potent
+cross raguly - see cross, as charge, other cross
+cross swallowtail - see cross, as charge, other cross
+cross swallowtailed - see cross, as charge, other cross
+cross tau - see cross, as charge, tau
+cross triparted and fretted fleury - see cross, as charge, flory
+cross triple-parted and fretted - see cross, as charge, plain cross
+cross urdy - see cross, as charge, other cross
+cross voided - see cross, as charge, plain cross
+cross-crosslet - see cross, as charge, crosslet
 cross, arrangement in - see arrangement, in cross
 crossbow - see bow
 crow - see bird, whole and bird, demi
 crown - see also jewelry and wreath and torse
 crozier - see staff
-crusily - see cross, as charge
-crustacean - see arthropod
+crusilly - see cross, as charge, crosslet
+crusilly - see field treatment, seme, crusily and cross, as charge, seme
+crusilly clechy - see cross, as charge, flory
+crusilly couped - see cross, as charge, plain cross
+crusilly fitchy - see cross, as charge, crosslet
+crusilly fleury - see cross, as charge, flory
+crusilly flory - see cross, as charge, flory
+crusilly formy - see cross, as charge, formy
+crusilly Latin - see cross, as charge, plain cross
+crusilly Latin Celtic flory - see cross, as charge, flory
+crusilly Latin fleury - see cross, as charge, flory
+crusilly Latin formy - see cross, as charge, formy
+crusilly Latin pomelly - see cross, as charge, pomelly
+crusilly moline - see cross, as charge, moline
+crusilly of ermine spots counterchanged - see cross, as charge, other cross
+crusilly patonce - see cross, as charge, flory
+crusilly patoncy - see cross, as charge, flory
+crusilly plain - see cross, as charge, plain cross
+crusilly pointed - see cross, as charge, other cross
+crusilly pommety - see cross, as charge, pomelly
+crusilly potent - see cross, as charge, potent
+crusilly swallowtailed - see cross, as charge, other cross
+crusily - see cross, as charge, crosslet
+crusily - see field treatment, seme, crusily and cross, as charge, seme
+crusily (sometimes fitchy) - see cross, as charge, crosslet
+crusily bottony - see cross, as charge, crosslet
+crusily Celtic - see cross, as charge, other cross
+crusily Cerda{n~}a - see cross, as charge, other cross
+crusily crosslet fitchy - see cross, as charge, crosslet
+crusily fitchy - see cross, as charge, crosslet
+crusily flory - see cross, as charge, flory
+crusily formy fitchy - see cross, as charge, formy
+crusily Latin - see cross, as charge, plain cross
+crusily Latin flory - see cross, as charge, flory
+crusily Maltese - see cross, as charge, maltese
+crusily patty - see cross, as charge, formy
+crustacean - see fish, lobster
 crux ansata - see cross, as charge
+crux ansata - see cross, as charge, other cross
+crux ansata patty - see cross, as charge, other cross
+crux stellata - see cross, as charge, other cross
 crwth - see musical instrument, harp
 cub, bear - see beast, bear
 cub, lion - see beast, cat
@@ -1368,6 +1552,7 @@ death's head - see head, human skull
 decrescent - see crescent
 decrescent moon - see crescent
 deer - see beast, deer
+deerhound - see beast, dog
 delf - see billet
 delphy - see billet
 demi annulet - see rainbow and annulet
@@ -1401,9 +1586,9 @@ doll - see toy
 dolmen - see architecture
 dolphin - see fish, dolphin
 dome - see architecture
-domed oven - see tool, other
 dondril blossom - see flower, few petals
 donkey - see beast, horse
+donnelly knot - see knot
 door - see gate
 dove - see bird, whole and bird, demi
 dove's head - see head, bird
@@ -1415,6 +1600,8 @@ dragonfly - see arthropod, dragonfly
 dragonship - see ship
 drake - see bird, whole and bird, demi
 drakkar - see ship
+drawer handle - see handle
+drawknife - see tool, carpentry
 drinking cup - see cup
 dromedary - see beast, camel
 drum - see musical instrument, drum
@@ -1434,9 +1621,11 @@ eagle's leg - see leg, bird
 ear - see body part
 earthworm - see reptile, worm
 earwig - see arthropod, beetle
+Eastern Orthodox cross - see cross, as charge, doubled
 eating fork - see tool, eating
 edelweiss - see flower, multipetaled
 egg - see cartouche and foodstuff
+eel - see fish, other
 eglantine - see flower, rose
 egret - see bird, whole and bird, demi
 elephant - see beast, elephant
@@ -1509,6 +1698,7 @@ field division, per pile inverted - see pile inverted
 field division, pily - see pile and field division, other
 field division, tierced en pairle - see field division, per pall
 field division, vetu - see also lozenge
+field primary - see peripheral on ly and field only
 field treatment, fretty - see fret
 field treatment, seme, crusily - see also cross, as charge
 field treatment, seme, de lys - see also fleur de lys
@@ -1534,6 +1724,7 @@ fireplace - see architecture
 firewheel blossom - see flower, multipetaled
 fish fin - see body part
 fish hook - see hook
+fish skeleton - see fish, other
 fish, alewife - see fish, other
 fish, catfish - see fish, other
 fish, crab - see arthropod, lobster
@@ -1651,6 +1842,7 @@ flower, violet - see flower, few petals
 flower, water lily - see flower, cup shape
 flower, wisteria - see flower, multifloreted
 flute - see musical instrument, recorder
+foal - see beast, horse
 foi - see hand
 foil, cinquefoil - see also flower, rose and foil, sexfoil
 foil, sexfoil - see also foil, cinquefoil
@@ -1731,6 +1923,7 @@ gillyflower - see flower, multipetaled
 giraffe - see beast, other
 girl - see human figure
 gittern - see musical instrument, lute
+gladii - see sword
 gladiolus - see flower, multifloreted
 gladius - see sword
 glaive - see pole axe
@@ -1761,6 +1954,8 @@ grain - see plant, wheat
 grape - see fruit, berry
 grapevine - see plant, vine
 great dane - see beast, dog
+Greek cross - see cross, as charge, plain cross
+Greek Orthodox cross - see cross, as charge, doubled
 greenbriar - see plant, thorn
 grenade - see also roundel, whole and fire
 greyhound - see beast, dog
@@ -1937,6 +2132,7 @@ ink pot - see inkhorn
 ink well - see inkhorn
 inkhorn - see also tool, writing
 inkmoline - see millrind
+inkpot - see inkhorn
 inkwell - see inkhorn
 inscription - see symbol
 insect - see arthropod
@@ -1955,6 +2151,7 @@ jay - see bird, whole and bird, demi
 jelling beast - see monster, knotted
 jerboa - see beast, mouse
 jerkin - see clothing, gown
+Jerusalem Cross - see cross, as charge, potent
 jessant - see head, jessant de lys
 jewel - see jewelry
 jewelry - see also crown
@@ -1969,6 +2166,7 @@ keg - see barrel
 kendall flower - see flower, rose and foil, sexfoil
 kestrel - see bird, whole and bird, demi
 kestrel's head - see head, bird
+key cross - see cross, as charge, toulouse
 keyring - see annulet and key
 keythong - see monster, griffin
 kingbird - see bird, whole and bird, demi
@@ -2065,6 +2263,8 @@ maiden - see human figure
 mail - see field treatment, mailed
 maily - see field treatment, mailed
 mallet - see hammer
+Maltese cross - see cross, as charge, maltese
+Maltese cross patoncy - see cross, as charge, maltese and cross, as charge, flory
 mammoth - see beast, elephant
 man - see human figure
 man lion - see monster, humanoid
@@ -2092,6 +2292,7 @@ mastiff - see beast, dog
 match - see knot
 mattock - see tool, agricultural
 mazer - see cup
+meadow beauty - see flower, few petals
 melusine - see monster, merfolk
 menorah - see candlestick
 merfolk - see monster, merfolk
@@ -2173,6 +2374,7 @@ moth - see arthropod, moth
 motley - see clothing, fool's motley
 motto - see symbol
 mound - see roundel, whole and cross
+mount - see base, enarched
 mountain lion - see beast, cat
 mountain range - see mountain
 mouse - see beast, mouse
@@ -2238,10 +2440,12 @@ nightingale - see bird, whole and bird, demi
 nimbus - see cloud
 nine man morris - see toy
 no primary - see field only and peripheral only
+Non cross - see cross, as charge, other cross
 non cross - see knot and cross
 noose - see knot
 norse serpent - see monster, knotted
 nosegay - see flower, bouquet
+note, musical - see symbol
 nugget - see rock
 number - see symbol
 numeral - see symbol
@@ -2251,6 +2455,7 @@ oak leaf - see leaf
 oar - see ship, part
 obelisk - see architecture
 ocotillo - see plant, cactus
+octagon - see polygon
 octofoil - see foil, octofoil
 octopus - see mollusk, octopus
 ogress - see roundel
@@ -2294,6 +2499,8 @@ paly - see field division, paly
 pan pipe - see musical instrument, pan pipe
 panda - see beast, bear
 pangolin - see beast, anteater
+panpipe - see musical instrument, pan pipe
+pansy - see flower, rose
 pantheon - see monster, panther
 panther - see monster, panther and beast, cat
 panther's face - see head, beast, cat
@@ -2306,7 +2513,16 @@ parchment - see book
 parrot - see bird, whole and bird, demi
 parsley - see plant, herb
 partisan - see spear
+Passion cross - see cross, as charge, plain cross
+passion cross botonny - see cross, as charge, crosslet
+passion cross, ends formee - see cross, as charge, formy
 passion nail - see lozenge and nail
+patriarchal cross - see cross, as charge, doubled
+patriarchal cross bottony - see cross, as charge, crosslet and cross, as charge, doubled
+patriarchal cross calvary orthodox botonny - see cross, as charge, calvary and cross, as charge, crosslet and cross, as charge, doubled
+patriarchal cross crosslet - see cross, as charge, crosslet and cross, as charge, doubled
+patriarchal cross fleury - see cross, as charge, doubled and cross, as charge, flory
+patriarchal cross flory - see cross, as charge, doubled and cross, as charge, flory
 paw - see leg, beast
 pea pod - see fruit, other
 peach - see fruit, other
@@ -2427,10 +2643,12 @@ platypus - see beast, other
 plaything - see toy
 plover - see bird, whole and bird, demi
 plume - see feather
+plumeria blossom - see flower, rose
 plumetty - see field treatment, plumetty
 pod - see fruit, other
 point - see base and gore
 poison ivy - see plant, vine
+poleaxe - see pole axe
 polecat - see beast, squirrel
 polygon - see also billet and triangle
 pomegranate - see fruit, pomegranate
@@ -2448,6 +2666,7 @@ potenty - see field treatment, potenty
 pouch - see clothing, pouch
 press - see also tool, other
 pretzel - see foodstuff and knot
+prickly pear flower - see flower, rose
 prickspur - see saddlery
 primrose - see flower, rose
 print - see paw print
@@ -2473,6 +2692,7 @@ question mark - see symbol
 quetzal - see bird, whole and bird, demi
 quill - see feather and pen
 quill of yarn - see tool, textile
+quill pen - see pen
 rabbit - see beast, rabbit
 raccoon - see beast, badger
 ragweed - see plant, herb
@@ -2542,6 +2762,8 @@ rocket - see gun
 rod - see staff
 roebuck - see beast, deer
 rogacina - see cross, as charge and symbol
+rogacina crossed and fourchy - see cross, as charge, other cross
+rogacina doubly crossed and fourchy - see cross, as charge, doubled
 roman numeral - see symbol
 rook - see chess piece
 rooster - see bird, whole and bird, demi
@@ -2552,11 +2774,16 @@ rosemary - see plant, herb
 rosette - see foil, sexfoil
 roundelly - see roundel, whole
 rowan - see tree, rounded shape
+rowan flower - see flower, rose and flower, multifloreted
 rowel - see mullet
 rudder - see ship, part
+rue flower - see flower, rose
 rune - see symbol
 rush - see plant, reed
 rushlight - see torch and beacon and candle
+Russian cross - see cross, as charge, doubled
+Russian Orthodox cross - see cross, as charge, doubled
+Russian Orthodox cross botonny - see cross, as charge, crosslet and cross, as charge, doubled
 rustic - see human figure
 rustre - see mascle
 saber - see sword
@@ -2565,14 +2792,17 @@ sack - see clothing, pouch
 sackbut - see musical instrument, horn
 saddle - see saddlery
 saddlery - see also horseshoe
+sage blossom - see flower, rose and flower, multifloreted
 sagebrush - see plant, herb
 sagittarius - see monster, centaur
 sagittary - see monster, centaur
 sailfin - see fish, other
+Saint Brigid's cross - see cross, as charge, other cross
 salamander - see reptile, lizard
 salmon - see fish, other
 saltorel - see saltire
 samoyed - see beast, dog
+San Damiano crucifix - see cross, as charge, other cross
 sand dune - see mountain
 sandal - see clothing, footgear
 sapling - see tree
@@ -2622,6 +2852,7 @@ sea magpie - see monster, sea, other and monster, other
 sea mew - see bird, whole and bird, demi
 sea monster - see monster, sea
 sea moose - see monster, sea, other
+sea mule - see monster, sea, horse
 sea otter - see beast, weasel
 sea pegasus - see monster, sea, horse
 sea serpent - see monster, sea, serpent
@@ -2655,6 +2886,7 @@ shamrock - see foil, trefoil
 shamshir - see sword
 shark - see fish, other
 shark's head - see head, fish
+shark's tooth - see tooth
 shaum - see musical instrument, recorder
 shawm - see musical instrument, recorder
 shazam - see lightning bolt
@@ -2667,6 +2899,7 @@ shellfish - see shell and arthropod, lobster and mollusk
 shepherd's crook - see staff
 shield - see escutcheon and roundel and cartouche
 shillelagh - see staff
+shin bone - see bone
 ship, anchor - see anchor
 shoe, clothing - see clothing, footgear
 shoe, horse - see horseshoe
@@ -2722,6 +2955,7 @@ sphinx - see monster, sphinx
 spider - see arthropod, spider
 spider web - see also knot
 spiderweb - see spider web
+spiderwort blossom - see flower, few petals
 spindle - see also tool, textile
 spiral - see gurges
 spiral horn - see musical instrument, horn
@@ -2734,6 +2968,7 @@ spur - see saddlery
 square - see billet
 squid - see mollusk, octopus
 squirrel - see beast, squirrel
+St. Brigid's cross - see cross, as charge, other cross
 staff - see also spear
 stafford knot - see knot
 stag - see beast, deer
@@ -2756,6 +2991,7 @@ stein - see cup
 stinging nettle - see flower, thistle
 stingray - see fish, ray
 stirrup - see saddlery
+stitchwort blossom - see flower, few petals
 stoat - see beast, weasel
 stone - see rock and keystone and roundel
 stool - see chair
@@ -2764,6 +3000,8 @@ strap - see clothing, belt
 strawberry - see fruit, strawberry
 stringed instrument - see musical instrument, harp and musical instrument, lute and musical instrument, dulcimer
 stump - see tree, stump
+sturgeon - see fish, other
+sun eclipsed - see sun, whole, charged
 sun issuant - see sun, demi
 sun wheel - see cross
 sun, whole, eclipsed - see sun, whole, charged
@@ -2794,6 +3032,7 @@ tapir - see beast, anteater
 targe - see roundel, whole
 tassel - see knot
 tau - see cross
+tau cross - see cross, as charge, tau
 teardrop - see goute
 teazel - see flower, thistle
 teazle - see flower, thistle
@@ -2818,6 +3057,7 @@ tiara - see crown
 tierce - see flaunch and gore
 tierced in point - see field division, per pall inverted
 tiger - see beast, cat
+tiger lily - see flower, few petals
 tiger's head - see head, beast, cat
 toad - see amphibian
 toe - see body part
@@ -2857,6 +3097,7 @@ tree, ash - see tree, rounded shape
 tree, aspen - see tree, rounded shape
 tree, beech - see tree, elongated shape
 tree, birch - see tree, elongated shape
+tree, blasted - see also tree, rounded shape
 tree, cedar - see tree, pine tree shape
 tree, cherry - see tree, rounded shape
 tree, cinnamon - see tree, rounded shape
@@ -2890,6 +3131,9 @@ trefoil - see foil, trefoil
 trefoil knot - see knot
 trefoily - see foil, trefoil
 tressure - see orle
+trews - see clothing, other
+triangle - see also polygon
+tricorporate - see monster, multibodied
 tricune - see mullet
 trident head - see head, weapon
 trillium - see flower, few petals
@@ -2900,6 +3144,7 @@ triton shell - see shell, other
 trivet - see tripod
 trojan horse - see toy
 troll - see monster, humanoid
+trousers - see clothing, other
 trout - see fish, other
 trout, winged - see monster, winged
 trowel - see tool, agricultural
@@ -2920,6 +3165,7 @@ tusk - see tooth
 twig - see tree branch
 tyger - see monster, tyger
 tyger's head - see head, monster, tyger
+Ukrainian sun-cross - see cross, as charge, other cross
 uncial - see symbol
 unicorn - see monster, unicorn
 unicorn's head - see head, monster, unicorn
@@ -2976,6 +3222,7 @@ whelk - see shell, other
 whip - see saddlery
 whippet - see beast, dog
 whirlpool - see gurges
+wild ginger flower - see flower, few petals
 wildman - see human figure
 willow - see tree, willow
 wind - see cloud
@@ -2997,8 +3244,9 @@ wolverine - see beast, badger
 woman - see human figure
 woman's head - see head, human
 wombat - see beast, badger
+wood anemone - see flower, rose
 wood chisel - see tool, carpentry
-wood sorrel - see flower, few petals and foil, trefoil
+wood sorrel - see flower, rose
 woodbine - see plant, vine
 woodchuck - see beast, badger
 woodpecker - see bird, whole and bird, demi
@@ -3021,6 +3269,7 @@ yak - see beast, bull
 yale - see monster, antelope
 yarn - see tool, textile
 yew - see tree, pine tree shape
+yoke - see saddlery
 youth - see human figure
 ypotrill - see monster, other
 yurt - see pavilion

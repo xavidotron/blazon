@@ -1,5 +1,4 @@
 bird, whole: bird
-caltrap: caltrop
 charge treatment, seme, crusily: charge treatment, seme, crusilly
 cross, as charge: cross
 cross, throughout: cross throughout
@@ -29,7 +28,6 @@ paw print: pawprint
 plant, heather: sprig of heather
 plant, wheat: ears of wheat
 plant, wheat: ear of wheat
-quill: quill pen
 roundel, whole: roundel
 ship, part: sail
 sun, whole: sun, whole, charged

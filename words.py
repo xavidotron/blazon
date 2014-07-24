@@ -382,14 +382,34 @@ def loadwords():
                         sees += CATEGORIES[n]
                         assert None not in sees, (sees, n)
                     else:
-                        assert n in CHARGES, n
-                        sees.append(CHARGES[n])
+                        # We don't handle sees referring to a see later in the
+                        # alphabet.
+                        CORRECTIONS = {'fish, lobster': 'arthropod, lobster',
+                                       'peripheral on ly': 'peripheral only'}
+                        if n in CORRECTIONS:
+                            n = CORRECTIONS[n]
+                        if n not in CHARGES:
+                            assert ', ' in n, n
+                            most, lastbit = n.rsplit(', ', 1)
+                            chargemod = copy.deepcopy(CHARGES[most])
+                            if lastbit == 'seme':
+                                chargemod.number = 'seme'
+                            elif lastbit in LINES and most in PERIPHERALS:
+                                chargemod.tags.append(LINES[lastbit])
+                            else:
+                                assert most == 'cross, as charge', n
+                                assert lastbit in CROSS_FAMILIES, n
+                                chargemod.tags.append(CROSS_FAMILIES[lastbit])
+                            sees.append(chargemod)
+                        else:
+                            sees.append(CHARGES[n])
                         assert None not in sees, (sees, n)
                 if also:
                     assert name in CHARGES, name
                 else:
                     assert (name not in CHARGES or CHARGES[name] is None 
-                            or CHARGES[name].category), name
+                            #or CHARGES[name].name == sees[0].name
+                            or CHARGES[name].category), (name, CHARGES[name], sees[0])
                     first = sees.pop(0)
                     CHARGES[name] = copy.deepcopy(first)
                     # Copying the seealso of just the first is weird
