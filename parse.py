@@ -32,7 +32,8 @@ def proc(x, b, orig_b, blist):
             if x.maintained:
                 pass
             elif x.was not in ('charge', 'charge of'):
-                raise BlazonException("No number/a/an for a charge: %s" % b)
+                raise BlazonException("No number/a/an for a charge: %s" % b,
+                                      orig_b, blist=blist)
             elif x.unspecified[-1].name != CHARGES[b].name:
                 if x.was == 'charge':
                     glued = '%s %s' % (x.unspecified[-1].blazon, orig_b)
@@ -45,7 +46,10 @@ def proc(x, b, orig_b, blist):
                     glued, options=[x.unspecified[-1].name, CHARGES[b].name],
                     blist=blist)
         if x.betweenness is not None:
-            assert x.number > 1 or len(x.betweenness) > 0 or (blist and blist[0] == 'and'),"You can't be between only one thing!"
+            if x.number <= 1 and len(x.betweenness) == 0 and (not blist or 'and' not in blist):
+                raise BlazonException(
+                    "You can't be between only one thing! (%s)"
+                    % b)
             g = x.betweenness
         elif x.on.kid is None:
             g = x.on.kid = Group()

@@ -60,3 +60,5 @@ wards to base
 under sail
 head to center
 braced
+sails set
+flagged
