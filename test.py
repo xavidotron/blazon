@@ -314,5 +314,13 @@ class TestCases(unittest.TestCase):
              'FIELD TREATMENT-PLUMMETTY:1:sable:bendwise'],
             list(parse(u'Per bend lozengy argent and sable and\n  argent, a bend vert and in base a feather bendwise sable.').describe()))
 
+        self.assertEquals(
+            [u'FIELD DIV.-LOZENGY OR FUSILY:argent:~and gules',
+             'CRAC:1:sable:primary:other cross',
+             'CRAC:1:primary:other cross',
+             'CHIEF:1:sable',
+             'FIRE AND FLAME:2:argent'],
+            list(parse(u'Lozengy argent and gules, a cross of Saint Brigid and on a chief sable two flames argent.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

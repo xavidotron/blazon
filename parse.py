@@ -211,7 +211,7 @@ def parse(blaz):
 
     while len(blist) > 0:
         b = pop_blist(blist)
-        #print b, [x.unspecified[-1].category if x.unspecified else None]
+        print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
             if b in ('her', 'his', 'its'):
                 raise BlazonException(
@@ -285,8 +285,9 @@ def parse(blaz):
                 CHARGES['arrangement, head, %s' % b])
             continue
         elif (x.lastcharge
-              and x.lastcharge.category in ('monster', 'beast', 'human',
-                                            'reptile')
+              and (x.lastcharge.category in ('monster', 'beast', 'human',
+                                             'reptile')
+                   or x.lastcharge.name in ('amphibian',))
               and b in POSTURES):
             x.lastcharge.tags.append(POSTURES[b])
             continue

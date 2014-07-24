@@ -209,7 +209,10 @@ DETAIL_ADJ = {
     'caucasian',
     }
 
-BLACKLIST = {'throughout'}
+BLACKLIST = {
+    'throughout',
+    'cross of',
+    }
 
 # These we want to treat as words for purposes of spellchecking, but we only
 # understand them in certain manually-coded contexts.
@@ -365,6 +368,8 @@ def loadwords():
                 DESC_TO_CHARGE[desc] = charge
             elif ' - see ' in l:
                 name, see = l.split(' - see ')
+                if name in BLACKLIST:
+                    continue
                 if see.startswith('also '):
                     see = see[len('also '):]
                     also = True
