@@ -368,6 +368,7 @@ def loadwords():
                 DESC_TO_CHARGE[desc] = charge
             elif ' - see ' in l:
                 name, see = l.split(' - see ')
+                name = name.lower()
                 if name in BLACKLIST:
                     continue
                 if see.startswith('also '):

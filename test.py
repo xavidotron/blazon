@@ -11,7 +11,9 @@ class TestCases(unittest.TestCase):
             ['ARM:1:argent:primary:embowed', 'ARM:1:primary:embowed', 'HORN AND ATTIRES:1:or'], 
             list(parse(u"(Fieldless) An arm embowed argent sustaining a stag's attire Or.").describe()))
         self.assertEquals(
-            ['CRAC:1:or:primary', 'CRAC:1:primary', 'FDL:1:sable'], 
+            ['CRAC:1:or:plain cross:primary',
+             'CRAC:1:plain cross:primary',
+             'FDL:1:sable'], 
             list(parse(u'(Fieldless) On a cross couped Or, a fleur-de-lys sable').describe()))
         self.assertEquals(
             ['AR', 'DOG:1:sable:primary:passant', 'DOG:1:primary:passant', 'ESCALLOP:3:gules'], 
@@ -20,7 +22,12 @@ class TestCases(unittest.TestCase):
             ['AR', 'SPINDLE:1:purpure:primary', 'TOOL-SEWING AND WEAVING:1:purpure:primary', 'SPINDLE:1:primary', 'CHIEF:1:purpure', 'POLE-AXE:1:argent'], 
             list(parse(u'Argent, an empty bottom-whorl drop spindle and on a chief purpure a glaive argent.').describe()))
         self.assertEquals(
-            ['AZ', 'CRAC:1:or:primary:moline', 'CRAC:1:primary:moline', 'CHIEF:1:or', 'BIRD:3:azure:volant to dexter', 'BIRD9DEMI:3:azure:volant to dexter'], 
+            ['AZ',
+             'CRAC:1:or:moline:primary',
+             'CRAC:1:moline:primary',
+             'CHIEF:1:or',
+             'BIRD:3:azure:volant to dexter',
+             'BIRD9DEMI:3:azure:volant to dexter'], 
             list(parse(u'Azure, a cross moline and on a chief Or three martlets volant azure').describe()))
         self.assertEquals(
             ['OR', 'FIELD TREATMENT-SEME (CRUSILLY):sable', 'CRAC:sable', 'CROSS:1:gules:primary', 'CROSS:1:primary', 'BIRD:1:or:displayed:eagle', 'BIRD9DEMI:1:or:displayed:eagle'], 
@@ -53,7 +60,9 @@ class TestCases(unittest.TestCase):
             ['FIELD DIV.-BARRY:or:~and azure', 'CHIEF:1:gules:indented', 'CAT:3:or'], 
             list(parse(u'Barry Or and azure, on a chief indented gules three lions queue-forchy Or.').describe()))
         self.assertEquals(
-            ['ER', 'FEATHER AND QUILL:1:purpure:primary:bendwise sinister', 'PEN:1:purpure:primary:bendwise sinister', 'FEATHER AND QUILL:1:primary:bendwise sinister'], 
+            ['ER',
+             'PEN:1:purpure:primary:bendwise sinister',
+             'PEN:1:primary:bendwise sinister'], 
             list(parse(u'Ermine, a quill pen bendwise sinister purpure.\n').describe()))
         self.assertEquals(
             ['GU', 'FDL:3:or:primary', 'FDL:3:primary', 'ARRANGEMENT-IN BEND:or', 'BORDURE:1:or:embattled'], 
@@ -316,15 +325,15 @@ class TestCases(unittest.TestCase):
 
         self.assertEquals(
             [u'FIELD DIV.-LOZENGY OR FUSILY:argent:~and gules',
-             'CRAC:1:sable:primary:other cross',
-             'CRAC:1:primary:other cross',
+             'CRAC:1:sable:other cross:primary',
+             'CRAC:1:other cross:primary',
              'CHIEF:1:sable',
              'FIRE AND FLAME:2:argent'],
             list(parse(u'Lozengy argent and gules, a cross of Saint Brigid and on a chief sable two flames argent.').describe()))
 
         self.assertEquals(
-            ['CRAC:1:argent:primary:other cross',
-             'CRAC:1:primary:other cross',
+            ['CRAC:1:argent:other cross:primary',
+             'CRAC:1:other cross:primary',
              'ERMINE SPOT:4:sable',
              'FIELD TREATMENT-SEME (ERMINED):4:sable'],
             list(parse(u'(Fieldless) A cross of Canterbury argent each arm charged with an ermine spot head to center sable.\n').describe()))
