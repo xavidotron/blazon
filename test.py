@@ -304,5 +304,15 @@ class TestCases(unittest.TestCase):
              'DICE:2:azure'],
             list(parse(u'Per fess azure and checky argent and\n  azure, on a fess argent two dice azure marked argent.').describe()))
 
+        self.assertEquals(
+            [u'PB:multicolor:~and argent',
+             'BEND:1:vert:primary',
+             'FIELD DIV.-BENDY:1:vert:primary',
+             'BEND:1:primary',
+             'FEATHER AND QUILL:1:sable:bendwise',
+             'PEN:1:sable:bendwise',
+             'FIELD TREATMENT-PLUMMETTY:1:sable:bendwise'],
+            list(parse(u'Per bend lozengy argent and sable and\n  argent, a bend vert and in base a feather bendwise sable.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

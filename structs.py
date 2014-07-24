@@ -231,7 +231,7 @@ class Tincture(object):
     
     def add_treatment(self, treatment):
         if self.is_complex():
-            self.add_tincture('multicolor')
+            assert self.add_tincture('multicolor')
         from words import CHARGES
         if 'field treatment, %s' % treatment in CHARGES:
             a = copy.deepcopy(CHARGES['field treatment, %s' % treatment])
@@ -266,7 +266,7 @@ class Tincture(object):
         self.fieldcharge = fieldcharge
         self.tcnt = 0
         if self.tincture != 'multicolor':
-            self.add_tincture(self.tincture)
+            assert self.add_tincture(self.tincture)
             self.tincture = 'multicolor'
 
     def is_complex(self):
@@ -279,8 +279,10 @@ class Tincture(object):
         elif self.tcnt == 1:
             self.fielddesc += ':~and ' + tincture
         else:
-            assert False, (self.fielddesc, self.tcnt, tincture)
+            #assert False, (self.fielddesc, self.tcnt, tincture)
+            return False
         self.tcnt += 1
+        return True
 
 class Fieldless(Tincture):
     def __init__(self):
@@ -306,3 +308,4 @@ class MultiTincture(Tincture):
     
     def add_tincture(self, tincture):
         self.tincts.append(tincture)
+        return True

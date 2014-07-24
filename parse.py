@@ -319,7 +319,8 @@ def parse(blaz):
             else:
                 x.lasttincture = ComplexTincture(charge)
             if x.fielddivision:
-                x.fielddivision[-1].add_tincture('multicolor')
+                if not x.fielddivision[-1].add_tincture('multicolor'):
+                    raise BlazonException("Trying to add a division (%s) to a full field division." % (b))
             x.fielddivision.append(x.lasttincture)
             if x.fdunspec and isinstance(x.fdunspec[0], Field):
                 x.lasttincture.on_field = True
@@ -373,12 +374,15 @@ def parse(blaz):
                 if old_was in ('detail',):
                     continue
                 elif x.fielddivision:
-                    x.fielddivision[-1].add_tincture(b)
+                    while not x.fielddivision[-1].add_tincture(b):
+                        x.fielddivision.pop()
+                        if not x.fielddivision:
+                            raise BlazonExceptions("Too many tinctures for a field division, don't know what to do with '%s'!" % b)
                     continue
                 elif x.multi is not None:
                     x.lasttincture = t
                     if isinstance(x.multi.tincture, MultiTincture):
-                        x.multi.tincture.add_tincture(t)
+                        assert x.multi.tincture.add_tincture(t)
                     else:
                         x.multi.tincture = MultiTincture([x.multi.tincture, t])
                     continue
