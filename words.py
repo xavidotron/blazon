@@ -89,6 +89,7 @@ LOCATIONS = {
     }
 ARRANGEMENTS = {
     'one and two', 'two and one',
+    'two and two',
     'two , two and two',
     'two , two , and two',
 }

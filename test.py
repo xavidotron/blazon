@@ -288,5 +288,13 @@ class TestCases(unittest.TestCase):
              'MONSTER9WINGED:argent'],
             list(parse(u'Per chevron Or and vert, two pommes each charged with a triskelion of armored legs Or and a winged sea-fox naiant argent.').describe()))
 
+        self.assertEquals(
+            [u'PPALE:argent:~and sable',
+             'ROUNDEL:4:multicolor:primary',
+             'ROUNDEL:primary',
+             'CHIEF:1:vert:engrailed',
+             'BELL:3:argent'],
+            list(parse(u"Per pale argent and sable, four\n  roundels counterchanged two and two and on a chief engrailed vert\n  three hawk's bells argent.\n").describe()))
+
 if __name__ == "__main__":
     unittest.main()

@@ -427,7 +427,8 @@ def parse(blaz):
             continue
         #print ':', b, x.number
         if ('field treatment, %s' % b in CHARGES 
-            or 'field treatment, seme, %s' % b in CHARGES):
+            or ('field treatment, seme, %s' % b in CHARGES 
+                and b != 'roundels')):
             assert x.lasttincture is not None
             chgs = x.lasttincture.add_treatment(b)
             #print 'TREATMENT', chgs
