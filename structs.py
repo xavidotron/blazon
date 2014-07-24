@@ -218,9 +218,8 @@ class Group(list, Thingy):
                     yield l
 
 class Tincture(object):
-    def __init__(self, tincture, csscolor=None, fielddesc=None):
+    def __init__(self, tincture, fielddesc=None):
         self.tincture = tincture
-        self.css = csscolor
         self.fielddesc = fielddesc
         self.fieldextras = []
         self.chargeextras = []
@@ -229,7 +228,7 @@ class Tincture(object):
         self.tcnt = None
 
     def __str__(self):
-        return self.css
+        return self.tincture
     
     def add_treatment(self, treatment):
         if self.is_complex():

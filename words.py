@@ -6,21 +6,17 @@ import copy
 from structs import Tincture, Fieldless, Charge
 
 TINCTURES = {
-    'azure': Tincture('azure', 'blue', 'AZ'),
-    'de larmes': Tincture('azure', 'blue', 'AZ'),
-    'sable': Tincture('sable', 'black', 'SA'),
-    'de poix': Tincture('sable', 'black', 'SA'),
-    'purpure': Tincture('purpure', 'purple', 'PU'),
-    'de vin': Tincture('purpure', 'purple', 'PU'),
-    'gules': Tincture('gules', 'red', 'GU'),
-    'de sangue': Tincture('gules', 'red', 'GU'),
-    'vert': Tincture('vert', 'green', 'VT'),
-    "d'huile": Tincture('vert', 'green', 'VT'),
-    'argent': Tincture('argent', 'white', 'AR'),
-    "d'eau": Tincture('argent', 'white', 'AR'),
-    'or': Tincture('or', 'gold', 'OR'),
-    "d'or": Tincture('or', 'gold', 'OR'),
     '(fieldless)': Fieldless(),
+}
+TINCTURE_ALIASES = {
+    'azure': ['de larmes'],
+    'sable': ['de poix'],
+    'purpure': ['de vin'],
+    'gules': ['de sangue'],
+    'vert': ["d'huile"],
+    'argent': ["d'eau"],
+    'or': ["d'or"],
+    'counterermine': ['counter-ermine'],
     }
 
 COUNTERCHANGEDS = {
@@ -253,6 +249,9 @@ def loadwords():
                         tinct, rest = tinct.split('<', 1)
                     if tinct not in TINCTURES and tinct != 'brown':
                         TINCTURES[tinct] = Tincture(tinct)
+                        if tinct in TINCTURE_ALIASES:
+                            for a in TINCTURE_ALIASES[tinct]:
+                                TINCTURES[a] = Tincture(tinct)
                 elif l.startswith('|bird_type:'):
                     typ, post = l.split(':')
                     if '<' in post:
