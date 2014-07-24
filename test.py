@@ -322,5 +322,12 @@ class TestCases(unittest.TestCase):
              'FIRE AND FLAME:2:argent'],
             list(parse(u'Lozengy argent and gules, a cross of Saint Brigid and on a chief sable two flames argent.').describe()))
 
+        self.assertEquals(
+            ['CRAC:1:argent:primary:other cross',
+             'CRAC:1:primary:other cross',
+             'ERMINE SPOT:4:sable',
+             'FIELD TREATMENT-SEME (ERMINED):4:sable'],
+            list(parse(u'(Fieldless) A cross of Canterbury argent each arm charged with an ermine spot head to center sable.\n').describe()))
+
 if __name__ == "__main__":
     unittest.main()

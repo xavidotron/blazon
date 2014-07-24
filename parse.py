@@ -211,7 +211,7 @@ def parse(blaz):
 
     while len(blist) > 0:
         b = pop_blist(blist)
-        print b, [x.unspecified[-1].category if x.unspecified else None]
+        #print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
             if b in ('her', 'his', 'its'):
                 raise BlazonException(
@@ -305,6 +305,8 @@ def parse(blaz):
               and x.lastcharge.name == 'cross, as charge'
               and b in CROSS_FAMILIES):
             x.lastcharge.tags.append(CROSS_FAMILIES[b])
+            # Possibly clear an extraneous 'of'.
+            x.mod = None
             continue
         elif 'field division, %s' % b in CHARGES:
             #print 'field division', b
@@ -327,7 +329,7 @@ def parse(blaz):
                 x.lasttincture.on_field = True
             continue
         else:
-            assert x.mod in (None, 'of', 'on') or x.mod in WITHINS or x.mod in CHARGED_WITHS, x.mod
+            assert x.mod in (None, 'of', 'on') or x.mod in WITHS, x.mod
 
         if b in NUMBERS:
             #print 'NUMBER', b, x.mod
@@ -360,7 +362,7 @@ def parse(blaz):
                 if blist[0] in ('rays', 'points'):
                     blist.pop(0)
             else:
-                assert x.mod in (None, 'on') or x.mod in WITHINS or x.mod in CHARGED_WITHS, x.mod
+                assert x.mod in (None, 'on') or x.mod in WITHS, x.mod
                 x.number = NUMBERS[b]
             continue
 
@@ -572,7 +574,7 @@ def parse(blaz):
                 x.was = 'adjective'
             elif b in ('overall',):
                 x.primary = False
-            elif b in ('in',) or b in WITHINS or b in CHARGED_WITHS:
+            elif b in WITHS:
                 # Could still be a primary if this is:
                 # Sable, in base a wombat Or.
                 # or
@@ -580,6 +582,8 @@ def parse(blaz):
                 if x.lastcharge:
                     x.primary = False
                 x.mod = b
+                if WITHS[b] is not None:
+                    x.number = WITHS[b]
                 x.was = 'in'
             elif b in ('on', 'issuant', 'elongated'):
                 if x.was == 'charge':

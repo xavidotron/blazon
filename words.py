@@ -52,15 +52,17 @@ MAINTAININGS = {
     'distilling',
     }
 
-WITHINS = {
-    'within',
-    'all within',
-    'within and conjoined to',
-    }
-
-CHARGED_WITHS = {
-    'charged with',
-    'charged on the head with',
+# "Charged withs" or "withins".
+# Value is implied number, if any.
+WITHS = {
+    'in': None,
+    'within': None,
+    'all within': None,
+    'within and conjoined to': None,
+    'charged with': None,
+    'charged on the head with': None,
+    'each arm charged with a': 4,  # for crosses
+    'each arm charged with an': 4,  # for crosses
 }
 
 ATOPS = {
@@ -82,8 +84,6 @@ NUMBERS = {
     'nine': 9,
     'ten': 10,
     'a sheaf of': 3,
-    'each arm charged with a': 4,  # for crosses
-    'each arm charged with an': 4,  # for crosses
     }
 
 CHARGES = {}
@@ -435,8 +435,7 @@ def loadwords():
     ALL_WORDS.update(TINCTURES,
                      CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
-                     WITHINS, CROSS_FAMILIES,
-                     CHARGED_WITHS, ATOPS,
+                     WITHS, CROSS_FAMILIES, ATOPS,
                      DETAIL_ADJ, COUNTERCHANGEDS,
                      MISC_WORDS)
 
