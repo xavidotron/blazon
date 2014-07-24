@@ -92,6 +92,7 @@ LOCATIONS = {
     'sinister',
     'dexter chief',
     'sinister chief',
+    'canton',
     }
 ARRANGEMENTS = {
     'one and two', 'two and one',
