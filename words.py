@@ -7,12 +7,19 @@ from structs import Tincture, Fieldless, Charge
 
 TINCTURES = {
     'azure': Tincture('azure', 'blue', 'AZ'),
+    'de larmes': Tincture('azure', 'blue', 'AZ'),
     'sable': Tincture('sable', 'black', 'SA'),
+    'de poix': Tincture('sable', 'black', 'SA'),
     'purpure': Tincture('purpure', 'purple', 'PU'),
+    'de vin': Tincture('purpure', 'purple', 'PU'),
     'gules': Tincture('gules', 'red', 'GU'),
+    'de sangue': Tincture('gules', 'red', 'GU'),
     'vert': Tincture('vert', 'green', 'VT'),
+    "d'huile": Tincture('vert', 'green', 'VT'),
     'argent': Tincture('argent', 'white', 'AR'),
+    "d'eau": Tincture('argent', 'white', 'AR'),
     'or': Tincture('or', 'gold', 'OR'),
+    "d'or": Tincture('or', 'gold', 'OR'),
     '(fieldless)': Fieldless(),
     }
 
@@ -42,6 +49,7 @@ MAINTAININGS = {
     'maintaining on the outer swirl',
     'gorged of',
     'perched upon',
+    'distilling',
     }
 
 WITHINS = {
@@ -124,7 +132,9 @@ BIRD_POSTURE_ALIASES = {
 BIRD_TYPES = {}
 
 FISH_POSTURES = {}
-FISH_POSTURE_ALIASES = {}
+FISH_POSTURE_ALIASES = {
+    'hauriant': 'haurient',
+    }
 
 POSTURES = {}
 POSTURE_ALIASES = {'rampant': ['segreant', 'salient', 'clymant'],
@@ -161,13 +171,15 @@ IMPLIED_NUMBER = {
     'flames': 1,
     'flaunches': 2,
     }
-IMPLIED_TINCTURES = {'bezant': 'or',
-                     'plate': 'argent',
-                     'hurt': 'azure',
-                     'torteau': 'gules',
-                     'pellet': 'sable',
-                     'pomme': 'vert',
-                     'golpe': 'purpure'}
+IMPLIED_TINCTURES = {
+    'bezant': 'or',
+    'plate': 'argent',
+    'hurt': 'azure',
+    'torteau': 'gules',
+    'pellet': 'sable',
+    'pomme': 'vert',
+    'golpe': 'purpure',
+    }
 
 MULTIPLE_TINCTURES = {
     'flower, rose',  # for double rose
@@ -415,7 +427,8 @@ def loadwords():
                 if ftkey in CHARGES:
                     tinct.fielddesc = CHARGES[ftkey].desc
 
-    ALL_WORDS.update(CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
+    ALL_WORDS.update(TINCTURES,
+                     CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
                      WITHINS, CROSS_FAMILIES,
                      CHARGED_WITHS, ATOPS,

@@ -296,7 +296,7 @@ def parse(blaz):
             x.lastcharge.tags.append(BIRD_POSTURES[b])
             continue
         elif (x.lastcharge
-              and x.lastcharge.category in ('monster, sea',) 
+              and x.lastcharge.category in ('monster, sea', 'fish') 
               and b in FISH_POSTURES):
             x.lastcharge.tags.append(FISH_POSTURES[b])
             continue
