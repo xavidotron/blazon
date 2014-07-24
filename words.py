@@ -74,6 +74,8 @@ NUMBERS = {
     'nine': 9,
     'ten': 10,
     'a sheaf of': 3,
+    'each arm charged with a': 4,  # for crosses
+    'each arm charged with an': 4,  # for crosses
     }
 
 CHARGES = {}
@@ -130,8 +132,10 @@ POSTURE_ALIASES = {'rampant': ['segreant', 'salient', 'clymant'],
 
 CROSS_FAMILIES = {}
 CROSS_ALIASES = {
-    'flory': ['patonce'],
+    'crosslet': ['of saint julian'],
     'doubled': ['russian orthodox'],
+    'flory': ['patonce'],
+    'other cross': ['of saint brigid', 'canterbury'],
     }
 
 DEFAULT_CHARGE = Charge('?', '?')

@@ -50,3 +50,5 @@ sword: head knife
 spear: boar spear
 roundel, whole: wooden round shield
 tool, other: bakers peel
+tree, rounded shape: trees blasted
+flower, cup shape: lotus blossom

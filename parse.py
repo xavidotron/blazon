@@ -25,7 +25,7 @@ class BlazonException(Exception):
 class stor(object):
     pass
 
-def proc(x, b, orig_b, next):
+def proc(x, b, orig_b, blist):
     if b in CHARGES and CHARGES[b] is not None:
         #print 'CHARGE', b
         if x.number is None:
@@ -42,9 +42,10 @@ def proc(x, b, orig_b, next):
                     "I don't know if a '%s' is a %s or a %s (or both)!"
                     % (glued,
                        x.unspecified[-1].name, CHARGES[b].name),
-                    glued, options=[x.unspecified[-1].name, CHARGES[b].name])
+                    glued, options=[x.unspecified[-1].name, CHARGES[b].name],
+                    blist=blist)
         if x.betweenness is not None:
-            assert x.number > 1 or len(x.betweenness) > 0 or next == 'and',"You can't be between only one thing!"
+            assert x.number > 1 or len(x.betweenness) > 0 or (blist and blist[0] == 'and'),"You can't be between only one thing!"
             g = x.betweenness
         elif x.on.kid is None:
             g = x.on.kid = Group()
@@ -531,11 +532,10 @@ def parse(blaz):
         if x.number is None and b in IMPLIED_NUMBER:
             x.number = IMPLIED_NUMBER[b]
 
-        next = blist[0] if blist else None
-        res = proc(x, depluralize(b), b, next)
+        res = proc(x, depluralize(b), b, blist)
         #print res, depluralize(b)
         if not res and b.startswith('demi-'):
-            res = proc(x, depluralize(b[len('demi-'):]), b, next)
+            res = proc(x, depluralize(b[len('demi-'):]), b, blist)
             if res:
                 chg = x.unspecified[-1]
                 assert chg.category in ('monster', 'beast', 'bird'), chg

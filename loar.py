@@ -36,10 +36,17 @@ def add_entry(typ, entry):
 def prompt_n(letter, pattern, word, blist):
     print '%s.' % letter, pattern % word
     if blist:
-        print '%s2.' % letter, pattern % (word + ' ' + blist[0])
-        if len(blist) > 1:
-            print '%s3.' % letter, pattern % (word + ' ' + blist[0] + ' ' +
-                                              blist[1])
+        for i in xrange(len(word.split())):
+            if i == 0:
+                pref = ''
+                wd = word
+            else:
+                pref = i
+                wd = ' '.join(word.split()[i:])
+            print '%s%s1.' % (pref, letter), pattern % (wd + ' ' + blist[0])
+            if len(blist) > 1:
+                print '%s%s2.' % (pref, letter), pattern % (
+                    wd + ' ' + blist[0] + ' ' + blist[1])
 
 def prompt_for_edit(e):
     word = e.word
@@ -49,19 +56,27 @@ def prompt_for_edit(e):
         for d in e.dym:
             print d
         print
-    prompt_n('a', 'Treat "%s" as an alias for a charge.', word, e.blist)
     if options:
         for i in xrange(len(options)):
             print '%s. Treat "%s" as an alias for "%s".' % (i+1, word,
                                                             options[i])
         if len(options) == 2:
             print 'b. both'
+    prompt_n('a', 'Treat "%s" as an alias for a charge.', word, e.blist)
     prompt_n('d', 'Treat "%s" as detail.', word, e.blist)
     print 'x. quit'
     action = raw_input("Action: ")
     if len(action) > 1:
-        word += ' ' + ' '.join(e.blist[:int(action[1:]) - 1])
-    if action.startswith('a'):
+        if action[0].isdigit():
+            word = ' '.join(word.split()[int(action[0]):])
+            action = action[1:]
+        if len(action) > 1:
+            extra = int(action[1:])
+        else:
+            extra = 0
+        word += ' ' + ' '.join(e.blist[:extra])
+        action = action[0]
+    if action == 'a':
         import words
         charge = None
         while not charge or (charge not in words.CHARGES
@@ -74,7 +89,7 @@ def prompt_for_edit(e):
         else:
             name = words.CHARGES[charge].name
         add_entry('aliases', '%s: %s' % (name, word))
-    elif action.startswith('d'):
+    elif action == 'd':
         add_entry('details', word)
     elif action.isdigit():
         i = int(action) - 1
