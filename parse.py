@@ -450,13 +450,17 @@ def parse(blaz):
             x.was = 'field treatment'
             clear_fielddivision(x)
             continue
-        elif b == 'semy':
+        elif b in ('semy', 'orle'):
             assert blist.pop(0) == 'of'
             #print 'SEMY'
             charge = depluralize(pop_blist(blist))
             assert charge in CHARGES, charge
             chg = copy.deepcopy(CHARGES[charge])
             chg.number = 'seme'
+            if b == 'orle':
+                arr = copy.deepcopy(CHARGES['arrangement, in orle'])
+                chg.mods.append(arr)
+                x.unspecified.append(arr)
             if charge in IMPLIED_TINCTURES:
                 assert not x.unspecified, x.unspecified
                 chg.tincture = copy.deepcopy(

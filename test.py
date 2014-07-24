@@ -338,5 +338,14 @@ class TestCases(unittest.TestCase):
              'FIELD TREATMENT-SEME (ERMINED):4:sable'],
             list(parse(u'(Fieldless) A cross of Canterbury argent each arm charged with an ermine spot head to center sable.\n').describe()))
 
+        self.assertEquals(
+            ['SA',
+             'ROUNDEL:seme:argent:seme on field',
+             'ARRANGEMENT-IN ORLE:argent',
+             'FIELD TREATMENT-SEME (9OTHER):argent',
+             'HEADDOG:1:argent:primary',
+             'HEADDOG:1:primary'],
+            list(parse(u"Sable, a wolf's head erased contourny within an orle of roundels argent.").describe()))
+
 if __name__ == "__main__":
     unittest.main()
