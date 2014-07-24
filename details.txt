@@ -51,3 +51,6 @@ all
 triple-towered
 with bevor reversed
 each
+armored
+edge to sinister
+opening to dexter

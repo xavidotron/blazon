@@ -44,3 +44,6 @@ monster, sea, horse: sea-horse
 tree, rounded shape: ash-tree
 monster, sea, wolf: sea-fox
 leg, human: armored leg
+tool, eating: fork
+head, beast, bear: bears heads
+sword: head knife

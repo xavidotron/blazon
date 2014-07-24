@@ -42,27 +42,33 @@ def prompt_for_edit(e):
             print d
         print
     print 'a. Treat "%s" as an alias for a charge.' % word
+    if options:
+        for i in xrange(len(options)):
+            print '%s. Treat "%s" as an alias for "%s".' % (i+1, word,
+                                                            options[i])
+        if len(options) == 2:
+            print 'b. both'
     print 'd. Treat "%s" as detail.' % word
     if e.blist:
         print 'd2. Treat "%s %s" as detail.' % (word, e.blist[0])
         if len(e.blist) > 1:
             print 'd3. Treat "%s %s %s" as detail.' % (word, e.blist[0], 
                                                        e.blist[1])
-    if options:
-        for i in xrange(len(options)):
-            print '%s. %s' % (i+1, options[i])
-        if len(options) == 2:
-            print 'b. both'
     print 'x. quit'
     action = raw_input("Action: ")
     if action.startswith('a'):
         import words
         charge = None
-        while not charge or charge not in words.CHARGES:
+        while not charge or (charge not in words.CHARGES
+                             and charge not in words.DESC_TO_CHARGE):
             if charge:
                 print "%s is not a charge!" % charge
             charge = raw_input("Specify charge: ")
-        add_entry('aliases', '%s: %s' % (words.CHARGES[charge].name, word))
+        if charge in words.DESC_TO_CHARGE:
+            name = words.DESC_TO_CHARGE[charge].name
+        else:
+            name = words.CHARGES[charge].name
+        add_entry('aliases', '%s: %s' % (name, word))
     elif action.startswith('d'):
         entry = word
         if len(action) > 1:

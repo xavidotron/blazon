@@ -28,6 +28,7 @@ ANDS = {
     'conjoined in pale with',
     'conjoined to',
     'enfiling',
+    'between the head and tail',
 }
 
 SUSTAININGS = {
@@ -75,6 +76,7 @@ NUMBERS = {
     }
 
 CHARGES = {}
+DESC_TO_CHARGE = {}
 
 LOCATIONS = {
     'base',
@@ -135,12 +137,13 @@ DEFAULT_CHARGE = Charge('?', '?')
 
 ALIASES = {}
 MULTI = {
-    'bow and arrow': ['bow', 'arrow'],
-    'holly sprig': ['holly', 'sprig'],
-    'wreath of thorns': ['wreath', 'thorn'],
     'annulet of ivy': ['annulet', 'plant, vine'],
+    'bow and arrow': ['bow', 'arrow'],
     'elm hurst': ['tree, multiple', 'tree, rounded shape'],
+    'holly sprig': ['holly', 'sprig'],
+    'triskelion of legs': ['triskelion', 'leg, human*3'],
     'triskelion of armored legs': ['triskelion', 'leg, human*3'],
+    'wreath of thorns': ['wreath', 'thorn'],
 }
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
@@ -339,6 +342,8 @@ def loadwords():
                     for alt in ALIASES[name]: 
                         CHARGES[alt] = charge
 
+                assert desc not in DESC_TO_CHARGE, desc
+                DESC_TO_CHARGE[desc] = charge
             elif ' - see ' in l:
                 name, see = l.split(' - see ')
                 if see.startswith('also '):

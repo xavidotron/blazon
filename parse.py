@@ -144,7 +144,8 @@ def unknown(typ, word, blist=None):
             sugg = suggest(word)
             if sugg:
                 dym.append("Did you mean: %s" % (', '.join(sugg)))
-    raise BlazonException("Unknown %s: %s" % (typ, word), word, dym)
+    raise BlazonException("Unknown %s: %s" % (typ, word), word, dym,
+                          blist=blist)
 
 def dont_understand(w1, w2):
     dym = []
@@ -356,8 +357,8 @@ def parse(blaz):
 
         if b in TINCTURES:
             t = copy.deepcopy(TINCTURES[b])
+            check_no_adj(x)
             if not x.unspecified:
-                check_no_adj(x)
                 if x.was in ('field treatment', 'counterchange'):
                     continue
                 old_was = x.was
