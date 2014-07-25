@@ -450,8 +450,8 @@ def parse(blaz):
             x.was = 'field treatment'
             clear_fielddivision(x)
             continue
-        elif b in ('semy', 'orle'):
-            assert blist.pop(0) == 'of'
+        elif b in ('semy', 'orle') and blist[0] == 'of':
+            blist.pop(0)
             #print 'SEMY'
             charge = depluralize(pop_blist(blist))
             assert charge in CHARGES, charge

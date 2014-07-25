@@ -46,6 +46,7 @@ MAINTAININGS = {
     'gorged of',
     'perched upon',
     'distilling',
+    'attired of',
     }
 
 # "Charged withs" or "withins".
