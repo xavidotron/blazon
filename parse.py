@@ -81,7 +81,7 @@ def proc(x, b, orig_b, blist):
             c.tincture = copy.deepcopy(TINCTURES[IMPLIED_TINCTURES[b]])
         else:
             x.unspecified.append(c)
-            x.lastcharge = c
+            x.lastcharge.append(c)
         x.multi = None
         x.number = None
         x.adj = None
@@ -91,7 +91,7 @@ def proc(x, b, orig_b, blist):
         assert x.on.kid is not None,"Between with nothing before it!"
         x.primary = False
         x.betweenness = x.on.kid.between = Group()
-        x.lastcharge = None
+        x.lastcharge = []
     else:
         return False
     return True
@@ -204,7 +204,7 @@ def parse(blaz):
     x.fielddivision = []
     x.fdunspec = None
     x.multi = None
-    x.lastcharge = None
+    x.lastcharge = []
     x.lasttincture = None
     x.maintained = False
     x.primary = True
@@ -253,62 +253,74 @@ def parse(blaz):
         elif 'arrangement, %s' % b in CHARGES:
             chg = CHARGES['arrangement, %s' % b]
             if x.lastcharge:
-                x.lastcharge.mods.append(chg)
-                chg.number = x.lastcharge.number
-                chg.tags = x.lastcharge.tags
+                x.lastcharge[-1].mods.append(chg)
+                chg.number = x.lastcharge[-1].number
+                chg.tags = x.lastcharge[-1].tags
             else:
                 x.arrangement = chg
             x.unspecified.append(chg)
-            x.lastcharge = chg
+            x.lastcharge.append(chg)
             x.multi = None
             continue
         elif (x.lastcharge or x.adj) and b in ORIENTATIONS:
             if x.lastcharge:
-                x.lastcharge.tags.append(ORIENTATIONS[b])
+                x.lastcharge[-1].tags.append(ORIENTATIONS[b])
             else:
                 unknown("charge", x.adj)
             continue
         elif x.lastcharge and b in LINES:
-            x.lastcharge.tags.append(LINES[b])
+            x.lastcharge[-1].tags.append(LINES[b])
             continue
         elif x.fielddivision and b in LINES:
             x.fielddivision[-1].fielddesc += ':' + LINES[b]
             continue
         elif (x.lastcharge 
-              and x.lastcharge.category in ('monster', 'beast', 'bird',
-                                            'reptile')
+              and x.lastcharge[-1].category in ('monster', 'beast', 'bird',
+                                                'reptile')
               and 'arrangement, creature, %s' % b in CHARGES):
-            x.lastcharge.mods.append(
+            x.lastcharge[-1].mods.append(
                 CHARGES['arrangement, creature, %s' % b])
             continue
         elif (x.lastcharge
-              and x.lastcharge.category
-              and x.lastcharge.category.startswith('head, ')
+              and x.lastcharge[-1].category
+              and x.lastcharge[-1].category.startswith('head, ')
               and 'arrangement, head, %s' % b in CHARGES):
-            x.lastcharge.mods.append(
+            x.lastcharge[-1].mods.append(
                 CHARGES['arrangement, head, %s' % b])
             continue
+        elif b in POSTURES or b in BIRD_POSTURES or b in FISH_POSTURES:
+            if not x.lastcharge:
+                raise BlazonException("Posture '%s' with no charge to modify!"
+                                      % b, b)
+            orig_lastcharge = x.lastcharge[-1]
+            while (x.lastcharge
+                   and x.lastcharge[-1].category not in (
+                    'monster', 'beast', 'human', 'reptile', 'bird',
+                    'monster, sea', 'fish')
+                   and x.lastcharge[-1].name not in ('amphibian',)):
+                x.lastcharge.pop()
+            if not x.lastcharge:
+                raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, orig_lastcharge.name), b)
+            if ((x.lastcharge[-1].category in ('monster', 'beast', 'human',
+                                               'reptile')
+                 or x.lastcharge[-1].name in ('amphibian',))
+                and b in POSTURES):
+                x.lastcharge[-1].tags.append(POSTURES[b])
+                continue
+            elif (x.lastcharge[-1].category in ('bird', 'monster')
+                  and b in BIRD_POSTURES):
+                x.lastcharge[-1].tags.append(BIRD_POSTURES[b])
+                continue
+            elif (x.lastcharge[-1].category in ('monster, sea', 'fish') 
+                  and b in FISH_POSTURES):
+                x.lastcharge[-1].tags.append(FISH_POSTURES[b])
+                continue
+            else:
+                raise BlazonException("%s is a posture, but a '%s' is a %s, not an appropriate creature!" % (b, x.lastcharge[-1].name, x.lastcharge[-1].category or x.lastcharge[-1].name), b)
         elif (x.lastcharge
-              and (x.lastcharge.category in ('monster', 'beast', 'human',
-                                             'reptile')
-                   or x.lastcharge.name in ('amphibian',))
-              and b in POSTURES):
-            x.lastcharge.tags.append(POSTURES[b])
-            continue
-        elif (x.lastcharge
-              and x.lastcharge.category in ('bird', 'monster')
-              and b in BIRD_POSTURES):
-            x.lastcharge.tags.append(BIRD_POSTURES[b])
-            continue
-        elif (x.lastcharge
-              and x.lastcharge.category in ('monster, sea', 'fish') 
-              and b in FISH_POSTURES):
-            x.lastcharge.tags.append(FISH_POSTURES[b])
-            continue
-        elif (x.lastcharge
-              and x.lastcharge.name == 'cross, as charge'
+              and x.lastcharge[-1].name == 'cross, as charge'
               and b in CROSS_FAMILIES):
-            x.lastcharge.tags.append(CROSS_FAMILIES[b])
+            x.lastcharge[-1].tags.append(CROSS_FAMILIES[b])
             # Possibly clear an extraneous 'of'.
             x.mod = None
             continue
@@ -355,8 +367,8 @@ def parse(blaz):
                     blist = blist[4:]
                 if num >= 9:
                     num = '9 or more'
-                if x.lastcharge is not None:
-                    x.lastcharge.tags.append('of %s' % num)
+                if x.lastcharge:
+                    x.lastcharge[-1].tags.append('of %s' % num)
                 elif x.fielddivision:
                     pass
                 else:
@@ -393,11 +405,12 @@ def parse(blaz):
                     else:
                         x.multi.tincture = MultiTincture([x.multi.tincture, t])
                     continue
-                elif (x.lastcharge and x.lastcharge.number == 2
-                      and not isinstance(x.lastcharge.tincture, MultiTincture)):
+                elif (x.lastcharge and x.lastcharge[-1].number == 2
+                      and not isinstance(x.lastcharge[-1].tincture, 
+                                         MultiTincture)):
                     x.lasttincture = t
-                    x.lastcharge.tincture = MultiTincture([
-                        x.lastcharge.tincture, t])
+                    x.lastcharge[-1].tincture = MultiTincture([
+                        x.lastcharge[-1].tincture, t])
                     continue
                 else:
                     raise BlazonException(
@@ -467,7 +480,7 @@ def parse(blaz):
                     TINCTURES[IMPLIED_TINCTURES[charge]])
             else:
                 x.unspecified.append(chg)
-                x.lastcharge = chg
+                x.lastcharge.append(chg)
             x.multi = None
             x.lasttincture.add_extra(chg)
             x.was = 'tincture'
@@ -560,7 +573,7 @@ def parse(blaz):
                 demi.number = chg.number
                 chg.mods.append(demi)
                 x.unspecified.append(demi)
-                x.lastcharge = demi
+                x.lastcharge.append(demi)
                 x.multi = None
         if res:
             x.mod = None
@@ -618,10 +631,7 @@ def parse(blaz):
                     x.was = 'symbol'
                     pass
                 else:
-                    if (b in POSTURES or b in BIRD_POSTURES 
-                        or b in FISH_POSTURES):
-                        raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, x.lastcharge.name), b)
-                    elif b in ('to',):
+                    if b in ('to',):
                         dont_understand(b, blist[0], blist[1:])
                     elif (b.endswith('ed') and x.was == 'tincture'
                           and blist[0] in TINCTURES):

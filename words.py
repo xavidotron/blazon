@@ -107,7 +107,9 @@ PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore', 'flaunch', 'fillet'}
 
 BETWEEN = frozenset(('between',))
 
-MAJOR_DETAILS = {'winged': 'winged object'}
+MAJOR_DETAILS = {
+    'winged': 'winged object',
+    }
 
 DETAILS = set()
 CONTOURNYS = {
@@ -197,7 +199,10 @@ SEMYS = {
     'goutty': 'goute',
 }
 
-CHARGE_ADJ = {'winged': 'monster, winged'}
+CHARGE_ADJ = {
+    'winged': 'monster, winged',
+    'bat-winged': 'monster, winged'
+    }
 
 DETAIL_ADJ = {
     'empty',

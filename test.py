@@ -347,5 +347,12 @@ class TestCases(unittest.TestCase):
              'HEADDOG:1:primary'],
             list(parse(u"Sable, a wolf's head erased contourny within an orle of roundels argent.").describe()))
 
+        self.assertEquals(
+            ['FISH8OTHER:1:argent:primary:naiant to dexter:embowed',
+             'FISH8OTHER:1:primary:naiant to dexter:embowed',
+             'MONSTER9WINGED:argent',
+             'ARRANGEMENT-IN ANNULO:1:argent:primary:naiant to dexter:embowed'],
+            list(parse(u"(Fieldless) A bat-winged fish attired of a stag's antlers naiant embowed in annulo argent.").describe()))
+
 if __name__ == "__main__":
     unittest.main()
