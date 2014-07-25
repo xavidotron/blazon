@@ -34,7 +34,15 @@ def add_entry(typ, entry):
         fil.write(entry + '\n')
 
 def prompt_n(letter, pattern, word, blist):
-    print '%s.' % letter, pattern % word
+    from parse import PLURAL_MAP
+    opts = {}
+    def opt(lpat, wd):
+        print lpat % letter + '.', pattern % wd
+        opts[lpat % letter] = (letter, wd)
+    opt('%s', word)
+    for suf in PLURAL_MAP:
+        if word.endswith(suf):
+            opt('%s'+suf, word[:-len(suf)] + PLURAL_MAP[suf])
     if blist:
         for i in xrange(len(word.split())):
             if i == 0:
@@ -43,10 +51,10 @@ def prompt_n(letter, pattern, word, blist):
             else:
                 pref = i
                 wd = ' '.join(word.split()[i:])
-            print '%s%s1.' % (pref, letter), pattern % (wd + ' ' + blist[0])
+            opt(pref + '%s1', wd + ' ' + blist[0])
             if len(blist) > 1:
-                print '%s%s2.' % (pref, letter), pattern % (
-                    wd + ' ' + blist[0] + ' ' + blist[1])
+                opt(pref + '%s2', wd + ' ' + blist[0] + ' ' + blist[1])
+    return opts
 
 def prompt_for_edit(e):
     word = e.word
@@ -56,26 +64,24 @@ def prompt_for_edit(e):
         for d in e.dym:
             print d
         print
+    opts = {}
     if options:
         for i in xrange(len(options)):
             print '%s. Treat "%s" as an alias for "%s".' % (i+1, word,
                                                             options[i])
+            opts[str(i+1)] = (str(i+1), word)
         if len(options) == 2:
             print 'b. both'
-    prompt_n('a', 'Treat "%s" as an alias for a charge.', word, e.blist)
-    prompt_n('d', 'Treat "%s" as detail.', word, e.blist)
+            opts['b'] = ('b', word)
+    opts.update(
+        prompt_n('a', 'Treat "%s" as an alias for a charge.', word, e.blist))
+    opts.update(
+        prompt_n('d', 'Treat "%s" as detail.', word, e.blist))
     print 'x. quit'
     action = raw_input("Action: ")
-    if len(action) > 1:
-        if action[0].isdigit():
-            word = ' '.join(word.split()[int(action[0]):])
-            action = action[1:]
-        if len(action) > 1:
-            extra = int(action[1:])
-        else:
-            extra = 0
-        word += ' ' + ' '.join(e.blist[:extra])
-        action = action[0]
+    if action not in opts:
+        sys.exit(1)
+    action, word = opts[action]
     if action == 'a':
         import words
         charge = None
@@ -83,7 +89,8 @@ def prompt_for_edit(e):
                              and charge not in words.DESC_TO_CHARGE):
             if charge:
                 print "%s is not a charge!" % charge
-            charge = raw_input("Specify charge: ")
+            charge = raw_input("Specify charge that '%s' is an alias of: "
+                               % word)
         if charge in words.DESC_TO_CHARGE:
             name = words.DESC_TO_CHARGE[charge].name
         else:
@@ -94,10 +101,8 @@ def prompt_for_edit(e):
     elif action.isdigit():
         i = int(action) - 1
         add_entry('aliases', '%s: %s' % (options[i], word))
-    elif action == 'b':
-        assert False
     else:
-        sys.exit(1)
+        assert False, action
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 if __name__ == '__main__':

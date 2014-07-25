@@ -97,16 +97,14 @@ def proc(x, b, orig_b, blist):
     return True
 
 PLURAL_MAP = {
+    's': '',
+    'es': '',
     'ies': 'y',
     'ves': 'f',
 }
 
 def depluralize(chargename):
     if chargename not in CHARGES:
-        if chargename.endswith('s') and chargename[:-1] in CHARGES:
-            return chargename[:-1]
-        if chargename.endswith('es') and chargename[:-2] in CHARGES:
-            return chargename[:-2]
         for suf in PLURAL_MAP:
             if chargename.endswith(suf):
                 poss = chargename[:-len(suf)] + PLURAL_MAP[suf]
@@ -289,6 +287,7 @@ def parse(blaz):
                 CHARGES['arrangement, head, %s' % b])
             continue
         elif b in POSTURES or b in BIRD_POSTURES or b in FISH_POSTURES:
+            check_no_adj(x)
             if not x.lastcharge:
                 raise BlazonException("Posture '%s' with no charge to modify!"
                                       % b, b)
@@ -302,7 +301,8 @@ def parse(blaz):
             if not x.lastcharge:
                 raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, orig_lastcharge.name), b)
             if ((x.lastcharge[-1].category in ('monster', 'beast', 'human',
-                                               'reptile')
+                                               'reptile',
+                                               'monster, sea')
                  or x.lastcharge[-1].name in ('amphibian', 'ship'))
                 and b in POSTURES):
                 x.lastcharge[-1].tags.append(POSTURES[b])
@@ -467,7 +467,9 @@ def parse(blaz):
             blist.pop(0)
             #print 'SEMY'
             charge = depluralize(pop_blist(blist))
-            assert charge in CHARGES, charge
+            if charge not in CHARGES:
+                raise BlazonException("Semy of unknown charge: '%s'" % charge,
+                                      charge)
             chg = copy.deepcopy(CHARGES[charge])
             chg.number = 'seme'
             if b == 'orle':
