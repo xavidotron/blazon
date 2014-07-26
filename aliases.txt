@@ -57,3 +57,6 @@ leaf: seeblätter
 monster, sea, lion: sea-lion
 shell, other: nautilus shell
 chair: klinia (roman dining couch)
+tool, textile: spools of thread
+wheel: waterwheel
+mirror: handmirror
