@@ -449,10 +449,13 @@ def loadwords():
         for l in fil:
             if l.strip() and not l.startswith('#'):
                 k, v = l.strip().split(': ')
+                tags = v.split(':')
+                v = tags.pop(0)
                 assert v in CHARGES, v
                 assert (k not in CHARGES or CHARGES[k] is None
                         or CHARGES[k].name == v), (k, v, CHARGES[k].name)
-                CHARGES[k] = CHARGES[v]
+                CHARGES[k] = copy.deepcopy(CHARGES[v])
+                CHARGES[k].tags += tags
 
     for w in MULTI:
         assert w not in CHARGES

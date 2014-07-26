@@ -60,5 +60,4 @@ klinia (roman dining couch): chair
 spools of thread: tool, textile
 waterwheel: wheel
 handmirror: mirror
-# :complex line
-cross nowy: cross, throughout
+cross nowy: cross, throughout:complex line

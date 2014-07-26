@@ -363,5 +363,12 @@ class TestCases(unittest.TestCase):
              'ARRANGEMENT9BEAST&MONSTER,RESPECTANT'],
             list(parse(u'Per pale azure ermined argent and argent ermined azure, two owls respectant counterchanged argent and azure.').describe()))
 
+        self.assertEquals(
+            ['AR',
+             u'CROSS:1:azure:complex line:primary',
+             u'CROSS:1:complex line:primary',
+             'KNOT AND ROPE:1:or'],
+            list(parse(u'Argent, on a cross nowy azure a trefoil knot Or.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
