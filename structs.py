@@ -295,10 +295,9 @@ class Tincture(object):
         self.fielddesc = fieldcharge.desc
         self.fieldcharge = fieldcharge
         self.fdtincts = []
-        self.max_tinctures = 2
         if self.tincture != 'multicolor':
             from words import TINCTURES
-            assert self.add_tincture(copy.deepcopy(TINCTURES[self.tincture]))
+            self.add_tincture(copy.deepcopy(TINCTURES[self.tincture]))
             self.tincture = 'multicolor'
 
     def is_complex(self):
@@ -312,12 +311,7 @@ class Tincture(object):
         if len(self.fdtincts) < 2:
             self.fdtincts.append(tincture)
         else:
-            if self.max_tinctures > 2:
-                self.fdtincts = [Tincture('multicolor'), Tincture('multicolor')]
-            else:
-                #assert False, (self.fielddesc, self.tcnt, tincture)
-                return False
-        return True
+            self.fdtincts = [Tincture('multicolor'), Tincture('multicolor')]
 
 class Fieldless(Tincture):
     def __init__(self):
@@ -343,4 +337,3 @@ class MultiTincture(Tincture):
     
     def add_tincture(self, tincture):
         self.tincts.append(tincture)
-        return True

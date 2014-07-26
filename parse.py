@@ -344,11 +344,11 @@ def parse(blaz):
                     x.lasttincture.max_tinctures = 4
                     x.lasttincture.fieldextras.append(charge)
             if x.fielddivision:
-                if not x.fielddivision[-1].add_tincture(x.lasttincture):
-                    raise BlazonException("Trying to add a division (%s) to a full field division." % (b))
+                x.fielddivision[-1].add_tincture(x.lasttincture)
             x.fielddivision.append(x.lasttincture)
             if x.fdunspec and isinstance(x.fdunspec[0], Field):
                 x.lasttincture.on_field = True
+            x.was = 'field division'
             continue
         else:
             assert x.mod in (None, 'of', 'on') or x.mod in WITHS, x.mod
@@ -389,7 +389,7 @@ def parse(blaz):
             continue
 
         if b in TINCTURES:
-            #print 'TINCTURE', b, x.unspecified
+            #print 'TINCTURE', b, x.unspecified, x.was
             t = copy.deepcopy(TINCTURES[b])
             check_no_adj(x)
             if not x.unspecified:
@@ -400,18 +400,18 @@ def parse(blaz):
                 if old_was in ('detail',):
                     continue
                 elif x.fielddivision:
-                    while not x.fielddivision[-1].add_tincture(t):
-                        x.fielddivision.pop()
-                        if not x.fielddivision:
-                            raise BlazonException("Too many tinctures for a field division, don't know what to do with '%s'!" % b)
+                    x.fielddivision[-1].add_tincture(t)
                     if x.fielddivision[-1].on_field:
                         t.on_field = True
                     x.lasttincture = t
+                    if old_was == 'and' and len(x.fielddivision) > 1:
+                        #print 'popping at', b
+                        x.fielddivision.pop()
                     continue
                 elif x.multi is not None:
                     x.lasttincture = t
                     if isinstance(x.multi.tincture, MultiTincture):
-                        assert x.multi.tincture.add_tincture(t)
+                        x.multi.tincture.add_tincture(t)
                     else:
                         x.multi.tincture = MultiTincture([x.multi.tincture, t])
                     continue
