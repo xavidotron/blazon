@@ -4,10 +4,10 @@ def coalesce(l):
     l = list(l)
     idx = 0
     while idx < len(l) - 1:
-        if l[idx].combinable_with(l[idx + 1]):
-            if l[idx + 1].number is not None:
-                l[idx].number += l[idx + 1].number
-            del l[idx + 1]
+        comb = l[idx].combine_with(l[idx + 1])
+        if comb is not None:
+            del l[idx:idx + 2]
+            l.insert(idx, comb)
         else:
             idx += 1
     return l
@@ -16,6 +16,10 @@ class Thingy(object):
     name = None
     tincture = None
     between = None
+
+    # Return None or a combined thing.
+    def combine_with(self, other):
+        return None
 
 class Parent(Thingy):
     kid = None
@@ -92,11 +96,19 @@ class Charge(Thingy):
         self.iffy_tags = []
         self.seealso = []
 
-    def combinable_with(self, other):
-        return (other.name == self.name and other.maintained == self.maintained
-                and self.tincture == other.tincture and self.mods == other.mods
-                and self.tags == other.tags and self.between == other.between
-                and self.iffy_tags == other.iffy_tags)
+    def combine_with(self, other):
+        if (other.name == self.name and other.maintained == self.maintained
+            and self.mods == other.mods
+            and self.tags == other.tags and self.between == other.between
+            and self.iffy_tags == other.iffy_tags):
+            ret = copy.deepcopy(self)
+            if other.number is not None:
+                ret.number += other.number
+            if self.tincture != other.tincture:
+                ret.tincture = MultiTincture([self.tincture, other.tincture])
+            return ret
+        else:
+            return None
     
     def render(self):
         return """<circle cx="50" cy="50" r="50" fill="%s" /><text x="5" y="40" fill="grey">%s</text>""" % (self.tincture, self.name)
@@ -225,14 +237,16 @@ class Tincture(object):
         self.chargeextras = []
         self.on_field = False
         self.fieldcharge = None
-        self.tcnt = None
+        self.fdtincts = None
 
     def __str__(self):
         return self.tincture
     
     def add_treatment(self, treatment):
         if self.is_complex():
-            assert self.add_tincture('multicolor')
+            self.fdtincts[-1].add_treatment(treatment)
+            return
+        self.tincture = 'multicolor'
         from words import CHARGES
         if 'field treatment, %s' % treatment in CHARGES:
             a = copy.deepcopy(CHARGES['field treatment, %s' % treatment])
@@ -257,32 +271,49 @@ class Tincture(object):
         self.chargeextras.append(extra)
 
     def fielddescription(self):
-        yield self.fielddesc
+        fd = self.fielddesc
+        if self.fdtincts:
+            fd += ':' + self.fdtincts[0].tincture
+            if len(self.fdtincts) > 1:
+                fd += ':~and ' + self.fdtincts[1].tincture
+        yield fd
         for e in self.fieldextras:
             for d in e.describe():
                 yield d
+        if self.fdtincts:
+            fdextras = []
+            for fdt in self.fdtincts:
+                fdextras += fdt.fieldextras
+            for e in coalesce(fdextras):
+                for d in e.describe():
+                    yield d
 
     def complicate(self, fieldcharge):
         self.fielddesc = fieldcharge.desc
         self.fieldcharge = fieldcharge
-        self.tcnt = 0
+        self.fdtincts = []
+        self.max_tinctures = 2
         if self.tincture != 'multicolor':
-            assert self.add_tincture(self.tincture)
+            from words import TINCTURES
+            assert self.add_tincture(copy.deepcopy(TINCTURES[self.tincture]))
             self.tincture = 'multicolor'
 
     def is_complex(self):
         return self.fieldcharge is not None
 
     def add_tincture(self, tincture):
+        #print 'a_t', tincture
         assert self.is_complex()
-        if self.tcnt == 0:
-            self.fielddesc += ':' + tincture
-        elif self.tcnt == 1:
-            self.fielddesc += ':~and ' + tincture
+        assert self.fdtincts is not None
+        assert isinstance(tincture, Tincture), tincture
+        if len(self.fdtincts) < 2:
+            self.fdtincts.append(tincture)
         else:
-            #assert False, (self.fielddesc, self.tcnt, tincture)
-            return False
-        self.tcnt += 1
+            if self.max_tinctures > 2:
+                self.fdtincts = [Tincture('multicolor'), Tincture('multicolor')]
+            else:
+                #assert False, (self.fielddesc, self.tcnt, tincture)
+                return False
         return True
 
 class Fieldless(Tincture):

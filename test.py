@@ -246,7 +246,7 @@ class TestCases(unittest.TestCase):
             list(parse(u"Gules, in fess two lamb's heads fesswise respectant erased conjoined at the forehead argent between in pale two mullets Or.").describe()))
 
         self.assertEquals(
-            [u'FIELD DIV.-VETU:argent:ploye:~and azure',
+            [u'FIELD DIV.-VETU:ploye:argent:~and azure',
              'REPTILE-SNAKE:2:sable:primary',
              'REPTILE-SNAKE:2:primary',
              'ARRANGEMENT9BEAST&MONSTER,RESPECTANT'],
@@ -353,6 +353,15 @@ class TestCases(unittest.TestCase):
              'MONSTER9WINGED:argent',
              'ARRANGEMENT-IN ANNULO:1:argent:primary:naiant to dexter:embowed'],
             list(parse(u"(Fieldless) A bat-winged fish attired of a stag's antlers naiant embowed in annulo argent.").describe()))
+
+        self.assertEquals(
+            ['PPALE:multicolor:~and multicolor',
+             'FIELD TREATMENT-SEME (ERMINED):multicolor',
+             'BIRD:2:multicolor:primary:owl',
+             'BIRD9DEMI:2:multicolor:primary:owl',
+             'BIRD:2:primary',
+             'ARRANGEMENT9BEAST&MONSTER,RESPECTANT'],
+            list(parse(u'Per pale azure ermined argent and argent ermined azure, two owls respectant counterchanged argent and azure.').describe()))
 
 if __name__ == "__main__":
     unittest.main()

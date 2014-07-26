@@ -324,10 +324,13 @@ def parse(blaz):
             # Possibly clear an extraneous 'of'.
             x.mod = None
             continue
-        elif 'field division, %s' % b in CHARGES:
+        elif 'field division, %s' % b in CHARGES or b in VAIRYS:
             #print 'field division', b
             check_no_adj(x)
-            charge = CHARGES['field division, %s' % b]
+            if b in VAIRYS:
+                charge = copy.deepcopy(CHARGES['field treatment, %s' % b])
+            else:
+                charge = CHARGES['field division, %s' % b]
             if not x.fdunspec:
                 if x.unspecified:
                     x.fdunspec = x.unspecified
@@ -337,8 +340,11 @@ def parse(blaz):
                     x.lasttincture.complicate(charge)
             else:
                 x.lasttincture = ComplexTincture(charge)
+                if b in VAIRYS:
+                    x.lasttincture.max_tinctures = 4
+                    x.lasttincture.fieldextras.append(charge)
             if x.fielddivision:
-                if not x.fielddivision[-1].add_tincture('multicolor'):
+                if not x.fielddivision[-1].add_tincture(x.lasttincture):
                     raise BlazonException("Trying to add a division (%s) to a full field division." % (b))
             x.fielddivision.append(x.lasttincture)
             if x.fdunspec and isinstance(x.fdunspec[0], Field):
@@ -383,6 +389,7 @@ def parse(blaz):
             continue
 
         if b in TINCTURES:
+            #print 'TINCTURE', b, x.unspecified
             t = copy.deepcopy(TINCTURES[b])
             check_no_adj(x)
             if not x.unspecified:
@@ -393,10 +400,13 @@ def parse(blaz):
                 if old_was in ('detail',):
                     continue
                 elif x.fielddivision:
-                    while not x.fielddivision[-1].add_tincture(b):
+                    while not x.fielddivision[-1].add_tincture(t):
                         x.fielddivision.pop()
                         if not x.fielddivision:
-                            raise BlazonExceptions("Too many tinctures for a field division, don't know what to do with '%s'!" % b)
+                            raise BlazonException("Too many tinctures for a field division, don't know what to do with '%s'!" % b)
+                    if x.fielddivision[-1].on_field:
+                        t.on_field = True
+                    x.lasttincture = t
                     continue
                 elif x.multi is not None:
                     x.lasttincture = t
@@ -452,16 +462,16 @@ def parse(blaz):
             x.unspecified = []
             x.was = 'counterchange'
             continue
-        #print ':', b, x.number
-        if ('field treatment, %s' % b in CHARGES 
-            or ('field treatment, seme, %s' % b in CHARGES 
-                and b != 'roundels')):
+        #print ':', b, x.number, x.unspecified
+        if (('field treatment, %s' % b in CHARGES 
+             or 'field treatment, seme, %s' % b in CHARGES)
+            and b not in ('roundels',) and b not in VAIRYS):
             assert x.lasttincture is not None
             chgs = x.lasttincture.add_treatment(b)
-            #print 'TREATMENT', chgs
+            #print 'TREATMENT', chgs, 'added to', x.lasttincture.fielddesc
             x.unspecified += chgs
             x.was = 'field treatment'
-            clear_fielddivision(x)
+            #clear_fielddivision(x)
             continue
         elif b in ('semy', 'orle') and blist[0] == 'of':
             blist.pop(0)
@@ -486,6 +496,7 @@ def parse(blaz):
             x.multi = None
             x.lasttincture.add_extra(chg)
             x.was = 'tincture'
+            #print 'SEMY LT', x.lasttincture, x.lasttincture.on_field
             if x.lasttincture.on_field:
                 ft = copy.deepcopy(CHARGES['field treatment, seme, other'])
                 x.unspecified.append(ft)

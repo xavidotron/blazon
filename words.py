@@ -202,6 +202,12 @@ SEMYS = {
     'goutty': 'goute',
 }
 
+# vairy is a field treatment that's written like a field division
+VAIRYS = {
+    'vairy',
+    'counter-vairy',
+}
+
 CHARGE_ADJ = {
     'winged': 'monster, winged',
     'bat-winged': 'monster, winged'
