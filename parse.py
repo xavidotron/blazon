@@ -295,14 +295,15 @@ def parse(blaz):
             while (x.lastcharge
                    and x.lastcharge[-1].category not in (
                     'monster', 'beast', 'human', 'reptile', 'bird',
-                    'monster, sea', 'fish')
+                    'monster, sea', 'fish', 'flower')
                    and x.lastcharge[-1].name not in ('amphibian', 'ship')):
                 x.lastcharge.pop()
             if not x.lastcharge:
                 raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, orig_lastcharge.name), b)
             if ((x.lastcharge[-1].category in ('monster', 'beast', 'human',
                                                'reptile',
-                                               'monster, sea')
+                                               'monster, sea',
+                                               'flower')
                  or x.lastcharge[-1].name in ('amphibian', 'ship'))
                 and b in POSTURES):
                 x.lastcharge[-1].tags.append(POSTURES[b])
