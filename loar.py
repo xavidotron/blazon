@@ -100,12 +100,12 @@ def prompt_for_edit(e):
             name = words.DESC_TO_CHARGE[charge].name
         else:
             name = words.CHARGES[charge].name
-        add_entry('aliases', '%s: %s' % (name, word))
+        add_entry('aliases', '%s: %s' % (word, name))
     elif action == 'd':
         add_entry('details', word)
     elif action.isdigit():
         i = int(action) - 1
-        add_entry('aliases', '%s: %s' % (options[i], word))
+        add_entry('aliases', '%s: %s' % (word, options[i]))
     else:
         assert False, action
     os.execl(sys.executable, sys.executable, *sys.argv)

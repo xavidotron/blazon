@@ -61,3 +61,4 @@ spools of thread: tool, textile
 waterwheel: wheel
 handmirror: mirror
 cross nowy: cross, throughout:complex line
+saltire: saltire, throughout
