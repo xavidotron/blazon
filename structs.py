@@ -243,11 +243,14 @@ class Tincture(object):
         return self.tincture
     
     def add_treatment(self, treatment):
+        from words import CHARGES, FURS
         if self.is_complex():
             self.fdtincts[-1].add_treatment(treatment)
             return
-        self.tincture = 'multicolor'
-        from words import CHARGES
+        if treatment in FURS:
+            self.tincture = 'fur'
+        else:
+            self.tincture = 'multicolor'
         if 'field treatment, %s' % treatment in CHARGES:
             a = copy.deepcopy(CHARGES['field treatment, %s' % treatment])
         else:

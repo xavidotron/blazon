@@ -19,6 +19,10 @@ TINCTURE_ALIASES = {
     'counterermine': ['counter-ermine'],
     }
 
+FURS = {
+    'ermined',
+}
+
 COUNTERCHANGEDS = {
     'counterchanged',
     'counter-changed',

@@ -355,7 +355,7 @@ class TestCases(unittest.TestCase):
             list(parse(u"(Fieldless) A bat-winged fish attired of a stag's antlers naiant embowed in annulo argent.").describe()))
 
         self.assertEquals(
-            ['PPALE:multicolor:~and multicolor',
+            ['PPALE:fur:~and fur',
              'FIELD TREATMENT-SEME (ERMINED):multicolor',
              'BIRD:2:multicolor:primary:owl',
              'BIRD9DEMI:2:multicolor:primary:owl',
