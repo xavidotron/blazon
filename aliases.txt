@@ -1,62 +1,64 @@
-bird, whole: bird
-charge treatment, seme, crusily: charge treatment, seme, crusilly
-cross, as charge: cross
-cross, throughout: cross throughout
-field division, vetu: field division, vêtu
-field treatment, seme, crusily: field treatment, seme, crusilly
-field treatment, vairy: field treatment, vair
-fleur de lys: fleurs-de-lis
-fleur de lys: fleur-de-lys
-fleur de lys: fleurs-de-lys
-flower, cup shape: tulip blossom
-flower, multifloreted: foxglove
-gate: torii gate
-head, beast, goat: lamb's head
-head, human: head
-helmet: sallet
-jewelry: rosary
-jewelry: paternoster
-knot: quatrefoil knot
-leg, monster: dragon's jamb
-lock: padlock
-mollusk, octopus: polypus
-monster, humanoid: frauenadler
-monster, sea, other: sea-stag
-mullet: mullet, charged
-mullet: spur rowel
-paw print: pawprint
-plant, heather: sprig of heather
-plant, wheat: ears of wheat
-plant, wheat: ear of wheat
-roundel, whole: roundel
-ship, part: sail
-sun, whole: sun, whole, charged
-sun, whole: sun
-tool, other: baker's peel
+bird: bird, whole
+charge treatment, seme, crusilly: charge treatment, seme, crusily
+cross: cross, as charge
+cross throughout: cross, throughout
+field division, vêtu: field division, vetu
+field treatment, seme, crusilly: field treatment, seme, crusily
+field treatment, vair: field treatment, vairy
+fleurs-de-lis: fleur de lys
+fleur-de-lys: fleur de lys
+fleurs-de-lys: fleur de lys
+tulip blossom: flower, cup shape
+foxglove: flower, multifloreted
+torii gate: gate
+lamb's head: head, beast, goat
+head: head, human
+sallet: helmet
+rosary: jewelry
+paternoster: jewelry
+quatrefoil knot: knot
+dragon's jamb: leg, monster
+padlock: lock
+polypus: mollusk, octopus
+frauenadler: monster, humanoid
+sea-stag: monster, sea, other
+mullet, charged: mullet
+spur rowel: mullet
+pawprint: paw print
+sprig of heather: plant, heather
+ears of wheat: plant, wheat
+ear of wheat: plant, wheat
+roundel: roundel, whole
+sail: ship, part
+sun, whole, charged: sun, whole
+sun: sun, whole
+baker's peel: tool, other
 # This is the default tree.
-tree, rounded shape: tree
-tree, rounded shape: tree blasted 
-wreath, not laurel: wreath
-horn, creature: ram's horns respectant
-monster, sea, horse: sea-horse
-tree, rounded shape: ash-tree
-monster, sea, wolf: sea-fox
-leg, human: armored leg
-tool, eating: fork
-head, beast, bear: bears heads
-sword: head knife
-spear: boar spear
-roundel, whole: wooden round shield
-tool, other: bakers peel
-tree, rounded shape: trees blasted
-flower, cup shape: lotus blossom
-plant, sprig: juniper sprig
-tree, willow: willow tree
-fish, other: fish
-leaf: seeblätter
-monster, sea, lion: sea-lion
-shell, other: nautilus shell
-chair: klinia (roman dining couch)
-tool, textile: spools of thread
-wheel: waterwheel
-mirror: handmirror
+tree: tree, rounded shape
+tree blasted : tree, rounded shape
+wreath: wreath, not laurel
+ram's horns respectant: horn, creature
+sea-horse: monster, sea, horse
+ash-tree: tree, rounded shape
+sea-fox: monster, sea, wolf
+armored leg: leg, human
+fork: tool, eating
+bears heads: head, beast, bear
+head knife: sword
+boar spear: spear
+wooden round shield: roundel, whole
+bakers peel: tool, other
+trees blasted: tree, rounded shape
+lotus blossom: flower, cup shape
+juniper sprig: plant, sprig
+willow tree: tree, willow
+fish: fish, other
+seeblätter: leaf
+sea-lion: monster, sea, lion
+nautilus shell: shell, other
+klinia (roman dining couch): chair
+spools of thread: tool, textile
+waterwheel: wheel
+handmirror: mirror
+# :complex line
+cross nowy: cross, throughout

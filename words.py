@@ -161,7 +161,6 @@ DEFAULT_CHARGE = Charge('?', '?')
 
 #SYMBOLS = {'elder futhark'}
 
-ALIASES = {}
 MULTI = {
     'annulet of ivy': ['annulet', 'plant, vine'],
     'bow and arrow': ['bow', 'arrow'],
@@ -230,6 +229,7 @@ DETAIL_ADJ = {
 BLACKLIST = {
     'throughout',
     'cross of',
+    'fish', # From head, fish
     }
 
 # These we want to treat as words for purposes of spellchecking, but we only
@@ -251,16 +251,6 @@ def loadwords():
         for l in fil:
             if l.strip() and not l.startswith('#'):
                 DETAILS.add(l.strip())
-
-    with codecs.open(os.path.join(os.path.dirname(__file__), 'aliases.txt'),
-              encoding='utf-8') as fil:
-        for l in fil:
-            if l.strip() and not l.startswith('#'):
-                k, v = l.strip().split(': ')
-                if k in ALIASES:
-                    ALIASES[k].append(v)
-                else:
-                    ALIASES[k] = [v]
 
     with open(os.path.join(os.path.dirname(__file__), 'my.cat')) as mydotcat:
         for l in mydotcat:
@@ -382,9 +372,6 @@ def loadwords():
                 else:
                     charge = Charge(name, desc)
                 CHARGES[name] = charge
-                if name in ALIASES:
-                    for alt in ALIASES[name]: 
-                        CHARGES[alt] = charge
 
                 assert desc not in DESC_TO_CHARGE, desc
                 DESC_TO_CHARGE[desc] = charge
@@ -401,16 +388,21 @@ def loadwords():
                 seenames = see.split(' and ')
                 sees = []
                 for n in seenames:
+                    # We don't handle sees referring to a see later in the
+                    # alphabet; so sees referring to other sees need correction.
+                    CORRECTIONS = {
+                        'fish, lobster': 'arthropod, lobster',
+                        'peripheral on ly': 'peripheral only',
+                        'bird': 'bird, whole',
+                        'sun': 'sun, whole',
+                        'roundel': 'roundel, whole',
+                        }
+                    if n in CORRECTIONS:
+                        n = CORRECTIONS[n]
                     if n in CATEGORIES and n not in CHARGES:
                         sees += CATEGORIES[n]
                         assert None not in sees, (sees, n)
                     else:
-                        # We don't handle sees referring to a see later in the
-                        # alphabet.
-                        CORRECTIONS = {'fish, lobster': 'arthropod, lobster',
-                                       'peripheral on ly': 'peripheral only'}
-                        if n in CORRECTIONS:
-                            n = CORRECTIONS[n]
                         if n not in CHARGES:
                             assert ', ' in n, n
                             most, lastbit = n.rsplit(', ', 1)
@@ -419,12 +411,15 @@ def loadwords():
                                 chargemod.number = 'seme'
                             elif lastbit in LINES and most in PERIPHERALS:
                                 chargemod.tags.append(LINES[lastbit])
+                            elif lastbit == 'charged':
+                                chargemod.tags.append('charged')
                             else:
                                 assert most == 'cross, as charge', n
                                 assert lastbit in CROSS_FAMILIES, n
                                 chargemod.tags.append(CROSS_FAMILIES[lastbit])
                             sees.append(chargemod)
                         else:
+                            assert CHARGES[n] is not None, n
                             sees.append(CHARGES[n])
                         assert None not in sees, (sees, n)
                 if also:
@@ -437,9 +432,6 @@ def loadwords():
                     CHARGES[name] = copy.deepcopy(first)
                     # Copying the seealso of just the first is weird
                     CHARGES[name].seealso = []
-                    if name in ALIASES:
-                        for alt in ALIASES[name]:
-                            CHARGES[alt] = CHARGES[name]
                 if 'bird, whole' in seenames and name in BIRD_TYPES:
                     CHARGES[name].iffy_tags.append(BIRD_TYPES[name])
                 for s in sees:
@@ -452,6 +444,16 @@ def loadwords():
             else:
                 assert False, l
     
+    with codecs.open(os.path.join(os.path.dirname(__file__), 'aliases.txt'),
+              encoding='utf-8') as fil:
+        for l in fil:
+            if l.strip() and not l.startswith('#'):
+                k, v = l.strip().split(': ')
+                assert v in CHARGES, v
+                assert (k not in CHARGES or CHARGES[k] is None
+                        or CHARGES[k].name == v), (k, v, CHARGES[k].name)
+                CHARGES[k] = CHARGES[v]
+
     for w in MULTI:
         assert w not in CHARGES
         CHARGES[w] = copy.deepcopy(CHARGES[MULTI[w][0]])
