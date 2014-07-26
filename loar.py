@@ -35,6 +35,7 @@ def add_entry(typ, entry):
 
 def prompt_n(letter, pattern, word, blist):
     from parse import PLURAL_MAP
+    from words import MISC_WORDS
     opts = {}
     def opt(lpat, wd):
         print lpat % letter + '.', pattern % wd
@@ -49,11 +50,15 @@ def prompt_n(letter, pattern, word, blist):
                 pref = ''
                 wd = word
             else:
-                pref = i
+                pref = str(i)
                 wd = ' '.join(word.split()[i:])
-            opt(pref + '%s1', wd + ' ' + blist[0])
-            if len(blist) > 1:
-                opt(pref + '%s2', wd + ' ' + blist[0] + ' ' + blist[1])
+            limit = 2
+            n = 0
+            while n < limit and n < len(blist):
+                opt(pref + '%s' + str(n + 1), wd + ' ' + ' '.join(blist[0:n+1]))
+                if blist[n] in MISC_WORDS:
+                    limit += 1
+                n += 1
     return opts
 
 def prompt_for_edit(e):

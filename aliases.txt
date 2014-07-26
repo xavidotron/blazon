@@ -55,3 +55,5 @@ tree, willow: willow tree
 fish, other: fish
 leaf: seeblätter
 monster, sea, lion: sea-lion
+shell, other: nautilus shell
+chair: klinia (roman dining couch)

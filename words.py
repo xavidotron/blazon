@@ -51,6 +51,7 @@ MAINTAININGS = {
     'perched upon',
     'distilling',
     'attired of',
+    'grasping',
     }
 
 # "Charged withs" or "withins".
@@ -70,6 +71,7 @@ ATOPS = {
     'atop',
     'fastened to',
     'hanging from',
+    'on',  # Can also be used in other ways.
 }
 
 NUMBERS = {
@@ -232,7 +234,8 @@ BLACKLIST = {
 
 # These we want to treat as words for purposes of spellchecking, but we only
 # understand them in certain manually-coded contexts.
-MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with'}
+MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
+              'in', 'the'}
 
 ALL_WORDS = set()
 
