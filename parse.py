@@ -102,20 +102,27 @@ def proc(x, b, orig_b, blist):
         return False
     return True
 
-PLURAL_MAP = {
-    's': '',
-    'es': '',
-    'ies': 'y',
-    'ves': 'f',
-}
+PLURALS = [
+    ('ves', 'f'),
+    ('ies', 'y'),
+    ('es', ''),
+    ('s', ''),
+]
 
 def depluralize(chargename):
     if chargename not in CHARGES:
-        for suf in PLURAL_MAP:
+        for suf, repl in PLURALS:
             if chargename.endswith(suf):
-                poss = chargename[:-len(suf)] + PLURAL_MAP[suf]
+                poss = chargename[:-len(suf)] + repl
                 if poss in CHARGES:
                     return poss
+        if ' ' in chargename:
+            first, rest = chargename.split(' ', 1)
+            for suf, repl in PLURALS:
+                if first.endswith(suf):
+                    poss = first[:-len(suf)] + repl + ' ' + rest
+                    if poss in CHARGES:
+                        return poss
     return chargename
 
 def clear_fielddivision(x):
@@ -460,9 +467,10 @@ def parse(blaz):
         elif b in COUNTERCHANGEDS:
             if len(x.unspecified) == 0:
                 check_no_adj(x)
-                if x.was in ('detail', 'field treatment'):
-                    raise BlazonException("Weird counterchange!")
+                if x.was in ('detail',):
                     continue
+                elif x.wasi in ('field treatment',):
+                    raise BlazonException("Weird counterchange!")
                 else:
                     raise BlazonException(
                         "Counterchange without anything to color: %s" % b)
@@ -599,7 +607,8 @@ def parse(blaz):
             res = proc(x, depluralize(b[len('demi-'):]), b, blist)
             if res:
                 chg = x.unspecified[-1]
-                assert chg.category in ('monster', 'beast', 'bird'), chg
+                if chg.category not in ('monster', 'beast', 'bird'):
+                    raise BlazonException("Unexpected demi- charge: "+b, b)
                 demi = copy.deepcopy(CHARGES['%s, demi' % chg.category])
                 demi.number = chg.number
                 chg.mods.append(demi)
@@ -668,6 +677,10 @@ def parse(blaz):
                           and blist[0] in TINCTURES):
                         # X sable vested azure
                         del blist[0]
+                    elif x.was == 'charge of':
+                        unknown("charge of phrase",
+                                "%s of %s" % (x.lastcharge[-1].blazon, b),
+                                blist)
                     else:
                         unknown("noncharge word after a '%s'" % x.was, b, blist)
 

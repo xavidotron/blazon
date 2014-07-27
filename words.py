@@ -456,7 +456,11 @@ def loadwords():
                     v = tags.pop(0)
                     assert v in CHARGES, v
                     chg = copy.deepcopy(CHARGES[v])
-                    chg.tags += tags
+                    for t in tags:
+                        if t == 'seme' or t.isdigit():
+                            chg.number = t
+                        else:
+                            chg.tags.append(t)
                     if multiplier:
                         chg.multiplier = int(multiplier)
                     charges.append(chg)

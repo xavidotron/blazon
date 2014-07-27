@@ -73,3 +73,9 @@ triskelion of legs: triskelion & leg, human*3
 triskelion of armored legs: triskelion & leg, human*3
 wreath of thorns: wreath & thorn
 annulet of rope: annulet & knot
+arabic penbox: pen box
+domed oven: tool, other
+hurst of pine trees: tree, multiple
+demi-sun: sun, demi
+sea-ounce: monster, sea, lion
+wreath of daisies: wreath, not laurel & flower, multipetaled:seme

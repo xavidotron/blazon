@@ -385,5 +385,14 @@ class TestCases(unittest.TestCase):
              'ARRANGEMENT9HEAD,RESPECTANT'],
             list(parse(u"Gules, an arrow inverted between two bird's heads couped respectant argent.").describe()))
 
+        self.assertEquals(
+            ['QLY:azure:~and gules',
+             'BIRD:1:argent:primary:owl',
+             'BIRD9DEMI:1:argent:primary:owl',
+             'BIRD:1:primary',
+             'WREATH,OTHER:1:argent',
+             'FLOWER-MULTI-PETALED:seme:argent'],
+            list(parse(u'Quarterly azure and gules, an owl within a wreath of daisies argent.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

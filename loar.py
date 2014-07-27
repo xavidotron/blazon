@@ -34,16 +34,21 @@ def add_entry(typ, entry):
         fil.write(entry + '\n')
 
 def prompt_n(letter, pattern, word, blist):
-    from parse import PLURAL_MAP
-    from words import MISC_WORDS
+    from parse import PLURALS
+    from words import TINCTURES, MISC_WORDS
     opts = {}
     def opt(lpat, wd):
         print lpat % letter + '.', pattern % wd
         opts[lpat % letter] = (letter, wd)
     opt('%s', word)
-    for suf in PLURAL_MAP:
+    for suf, repl in PLURALS:
         if word.endswith(suf):
-            opt('%s'+suf, word[:-len(suf)] + PLURAL_MAP[suf])
+            opt('%s'+suf, word[:-len(suf)] + repl)
+            break
+        elif word.split()[0].endswith(suf):
+            first, rest = word.split(None, 1)
+            opt('%s'+suf, first[:-len(suf)] + repl + ' ' + rest)
+            break
     if blist:
         for i in xrange(len(word.split())):
             if i == 0:
@@ -54,7 +59,7 @@ def prompt_n(letter, pattern, word, blist):
                 wd = ' '.join(word.split()[i:])
             limit = 2
             n = 0
-            while n < limit and n < len(blist):
+            while n < limit and n < len(blist) and blist[n] not in TINCTURES:
                 opt(pref + '%s' + str(n + 1), wd + ' ' + ' '.join(blist[0:n+1]))
                 if blist[n] in MISC_WORDS:
                     limit += 1
