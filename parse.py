@@ -367,7 +367,7 @@ def parse(blaz):
             x.was = 'field division'
             continue
         else:
-            assert x.mod in (None, 'of', 'on') or x.mod in WITHS, x.mod
+            assert x.mod in (None, 'of') or x.mod in WITHS or x.mod in ATOPS, x.mod
 
         if b in NUMBERS:
             #print 'NUMBER', b, x.mod
@@ -404,7 +404,7 @@ def parse(blaz):
                 x.mod = None
                 x.was = 'number'
             else:
-                assert x.mod in (None, 'on', 'of') or x.mod in WITHS, x.mod
+                assert x.mod in (None, 'of') or x.mod in WITHS or x.mod in ATOPS, x.mod
                 x.number = NUMBERS[b]
                 if x.mod == 'of':
                     x.was = 'of number'
@@ -646,7 +646,7 @@ def parse(blaz):
                 if WITHS[b] is not None:
                     x.number = WITHS[b]
                 x.was = 'in'
-            elif b in ('on', 'issuant', 'elongated'):
+            elif b in ATOPS or b in ('issuant', 'elongated'):
                 if x.was == 'charge':
                     x.primary = False
                 else:
@@ -678,7 +678,7 @@ def parse(blaz):
                         # X sable vested azure
                         del blist[0]
                     elif x.was == 'charge of':
-                        unknown("charge of phrase",
+                        unknown("'charge of' phrase",
                                 "%s of %s" % (x.lastcharge[-1].blazon, b),
                                 blist)
                     else:
