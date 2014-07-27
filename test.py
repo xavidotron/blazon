@@ -370,5 +370,12 @@ class TestCases(unittest.TestCase):
              'KNOT AND ROPE:1:or'],
             list(parse(u'Argent, on a cross nowy azure a trefoil knot Or.').describe()))
 
+        self.assertEquals(
+            ['CRAC:1:purpure:primary',
+             'CRAC:1:primary',
+             'ROUNDEL:5:purpure:primary',
+             'ROUNDEL:primary'],
+            list(parse(u'(Fieldless) A cross of five golpes.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

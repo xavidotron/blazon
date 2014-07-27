@@ -62,3 +62,5 @@ waterwheel: wheel
 handmirror: mirror
 cross nowy: cross, throughout:complex line
 saltire: saltire, throughout
+ypotryll: monster, other
+doumbek: musical instrument, drum

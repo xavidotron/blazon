@@ -230,6 +230,7 @@ BLACKLIST = {
     'throughout',
     'cross of',
     'fish', # From head, fish
+    'enflamed', # Can be a line, but usually isn't.
     }
 
 # These we want to treat as words for purposes of spellchecking, but we only
@@ -344,7 +345,8 @@ def loadwords():
                     typ, ln = l.split(':')
                     if '<' in ln:
                         ln, rest = ln.split('<', 1)
-                    LINES[ln] = ln
+                    if ln not in BLACKLIST:
+                        LINES[ln] = ln
                 else:
                     continue
             elif '|' in l:

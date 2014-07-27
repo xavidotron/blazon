@@ -77,8 +77,14 @@ def proc(x, b, orig_b, blist):
         if x.nextmods:
             c.mods += x.nextmods
         if b in IMPLIED_TINCTURES:
-            assert not x.unspecified, x.unspecified
             c.tincture = copy.deepcopy(TINCTURES[IMPLIED_TINCTURES[b]])
+            if x.was == 'of number':
+                assert len(x.unspecified) == 1
+                for u in x.unspecified:
+                    u.tincture = c.tincture
+                x.unspecified = []
+            else:
+                assert not x.unspecified, x.unspecified
         else:
             x.unspecified.append(c)
             x.lastcharge.append(c)
@@ -367,7 +373,11 @@ def parse(blaz):
                 x.primary = False
             elif x.commadeprim:
                 x.numdeprim = True
-            if x.mod == 'of':
+            # A "cross of five golpes" is basically an other cross and
+            # five golpes
+            if (x.mod == 'of'
+                and (not x.lastcharge
+                     or x.lastcharge[-1].name not in ('cross, as charge'))):
                 num = NUMBERS[b]
                 if (blist[0] == 'greater' and blist[1] == 'and'
                     and blist[3] == 'lesser'):
@@ -375,19 +385,23 @@ def parse(blaz):
                     blist = blist[4:]
                 if num >= 9:
                     num = '9 or more'
-                if x.lastcharge:
+                if x.lastcharge and blist[0] in ('rays', 'points'):
                     x.lastcharge[-1].tags.append('of %s' % num)
+                    blist.pop(0)
                 elif x.fielddivision:
                     pass
                 else:
                     raise BlazonException("Weird use of 'of %s'!" % num)
                     
                 x.mod = None
-                if blist[0] in ('rays', 'points'):
-                    blist.pop(0)
+                x.was = 'number'
             else:
-                assert x.mod in (None, 'on') or x.mod in WITHS, x.mod
+                assert x.mod in (None, 'on', 'of') or x.mod in WITHS, x.mod
                 x.number = NUMBERS[b]
+                if x.mod == 'of':
+                    x.was = 'of number'
+                else:
+                    x.was = 'number'
             continue
 
         if b in TINCTURES:
@@ -466,7 +480,8 @@ def parse(blaz):
             continue
         #print ':', b, x.number, x.unspecified
         if (('field treatment, %s' % b in CHARGES 
-             or 'field treatment, seme, %s' % b in CHARGES)
+             or 'field treatment, seme, %s' % b in CHARGES
+             or b.startswith('crusilly'))
             and b not in ('roundels',) and b not in VAIRYS):
             assert x.lasttincture is not None
             chgs = x.lasttincture.add_treatment(b)
@@ -653,7 +668,7 @@ def parse(blaz):
                         # X sable vested azure
                         del blist[0]
                     else:
-                        unknown("noncharge word after a %s" % x.was, b, blist)
+                        unknown("noncharge word after a '%s'" % x.was, b, blist)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

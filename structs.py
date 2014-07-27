@@ -253,8 +253,10 @@ class Tincture(object):
             self.tincture = 'multicolor'
         if 'field treatment, %s' % treatment in CHARGES:
             a = copy.deepcopy(CHARGES['field treatment, %s' % treatment])
-        else:
+        elif 'field treatment, seme, %s' % treatment in CHARGES:
             a = copy.deepcopy(CHARGES['field treatment, seme, %s' % treatment])
+        else:
+            a = copy.deepcopy(CHARGES[treatment])
         self.fieldextras.append(a)
         if 'charge treatment, %s' % treatment in CHARGES:
             b = copy.deepcopy(CHARGES['charge treatment, %s' % treatment])
