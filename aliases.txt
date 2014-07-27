@@ -65,3 +65,11 @@ saltire: saltire, throughout
 ypotryll: monster, other
 doumbek: musical instrument, drum
 oak sprig: plant, sprig
+annulet of ivy: annulet & plant, vine
+bow and arrow: bow & arrow
+elm hurst: tree, multiple & tree, rounded shape
+holly sprig: holly & sprig
+triskelion of legs: triskelion & leg, human*3
+triskelion of armored legs: triskelion & leg, human*3
+wreath of thorns: wreath & thorn
+annulet of rope: annulet & knot

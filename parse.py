@@ -243,7 +243,7 @@ def parse(blaz):
         if b in SEMYS:
             blist = ['of', SEMYS[b]] + blist
             b = 'semy'
-
+        #print "!", x.lastcharge, b
         if x.mod in ('issuant', 'elongated'):
             if b in ('from', 'to', 'palewise', 'fesswise'):
                 continue
@@ -287,7 +287,8 @@ def parse(blaz):
             continue
         elif (x.lastcharge
               and x.lastcharge[-1].category
-              and x.lastcharge[-1].category.startswith('head, ')
+              and (x.lastcharge[-1].category.startswith('head, ')
+                   or x.lastcharge[-1].category == 'head')
               and 'arrangement, head, %s' % b in CHARGES):
             x.lastcharge[-1].mods.append(
                 CHARGES['arrangement, head, %s' % b])

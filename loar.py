@@ -106,6 +106,9 @@ def prompt_for_edit(e):
     elif action.isdigit():
         i = int(action) - 1
         add_entry('aliases', '%s: %s' % (word, options[i]))
+    elif action == 'b':
+        assert len(options) == 2
+        add_entry('aliases', '%s: %s & %s' % (word, options[0], options[1]))
     else:
         assert False, action
     os.execl(sys.executable, sys.executable, *sys.argv)

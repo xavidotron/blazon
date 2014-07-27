@@ -377,5 +377,13 @@ class TestCases(unittest.TestCase):
              'ROUNDEL:primary'],
             list(parse(u'(Fieldless) A cross of five golpes.').describe()))
 
+        self.assertEquals(
+            ['GU',
+             'ARROW:1:argent:primary',
+             'ARROW:1:primary',
+             'HEAD-BIRD:2:argent',
+             'ARRANGEMENT9HEAD,RESPECTANT'],
+            list(parse(u"Gules, an arrow inverted between two bird's heads couped respectant argent.").describe()))
+
 if __name__ == "__main__":
     unittest.main()

@@ -163,15 +163,6 @@ DEFAULT_CHARGE = Charge('?', '?')
 
 #SYMBOLS = {'elder futhark'}
 
-MULTI = {
-    'annulet of ivy': ['annulet', 'plant, vine'],
-    'bow and arrow': ['bow', 'arrow'],
-    'elm hurst': ['tree, multiple', 'tree, rounded shape'],
-    'holly sprig': ['holly', 'sprig'],
-    'triskelion of legs': ['triskelion', 'leg, human*3'],
-    'triskelion of armored legs': ['triskelion', 'leg, human*3'],
-    'wreath of thorns': ['wreath', 'thorn'],
-}
 ALSOS = {'flower, few petals'}
 CATEGORIES = {}
 
@@ -452,26 +443,26 @@ def loadwords():
               encoding='utf-8') as fil:
         for l in fil:
             if l.strip() and not l.startswith('#'):
-                k, v = l.strip().split(': ')
-                tags = v.split(':')
-                v = tags.pop(0)
-                assert v in CHARGES, v
+                k, val = l.strip().split(': ')
                 assert (k not in CHARGES or CHARGES[k] is None
-                        or CHARGES[k].name == v), (k, v, CHARGES[k].name)
-                CHARGES[k] = copy.deepcopy(CHARGES[v])
-                CHARGES[k].tags += tags
-
-    for w in MULTI:
-        assert w not in CHARGES
-        CHARGES[w] = copy.deepcopy(CHARGES[MULTI[w][0]])
-        for a in MULTI[w][1:]:
-            if '*' in a:
-                a, multiplier = a.split('*')
-                charge = copy.deepcopy(CHARGES[a])
-                charge.multiplier = int(multiplier)
-            else:
-                charge = CHARGES[a]
-            CHARGES[w].seealso.append(charge)
+                        or CHARGES[k].name == val), (k, val, CHARGES[k].name)
+                charges = []
+                for v in val.split(' & '):
+                    if '*' in v:
+                        v, multiplier = v.split('*')
+                    else:
+                        multiplier = None
+                    tags = v.split(':')
+                    v = tags.pop(0)
+                    assert v in CHARGES, v
+                    chg = copy.deepcopy(CHARGES[v])
+                    chg.tags += tags
+                    if multiplier:
+                        chg.multiplier = int(multiplier)
+                    charges.append(chg)
+                CHARGES[k] = charges[0]
+                for a in charges[1:]:
+                    CHARGES[k].seealso.append(a)
 
     for n in TINCTURES:
         tinct = TINCTURES[n]
