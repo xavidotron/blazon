@@ -99,9 +99,9 @@ class TestCases(unittest.TestCase):
             ['ESTOILE:1:argent:primary:of 5', 'STAR:1:argent:primary:of 5', 'ESCARB:1:argent:primary:of 5', 'ESTOILE:1:primary:of 5'],
             list(parse(u'(Fieldless) An estoile of five rays argent\n\n').describe()))
 
-        #self.assertEquals(
-        #    [u'PB:sable:~and argent', 'BEND:1:azure:primary', 'FIELD DIV.-BENDY:1:azure:primary', 'BEND:1:primary', 'CRAMPET:3:argent', 'MONSTER-PHOENIX:2'],
-        #    list(parse(u'Per bend sable and argent, on a bend azure between two phoenixes counterchanged, three crampets argent').describe()))
+        self.assertEquals(
+            [u'PB:sable:~and argent', 'BEND:1:azure:primary', 'FIELD DIV.-BENDY:1:azure:primary', 'BEND:1:primary', 'CRAMPET:3:argent', 'MONSTER-PHOENIX:2'],
+            list(parse(u'Per bend sable and argent, on a bend azure between two phoenixes counterchanged, three crampets argent').describe()))
 
         self.assertEquals(
             ['AR', 'BEAST-MOUSE AND RAT:1:proper:primary:passant', 'BEAST-MOUSE AND RAT:1:primary:passant', 'BORDURE:1:purpure'],
