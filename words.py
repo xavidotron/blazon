@@ -61,10 +61,12 @@ WITHS = {
     'within': None,
     'all within': None,
     'within and conjoined to': None,
+    # charged withs
     'charged with': None,
     'charged on the head with': None,
     'each arm charged with a': 4,  # for crosses
     'each arm charged with an': 4,  # for crosses
+    'decorated with': None,
 }
 
 ATOPS = {
