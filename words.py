@@ -64,8 +64,6 @@ WITHS = {
     'within and conjoined to': None,
     # charged withs
     'charged with': None,
-    'charged on the head with': None,
-    'charged on the shoulder with': None,
     'each arm charged with a': 4,  # for crosses
     'each arm charged with an': 4,  # for crosses
     'decorated with': None,
@@ -138,6 +136,7 @@ BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {
     'rising': 'rousant',
     'volant': 'volant guardant',
+    'other bird posture': 'volant in chevron addorsed',
     }
 BIRD_TYPES = {}
 
@@ -217,6 +216,7 @@ DETAIL_ADJ = {
     'empty',
     'bottom-whorl',
     'elder futhark',
+    'lower case',
     'brunette',
     'caucasian',
     }

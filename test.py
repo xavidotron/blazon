@@ -412,5 +412,11 @@ class TestCases(unittest.TestCase):
              'LETTERS,RUNES AND SYMBOLS:sable'],
             list(parse(u'Argent, a toad sejant affronty vert, spotted and crowned Or, charged with a heart gules fimbriated Or within in annulo the inscription "Before you meet the handsome prince you have to kiss a lot of toads" sable.').describe()))
 
+        self.assertEquals(
+            ['BEAST-BOAR:1:or:primary:passant',
+             'BEAST-BOAR:1:primary:passant',
+             'JEWELS AND JEWELRY:1:gules'],
+            list(parse(u'(Fieldless) A boar passant Or charged on the shoulder with a hexagonal gemstone gules.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

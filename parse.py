@@ -387,6 +387,7 @@ def parse(blaz):
                     x.number *= NUMBERS[b]
                     continue
                 else:
+                    check_no_adj(x)
                     raise BlazonException("Multiple numbers without a charge between: %s and %s" % (x.number, b))
             if x.numdeprim:
                 x.primary = False
@@ -660,6 +661,14 @@ def parse(blaz):
                 if WITHS[b] is not None:
                     x.number = WITHS[b]
                 x.was = 'in'
+            elif (b == 'charged' and blist[0] == 'on' and blist[1] == 'the'
+                  and blist[3] == 'with'
+                  and (blist[2] in CHARGES or blist[2] not in ALL_WORDS)):
+                # charged on the cuff/head/shoulder with
+                del blist[:4]
+                x.primary = False
+                x.mod = 'charged with'
+                x.was = 'in'
             elif b in ATOPS or b in ('issuant', 'elongated'):
                 if x.was == 'charge':
                     x.primary = False
@@ -691,7 +700,7 @@ def parse(blaz):
                         "%s of %s" % (x.lastcharge[-1].blazon, b),
                         blist)
             else:
-                unknown("noncharge word after a '%s'" % x.was, b, blist)
+                unknown("noncharge word after '%s'" % x.was, b, blist)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

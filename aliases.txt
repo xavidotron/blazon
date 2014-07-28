@@ -80,3 +80,4 @@ demi-sun: sun, demi
 sea-ounce: monster, sea, lion
 wreath of daisies: wreath, not laurel & flower, multipetaled:seme
 hand of fatima: hand
+grasshopper: arthropod, mantis
