@@ -394,5 +394,13 @@ class TestCases(unittest.TestCase):
              'FLOWER-MULTI-PETALED:seme:argent'],
             list(parse(u'Quarterly azure and gules, an owl within a wreath of daisies argent.').describe()))
 
+        self.assertEquals(
+            ['SA',
+             'ROUNDEL:1:argent:primary',
+             'ROUNDEL:1:primary',
+             'CRAC:1:azure:formy',
+             'BORDURE:1:multicolor'],
+            list(parse(u'Sable, on a plate a Latin cross formy azure, a bordure parted bordurewise indented azure and argent.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

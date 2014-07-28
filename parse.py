@@ -279,11 +279,12 @@ def parse(blaz):
             else:
                 unknown("charge", x.adj)
             continue
+        elif x.was == 'field division' and x.fielddivision and b in LINES:
+            if x.fielddivision[-1].fielddesc:
+                x.fielddivision[-1].fielddesc += ':' + LINES[b]
+            continue
         elif x.lastcharge and b in LINES:
             x.lastcharge[-1].tags.append(LINES[b])
-            continue
-        elif x.fielddivision and b in LINES:
-            x.fielddivision[-1].fielddesc += ':' + LINES[b]
             continue
         elif (x.lastcharge 
               and x.lastcharge[-1].category in ('monster', 'beast', 'bird',
@@ -340,10 +341,15 @@ def parse(blaz):
             # Possibly clear an extraneous 'of'.
             x.mod = None
             continue
-        elif 'field division, %s' % b in CHARGES or b in VAIRYS:
+        elif ('field division, %s' % b in CHARGES or b in VAIRYS
+              or b in ('parted',)):
             #print 'field division', b
             check_no_adj(x)
-            if b in VAIRYS:
+            if b in ('parted',):
+                if blist[0].endswith('wise'):
+                    del blist[0]
+                charge = None
+            elif b in VAIRYS:
                 charge = copy.deepcopy(CHARGES['field treatment, %s' % b])
             else:
                 charge = CHARGES['field division, %s' % b]
@@ -351,7 +357,10 @@ def parse(blaz):
                 if x.unspecified:
                     x.fdunspec = x.unspecified
                     x.unspecified = []
-                    x.lasttincture = ComplexTincture(charge)
+                    if charge:
+                        x.lasttincture = ComplexTincture(charge)
+                    else:
+                        x.lasttincture = MultiTincture([])
                 else:
                     x.lasttincture.complicate(charge)
             else:
