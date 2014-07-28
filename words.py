@@ -52,6 +52,7 @@ MAINTAININGS = {
     'distilling',
     'attired of',
     'grasping',
+    'sinister forepaw resting on a maintained',
     }
 
 # "Charged withs" or "withins".
@@ -64,6 +65,7 @@ WITHS = {
     # charged withs
     'charged with': None,
     'charged on the head with': None,
+    'charged on the shoulder with': None,
     'each arm charged with a': 4,  # for crosses
     'each arm charged with an': 4,  # for crosses
     'decorated with': None,

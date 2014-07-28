@@ -38,6 +38,7 @@ class Field(Parent):
             yield "  " + l
     
     def describe(self):
+        assert self.tincture is not None
         for l in self.tincture.fielddescription():
             yield l
         for l in self.kid.describe():
