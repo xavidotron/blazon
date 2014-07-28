@@ -1,4 +1,5 @@
 import copy, urllib
+import re
 
 from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
@@ -199,6 +200,7 @@ def parse(blaz):
         blaz += '.'
     for p in (',', '.'):
         blaz = blaz.replace(p,' '+p)
+    blaz = re.sub(r'\"[^"]+\"', '', blaz)
     blist = blaz.split()
     
     x = stor()
@@ -491,7 +493,7 @@ def parse(blaz):
                 if len(unspec) == 1:
                     # Do this even if unspec[0].number != 1; that's how
                     # oanda does it.
-                    unspec[0].tincture = Tincture('multicolor')
+                    unspec[0].tincture = MultiTincture([])
             x.lasttincture = None
             x.unspecified = []
             x.was = 'counterchange'
@@ -546,7 +548,7 @@ def parse(blaz):
         elif b in ANDS:
             if x.primary is None:
                 x.primary = True
-            if x.was not in ('field treatment',):
+            if x.was not in ('field treatment', 'counterchange'):
                 x.was = 'and'
             continue
         elif b in SUSTAININGS:
@@ -627,7 +629,10 @@ def parse(blaz):
         if res:
             x.mod = None
         else:
-            if x.number is not None and x.adj != 'sets':
+            if x.unspecified and x.unspecified[-1].name == 'symbol':
+                x.was = 'symbol'
+                pass
+            elif x.number is not None and x.adj != 'sets':
                 #if x.on.kid is None:
                 #    x.on.kid = Group()
                 #else:
@@ -675,26 +680,24 @@ def parse(blaz):
             elif b == '.':
                 x.was = 'period'
                 pass
+            elif b in ('to',):
+                dont_understand(b, blist[0], blist[1:])
+            elif (b.endswith('ed') and x.was == 'tincture'
+                  and blist[0] in TINCTURES):
+                # X sable vested azure
+                del blist[0]
+            elif x.was == 'charge of':
+                unknown("'charge of' phrase",
+                        "%s of %s" % (x.lastcharge[-1].blazon, b),
+                        blist)
             else:
-                if x.unspecified and x.unspecified[-1].name == 'symbol':
-                    x.was = 'symbol'
-                    pass
-                else:
-                    if b in ('to',):
-                        dont_understand(b, blist[0], blist[1:])
-                    elif (b.endswith('ed') and x.was == 'tincture'
-                          and blist[0] in TINCTURES):
-                        # X sable vested azure
-                        del blist[0]
-                    elif x.was == 'charge of':
-                        unknown("'charge of' phrase",
-                                "%s of %s" % (x.lastcharge[-1].blazon, b),
-                                blist)
-                    else:
-                        unknown("noncharge word after a '%s'" % x.was, b, blist)
+                unknown("noncharge word after a '%s'" % x.was, b, blist)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision
+
+    if x.field.tincture is None:
+        raise BlazonException("No tincture for field!")
 
     return x.field
 

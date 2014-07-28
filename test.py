@@ -402,5 +402,15 @@ class TestCases(unittest.TestCase):
              'BORDURE:1:multicolor'],
             list(parse(u'Sable, on a plate a Latin cross formy azure, a bordure parted bordurewise indented azure and argent.').describe()))
 
+        self.assertEquals(
+            ['AR',
+             'AMPHIBIAN-FROG:1:vert:primary:affronte',
+             'AMPHIBIAN-FROG:1:primary:affronte',
+             'HEART:1:gules',
+             'LEAF:1:gules',
+             'ARRANGEMENT-IN ANNULO:1:sable',
+             'LETTERS,RUNES AND SYMBOLS:sable'],
+            list(parse(u'Argent, a toad sejant affronty vert, spotted and crowned Or, charged with a heart gules fimbriated Or within in annulo the inscription "Before you meet the handsome prince you have to kiss a lot of toads" sable.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
