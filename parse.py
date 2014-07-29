@@ -61,7 +61,7 @@ def proc(x, b, orig_b, blist):
         c.blazon = orig_b
         g.append(c)
         c.number = x.number
-        if b in PERIPHERALS:
+        if c.name in PERIPHERALS:
             x.primary = False
         elif x.primary:
             assert not x.maintained

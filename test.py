@@ -428,6 +428,7 @@ class TestCases(unittest.TestCase):
             list(parse(u'Per chevron throughout argent and sable, between two pairs of branches in saltire vert, a sword inverted argent.').describe()))
 
         self.assertEquals(
+
             ['PC:azure:~and argent',
              'FDL:2:primary',
              'INSECT-BUTTERFLY AND MOTH:1:primary',
@@ -459,5 +460,13 @@ class TestCases(unittest.TestCase):
              'TRISKELION:3:primary'],
             list(parse(u'Per pall vert, Or, and argent, three triskeles argent, purpure, and azure.\n').describe()))
 
+            ['OR',
+             'BIRD:1:sable:primary',
+             'BIRD9DEMI:1:sable:primary',
+             'BIRD:1:primary',
+             'BASE:1:vert:enarched',
+             'BORDURE:1:sable:nebuly'],
+            list(parse(u'Or, a hen sable and a mount vert, a bordure nebuly sable.').describe()))
+        
 if __name__ == "__main__":
     unittest.main()
