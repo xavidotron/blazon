@@ -89,6 +89,7 @@ NUMBERS = {
     'nine': 9,
     'ten': 10,
     'a sheaf of': 3,
+    'two pairs of': 4,
     }
 
 CHARGES = {}

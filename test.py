@@ -418,5 +418,14 @@ class TestCases(unittest.TestCase):
              'JEWELS AND JEWELRY:1:gules'],
             list(parse(u'(Fieldless) A boar passant Or charged on the shoulder with a hexagonal gemstone gules.').describe()))
 
+        self.assertEquals(
+            ['PC:argent:~and sable',
+             'TREE9BRANCH:4:vert:primary',
+             'TREE9BRANCH:primary',
+             'INSA:4:vert:primary',
+             'SWORD:1:argent:primary',
+             'SWORD:1:primary'],
+            list(parse(u'Per chevron throughout argent and sable, between two pairs of branches in saltire vert, a sword inverted argent.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

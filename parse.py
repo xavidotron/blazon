@@ -95,9 +95,11 @@ def proc(x, b, orig_b, blist):
         x.nextmods = []
         x.was = 'charge'
     elif b in BETWEEN:
-        assert x.on.kid is not None,"Between with nothing before it!"
-        x.primary = False
-        x.betweenness = x.on.kid.between = Group()
+        if x.lastcharge:
+            if x.on.kid is None:
+                raise BlazonException("Between with nothing before it!")
+            x.primary = False
+            x.betweenness = x.on.kid.between = Group()
         x.lastcharge = []
     else:
         return False
@@ -572,7 +574,8 @@ def parse(blaz):
             x.was = 'detail'
             continue
         elif b in DETAILS:
-            x.was = 'detail'
+            if x.was not in ('field division',):
+                x.was = 'detail'
             x.primary = None  # Not primary until "and"
             continue
         elif b in ARRANGEMENTS:
