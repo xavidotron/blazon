@@ -12,7 +12,7 @@ TINCTURE_ALIASES = {
     'azure': ['de larmes'],
     'sable': ['de poix'],
     'purpure': ['de vin'],
-    'gules': ['de sangue'],
+    'gules': ['de sangue', 'de sang'],
     'vert': ["d'huile"],
     'argent': ["d'eau"],
     'or': ["d'or"],
@@ -53,6 +53,7 @@ MAINTAININGS = {
     'attired of',
     'grasping',
     'sinister forepaw resting on a maintained',
+    'each tentacle maintaining',
     }
 
 # "Charged withs" or "withins".
@@ -138,6 +139,8 @@ BIRD_POSTURE_ALIASES = {
     'rising': 'rousant',
     'volant': 'volant guardant',
     'other bird posture': 'volant in chevron addorsed',
+    'close': 'statant',
+    'close to sinister': 'statant contourny',
     }
 BIRD_TYPES = {}
 
@@ -200,6 +203,7 @@ SEMYS = {
     'estoilly': 'estoile',
     'fleury': 'fleur de lys',
     'goutty': 'goute',
+    'goutte': 'goute',
 }
 
 # vairy is a field treatment that's written like a field division
@@ -232,7 +236,7 @@ BLACKLIST = {
 # These we want to treat as words for purposes of spellchecking, but we only
 # understand them in certain manually-coded contexts.
 MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
-              'in', 'the'}
+              'in', 'the', 'de',}
 
 ALL_WORDS = set()
 

@@ -534,6 +534,9 @@ def parse(blaz):
                 x.unspecified.append(chg)
                 x.lastcharge.append(chg)
             x.multi = None
+            if x.lasttincture is None:
+                raise BlazonException("'%s of %s' without a tincture to modify!"
+                                      % (b, charge))
             x.lasttincture.add_extra(chg)
             x.was = 'tincture'
             #print 'SEMY LT', x.lasttincture, x.lasttincture.on_field

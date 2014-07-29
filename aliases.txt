@@ -81,3 +81,7 @@ sea-ounce: monster, sea, lion
 wreath of daisies: wreath, not laurel & flower, multipetaled:seme
 hand of fatima: hand
 grasshopper: arthropod, mantis
+mask of comedy: mask
+mask of tragedy: mask
+chaplet of daisies: wreath, not laurel
+barnacle goose tree: tree, rounded shape
