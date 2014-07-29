@@ -522,6 +522,18 @@ def parse(blaz):
                                       charge)
             chg = copy.deepcopy(CHARGES[charge])
             chg.number = 'seme'
+            if x.lasttincture is None:
+                if (blist[0] == 'counterchanged'
+                    or (blist[0] == 'all' and blist[1] == 'counterchanged')):
+                    assert len(x.unspecified) == 1, x.unspecified
+                    x.lasttincture = MultiTincture([])
+                    x.unspecified[-1].tincture = x.lasttincture
+                    x.unspecified = []
+                else:
+                    raise BlazonException(
+                        "'%s of %s' without a tincture to modify!"
+                        % (b, charge))
+            x.lasttincture.add_extra(chg)
             if b == 'orle':
                 arr = copy.deepcopy(CHARGES['arrangement, in orle'])
                 chg.mods.append(arr)
@@ -534,10 +546,6 @@ def parse(blaz):
                 x.unspecified.append(chg)
                 x.lastcharge.append(chg)
             x.multi = None
-            if x.lasttincture is None:
-                raise BlazonException("'%s of %s' without a tincture to modify!"
-                                      % (b, charge))
-            x.lasttincture.add_extra(chg)
             x.was = 'tincture'
             #print 'SEMY LT', x.lasttincture, x.lasttincture.on_field
             if x.lasttincture.on_field:

@@ -427,5 +427,13 @@ class TestCases(unittest.TestCase):
              'SWORD:1:primary'],
             list(parse(u'Per chevron throughout argent and sable, between two pairs of branches in saltire vert, a sword inverted argent.').describe()))
 
+        self.assertEquals(
+            ['PC:azure:~and argent',
+             'FDL:2:primary',
+             'INSECT-BUTTERFLY AND MOTH:1:primary',
+             'BORDURE:1:multicolor',
+             'GOUTE:seme:multicolor'],
+            list(parse(u'Per chevron azure and argent, two fleurs-de-lys and a butterfly counterchanged, a bordure goutty all counterchanged argent and gules.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
