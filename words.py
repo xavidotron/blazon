@@ -237,7 +237,7 @@ BLACKLIST = {
 # These we want to treat as words for purposes of spellchecking, but we only
 # understand them in certain manually-coded contexts.
 MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
-              'in', 'the', 'de',}
+              'in', 'the', 'de', 'each'}
 
 ALL_WORDS = set()
 

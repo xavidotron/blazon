@@ -88,7 +88,7 @@ def proc(x, b, orig_b, blist):
                 assert not x.unspecified, x.unspecified
         else:
             x.unspecified.append(c)
-            x.lastcharge.append(c)
+        x.lastcharge.append(c)
         x.multi = None
         x.number = None
         x.adj = None
@@ -537,7 +537,7 @@ def parse(blaz):
                     TINCTURES[IMPLIED_TINCTURES[charge]])
             else:
                 x.unspecified.append(chg)
-                x.lastcharge.append(chg)
+            x.lastcharge.append(chg)
             x.multi = None
             x.was = 'tincture'
             #print 'SEMY LT', x.lasttincture, x.lasttincture.on_field
@@ -547,7 +547,7 @@ def parse(blaz):
                 x.lasttincture.add_extra(ft)
                 chg.tags.append('seme on field')
             continue
-
+        #print '!', b
         if b == 'the':
             x.number = 'the'
             x.was = 'number'
@@ -663,7 +663,7 @@ def parse(blaz):
                 # or
                 # Vert, within an annulet an acorn argent.
                 if x.lastcharge:
-                    x.primary = False
+                    x.primary = None # Not primary until 'and'
                 x.mod = b
                 if WITHS[b] is not None:
                     x.number = WITHS[b]
@@ -673,7 +673,22 @@ def parse(blaz):
                   and (blist[2] in CHARGES or blist[2] not in ALL_WORDS)):
                 # charged on the cuff/head/shoulder with
                 del blist[:4]
-                x.primary = False
+                x.primary = None # Not primary until 'and'
+                x.mod = 'charged with'
+                x.was = 'in'
+            elif (b == 'each' and blist[0] == 'charged' and blist[1] == 'with'
+                  and blist[2] in ('a', 'an')):
+                del blist[:3]
+                x.primary = None # Not primary until 'and'
+                x.number = x.lastcharge[-1].number
+                x.mod = 'charged with'
+                x.was = 'in'
+            elif (b == 'each' and blist[1] == 'charged' and blist[2] == 'with'
+                  and blist[3] in ('a', 'an')
+                  and blist[0] == depluralize(x.lastcharge[-1].name)):
+                del blist[:4]
+                x.primary = None # Not primary until 'and'
+                x.number = x.lastcharge[-1].number
                 x.mod = 'charged with'
                 x.was = 'in'
             elif b in ATOPS or b in ('issuant', 'elongated'):

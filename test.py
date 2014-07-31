@@ -290,8 +290,8 @@ class TestCases(unittest.TestCase):
             [u'PC:or:~and vert',
              'ROUNDEL:2:vert:primary',
              'ROUNDEL:2:primary',
-             'TRISKELION:1:or',
-             'LEG AND FOOT-HUMAN:3:or',
+             'TRISKELION:2:or',
+             'LEG AND FOOT-HUMAN:6:or',
              'SEAWOLF:1:argent:primary:naiant to dexter',
              'SEAWOLF:1:primary:naiant to dexter',
              'MONSTER9WINGED:argent'],
@@ -440,6 +440,18 @@ class TestCases(unittest.TestCase):
              'GOUTE:1:multicolor:primary',
              'GOUTE:1:primary'],
             list(parse(u'Per bend Or and sable, a goutte counterchanged.').describe()))
+
+        self.assertEquals(
+            ['GU',
+             'CALIPER AND COMPASS:1:argent:primary',
+             'TOOL9OTHER:1:argent:primary',
+             'CALIPER AND COMPASS:1:primary',
+             'CRESCENT:3:argent',
+             'STAR:3:sable:of 6',
+             'CALTRAP:3:sable:of 6',
+             'ESTOILE:3:sable:of 6',
+             'SUN:3:sable:of 6'],
+            list(parse(u'Gules, a pair of calipers and in chief three crescents argent each crescent charged with a mullet of six points sable.').describe()))
 
 if __name__ == "__main__":
     unittest.main()
