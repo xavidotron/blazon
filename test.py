@@ -435,5 +435,11 @@ class TestCases(unittest.TestCase):
              'GOUTE:seme:multicolor'],
             list(parse(u'Per chevron azure and argent, two fleurs-de-lys and a butterfly counterchanged, a bordure goutty all counterchanged argent and gules.').describe()))
 
+        self.assertEquals(
+            ['PB:or:~and sable',
+             'GOUTE:1:multicolor:primary',
+             'GOUTE:1:primary'],
+            list(parse(u'Per bend Or and sable, a goutte counterchanged.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

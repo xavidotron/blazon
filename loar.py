@@ -49,19 +49,25 @@ def prompt_n(letter, pattern, word, blist):
             first, rest = word.split(None, 1)
             opt('%s'+suf, first[:-len(suf)] + repl + ' ' + rest)
             break
-    if blist:
-        for i in xrange(len(word.split())):
+    if ' ' in word:
+        parts = word.split(' ')
+        parts = parts + blist
+    else:
+        parts = [word] + blist
+    if len(parts) > 1:
+        for i in xrange(len(word.split(' '))):
             if i == 0:
                 pref = ''
-                wd = word
             else:
                 pref = str(i)
-                wd = ' '.join(word.split()[i:])
-            limit = 2
+            limit = 3
             n = 0
-            while n < limit and n < len(blist) and blist[n] not in TINCTURES:
-                opt(pref + '%s' + str(n + 1), wd + ' ' + ' '.join(blist[0:n+1]))
-                if blist[n] in MISC_WORDS:
+            while (n < limit and i + n < len(parts)
+                   and parts[i + n] not in TINCTURES):
+                w = ' '.join(parts[i:i+n+1])
+                if w != word:
+                    opt(pref + '%s' + str(n), w)
+                if parts[i + n] in MISC_WORDS:
                     limit += 1
                 n += 1
     return opts

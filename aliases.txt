@@ -85,3 +85,10 @@ mask of comedy: mask
 mask of tragedy: mask
 chaplet of daisies: wreath, not laurel
 barnacle goose tree: tree, rounded shape
+g-clef: symbol
+letter a: symbol
+fleur-de lys: fleur de lys
+cheveron: chevron
+pig: beast, boar
+hempbreak: tool, textile
+pair of calipers: caliper

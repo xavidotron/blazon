@@ -68,6 +68,7 @@ WITHS = {
     'each arm charged with a': 4,  # for crosses
     'each arm charged with an': 4,  # for crosses
     'decorated with': None,
+    'surmounted by': None,
 }
 
 ATOPS = {

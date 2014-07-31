@@ -41,8 +41,9 @@ class Field(Parent):
         assert self.tincture is not None
         for l in self.tincture.fielddescription():
             yield l
-        for l in self.kid.describe():
-            yield l
+        if self.kid is not None:
+            for l in self.kid.describe():
+                yield l
 
     def render(self):
         assert self.between is None

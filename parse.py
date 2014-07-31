@@ -5,7 +5,7 @@ from structs import Field, Group, ComplexTincture, MultiTincture
 from words import *
 
 class BlazonException(Exception):
-    def __init__(self, text, word=None, dym=[], options=[], blist=None):
+    def __init__(self, text, word=None, dym=[], options=[], blist=[]):
         self.text = text
         if word:
             self.word = word
@@ -131,14 +131,6 @@ def depluralize(chargename):
 def clear_fielddivision(x):
     if x.fielddivision:
         # Done describing a complex tincture
-        if x.fdunspec is not None:
-            assert len(x.fdunspec) > 0
-            for s in x.fdunspec:
-                #if len(x.fielddivision) == 1:
-                s.tincture = x.fielddivision[0]
-                #else:
-                #    s.tincture = MultiTincture(x.fielddivision)
-        x.fdunspec = None
         x.fielddivision = []
 
 def pop_blist(blist):
@@ -155,7 +147,7 @@ def suggest(word):
     ret = PWL.suggest(word)
     return ret
 
-def unknown(typ, word, blist=None):
+def unknown(typ, word, blist=[]):
     dym = []
     if PWL:
         if PWL.check(word):
@@ -168,7 +160,7 @@ def unknown(typ, word, blist=None):
     raise BlazonException("Unknown %s: %s" % (typ, word), word, dym,
                           blist=blist)
 
-def dont_understand(w1, w2, blist=None):
+def dont_understand(w1, w2, blist=[]):
     dym = []
     if PWL:
         if not PWL.check(w1):
@@ -202,7 +194,7 @@ def parse(blaz):
         blaz += '.'
     for p in (',', '.'):
         blaz = blaz.replace(p,' '+p)
-    blaz = re.sub(r'\"[^"]+\"', '', blaz)
+    blaz = re.sub(r'inscription \"[^"]+\"', 'inscription', blaz)
     blist = blaz.split()
     
     x = stor()
@@ -217,7 +209,6 @@ def parse(blaz):
     x.adj = None
     x.arrangement = None
     x.fielddivision = []
-    x.fdunspec = None
     x.multi = None
     x.lastcharge = []
     x.lasttincture = None
@@ -251,7 +242,7 @@ def parse(blaz):
             x.mod = None
             continue
 
-        if b in SEMYS:
+        if x.number is None and b in SEMYS:
             blist = ['of', SEMYS[b]] + blist
             b = 'semy'
         #print "!", x.lastcharge, b
@@ -357,26 +348,26 @@ def parse(blaz):
                 charge = copy.deepcopy(CHARGES['field treatment, %s' % b])
             else:
                 charge = CHARGES['field division, %s' % b]
-            if not x.fdunspec:
+            if not x.fielddivision:
                 if x.unspecified:
-                    x.fdunspec = x.unspecified
-                    x.unspecified = []
                     if charge:
                         x.lasttincture = ComplexTincture(charge)
                     else:
                         x.lasttincture = MultiTincture([])
+                    if isinstance(x.unspecified[0], Field):
+                        x.lasttincture.on_field = True
+                    for u in x.unspecified:
+                        u.tincture = x.lasttincture
+                    x.unspecified = []
                 else:
                     x.lasttincture.complicate(charge)
             else:
                 x.lasttincture = ComplexTincture(charge)
                 if b in VAIRYS:
-                    x.lasttincture.max_tinctures = 4
                     x.lasttincture.fieldextras.append(charge)
             if x.fielddivision:
                 x.fielddivision[-1].add_tincture(x.lasttincture)
             x.fielddivision.append(x.lasttincture)
-            if x.fdunspec and isinstance(x.fdunspec[0], Field):
-                x.lasttincture.on_field = True
             x.was = 'field division'
             continue
         else:
@@ -489,6 +480,8 @@ def parse(blaz):
                     raise BlazonException(
                         "Counterchange without anything to color: %s" % b)
             if x.primary is not False:
+                if not x.field.tincture:
+                    raise BlazonException("Counterchange without a field!")
                 if not x.field.tincture.is_complex():
                     raise BlazonException(
                         "Counterchange over a simple field!")
