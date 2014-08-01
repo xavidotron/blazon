@@ -453,5 +453,11 @@ class TestCases(unittest.TestCase):
              'SUN:3:sable:of 6'],
             list(parse(u'Gules, a pair of calipers and in chief three crescents argent each crescent charged with a mullet of six points sable.').describe()))
 
+        self.assertEquals(
+            ['FIELD DIV.-PER PALL:multicolor:~and multicolor',
+             'TRISKELION:3:multicolor:primary',
+             'TRISKELION:3:primary'],
+            list(parse(u'Per pall vert, Or, and argent, three triskeles argent, purpure, and azure.\n').describe()))
+
 if __name__ == "__main__":
     unittest.main()

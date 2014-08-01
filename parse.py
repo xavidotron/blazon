@@ -451,6 +451,18 @@ def parse(blaz):
                     x.lastcharge[-1].tincture = MultiTincture([
                         x.lastcharge[-1].tincture, t])
                     continue
+                elif x.lastcharge and x.lastcharge[-1].number == 3:
+                    x.lasttincture = t
+                    if isinstance(x.lastcharge[-1].tincture, MultiTincture):
+                        if len(x.lastcharge[-1].tincture.tincts) >= 3:
+                            raise BlazonException(
+                                "Too many tinctures for 3 things! (at %s)"
+                                % b)
+                        x.lastcharge[-1].tincture.add_tincture(t)
+                    else:
+                        x.lastcharge[-1].tincture = MultiTincture([
+                                x.lastcharge[-1].tincture, t])
+                    continue
                 else:
                     raise BlazonException(
                         "Tincture without anything to color: %s" % (b))
