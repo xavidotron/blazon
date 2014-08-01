@@ -65,6 +65,7 @@ WITHS = {
     'within and conjoined to': None,
     # charged withs
     'charged with': None,
+    'charged in base with': None,
     'each arm charged with a': 4,  # for crosses
     'each arm charged with an': 4,  # for crosses
     'decorated with': None,
@@ -91,6 +92,8 @@ NUMBERS = {
     'nine': 9,
     'ten': 10,
     'a sheaf of': 3,
+    'two sheaves of': 6,
+    'three sheaves of': 9,
     'two pairs of': 4,
     }
 
@@ -137,11 +140,11 @@ LINES = {'grady': 'indented',
 
 BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {
-    'rising': 'rousant',
-    'volant': 'volant guardant',
-    'other bird posture': 'volant in chevron addorsed',
-    'close': 'statant',
-    'close to sinister': 'statant contourny',
+    'rising': ['rousant', 'hovering'],
+    'volant': ['volant guardant'],
+    'other bird posture': ['volant in chevron addorsed'],
+    'close': ['statant'],
+    'close to sinister': ['statant contourny'],
     }
 BIRD_TYPES = {}
 
@@ -203,6 +206,7 @@ SEMYS = {
     'estencely': 'spark',
     'estoilly': 'estoile',
     'fleury': 'fleur de lys',
+    'semy-de-lys': 'fleur de lys',
     'goutty': 'goute',
     'goutte': 'goute',
 }
@@ -211,6 +215,7 @@ SEMYS = {
 VAIRYS = {
     'vairy',
     'counter-vairy',
+    'papellony', 'papelonny',
 }
 
 CHARGE_ADJ = {
@@ -225,6 +230,7 @@ DETAIL_ADJ = {
     'lower case',
     'brunette',
     'caucasian',
+    'hexagonal',
     }
 
 BLACKLIST = {
@@ -286,8 +292,8 @@ def loadwords():
                     names = [name]
                     for a in BIRD_POSTURE_ALIASES:
                         if name.startswith(a):
-                            names.append(BIRD_POSTURE_ALIASES[a] 
-                                         + name[len(a):])
+                            for v in BIRD_POSTURE_ALIASES[a]:
+                                names.append(v + name[len(a):])
                     for n in list(names):
                         if n.endswith(' to dexter'):
                             names.append(n[:-len(' to dexter')])

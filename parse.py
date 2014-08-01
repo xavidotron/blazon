@@ -238,7 +238,7 @@ def parse(blaz):
                     x.mod = None
                 continue
             elif b not in LOCATIONS:
-                raise BlazonException("Unknown location '%s'!" % b, b)
+                raise BlazonException("Unknown location '%s'!" % b, 'in '+b)
             x.mod = None
             continue
 
@@ -510,6 +510,8 @@ def parse(blaz):
             blist.pop(0)
             #print 'SEMY'
             charge = depluralize(pop_blist(blist))
+            while charge in DETAIL_ADJ:
+                charge = depluralize(pop_blist(blist))
             if charge not in CHARGES:
                 raise BlazonException("Semy of unknown charge: '%s'" % charge,
                                       charge)
@@ -606,6 +608,11 @@ def parse(blaz):
             continue
         elif b in ATOPS and blist[0] == 'its' and blist[1] not in ALL_WORDS:
             # e.g., "atop its back"
+            del blist[:2]
+            x.was = 'detail'
+            continue
+        elif b in ('in',) and blist[0] == 'its' and blist[1] not in ALL_WORDS:
+            # e.g., "in its beak"
             del blist[:2]
             x.was = 'detail'
             continue

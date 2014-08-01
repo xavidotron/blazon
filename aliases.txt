@@ -5,6 +5,7 @@ cross throughout: cross, throughout
 field division, vêtu: field division, vetu
 field treatment, seme, crusilly: field treatment, seme, crusily
 field treatment, vair: field treatment, vairy
+field treatment, papellony: field treatment, papelonny
 fleurs-de-lis: fleur de lys
 fleur-de-lys: fleur de lys
 fleurs-de-lys: fleur de lys
@@ -92,3 +93,4 @@ cheveron: chevron
 pig: beast, boar
 hempbreak: tool, textile
 pair of calipers: caliper
+artist's paint brush: tool, artistic

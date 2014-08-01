@@ -38,17 +38,20 @@ def prompt_n(letter, pattern, word, blist):
     from words import TINCTURES, MISC_WORDS
     opts = {}
     def opt(lpat, wd):
-        print lpat % letter + '.', pattern % wd
-        opts[lpat % letter] = (letter, wd)
-    opt('%s', word)
-    for suf, repl in PLURALS:
-        if word.endswith(suf):
-            opt('%s'+suf, word[:-len(suf)] + repl)
-            break
-        elif word.split()[0].endswith(suf):
-            first, rest = word.split(None, 1)
-            opt('%s'+suf, first[:-len(suf)] + repl + ' ' + rest)
-            break
+        if wd not in MISC_WORDS:
+            print lpat % letter + '.', pattern % wd
+            opts[lpat % letter] = (letter, wd)
+    def opt_pl(lpat, wd):
+        opt(lpat, wd)
+        for suf, repl in PLURALS:
+            if wd.endswith(suf):
+                opt(lpat+suf, wd[:-len(suf)] + repl)
+                break
+            elif wd.split()[0].endswith(suf):
+                first, rest = wd.split(None, 1)
+                opt(lpat+suf, first[:-len(suf)] + repl + ' ' + rest)
+                break
+    opt_pl('%s', word)
     if ' ' in word:
         parts = word.split(' ')
         parts = parts + blist
@@ -66,7 +69,7 @@ def prompt_n(letter, pattern, word, blist):
                    and parts[i + n] not in TINCTURES):
                 w = ' '.join(parts[i:i+n+1])
                 if w != word:
-                    opt(pref + '%s' + str(n), w)
+                    opt_pl(pref + '%s' + str(n), w)
                 if parts[i + n] in MISC_WORDS:
                     limit += 1
                 n += 1
