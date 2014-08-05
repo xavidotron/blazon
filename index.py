@@ -3,6 +3,8 @@
 
 import cgi,cgitb
 
+import words, structs
+
 cgitb.enable()
 
 fs = cgi.FieldStorage()
@@ -16,7 +18,7 @@ print """Content-Type: text/html; charset=utf-8
 <body>"""
 
 mode = fs.getfirst("mode", None)
-import words
+
 if mode and mode[0].isupper() and hasattr(words, mode):
     words.loadwords()
     print """<ul>"""
@@ -24,6 +26,9 @@ if mode and mode[0].isupper() and hasattr(words, mode):
         print """<li>%s</li>""" % cgi.escape(w)
     print """</ul>"""
 else:
+    double = fs.getfirst("double", False)
+    structs.DOUBLE_PRIMARIES = double
+    
     blazon = fs.getfirst("blazon", None)
 
     print """<h1>Kihō's Blazon to Complex Search Form Parser</h1>
@@ -51,21 +56,7 @@ else:
     (i.e., <a href="http://oanda.sca.org/my.cat">my.cat</a>).  This means
     that a single charge in your blazon may be represented by multiple armory
     descriptions, so keep this in mind when counting distinct changes from
-    Complex Search Form score totals.</p>
-
-    <p>In additon, for primary charge groups, the parser will generally
-    generate two descriptions: a precise one and a simpler one without
-    tags like tincture.  This helps highlight armory that doesn't have
-    exactly your primary charge group, but has a primary charge group
-    close enough that it's not a substantial change.</p>
-
-    <h2>Blazon Search</h2>
-
-    <form method="get">
-    <textarea name="blazon" cols="100" rows="5">%s</textarea><br />
-    <input type="submit" value="Parse" />
-    </form>""" % (cgi.escape(blazon) if blazon
-                  else "Or, a Laurel wreath vert.")
+    Complex Search Form score totals.</p>"""
 
     if blazon:
         import complexify
@@ -92,6 +83,31 @@ else:
             print '</ul>'
             url = complexify.url_for(lst)
             print '<p><a href="%s">Search the Complex Search Form with these descriptions</a></p>' % (url)
+
+    print """<h2>Blazon Search</h2>
+
+    <form method="get">
+    <textarea name="blazon" cols="100" rows="5">%s</textarea><br />
+    <label><input name="double" type="checkbox"%s /> Double Primaries (see below)</label><br />
+    <input type="submit" value="Parse" />
+    </form>""" % (cgi.escape(blazon) if blazon else "Or, a Laurel wreath vert.",
+                  " checked" if double else "")
+
+    print """<h3>Options</h3>
+
+    <h4>Doubling Primaries</h4>
+    <p>Sometimes, a straightforward search will give you large numbers of
+    blazons that are a substantial change away, making it hard to see
+    any conflicts.  To help with this, you can ask the parser to
+    generate two descriptions for primary charge groups:
+    a precise one and a simpler one without
+    tags like tincture.  This will give two points to armory that has exactly
+    your primary charge group and one point to armory that has something
+    close to your primary charge group.  The intent is that armory with
+    a substatial change to the primary charge group will lose two points this
+    way, equivalent to two DCs; however, this won't necessarily be the case
+    for armory with coprimary charges and such cases.  As always, check
+    the descriptions being used.</p>"""
 
 print """
 <hr />

@@ -1,5 +1,7 @@
 import copy
 
+DOUBLE_PRIMARIES = True
+
 def coalesce(l):
     l = list(l)
     idx = 0
@@ -148,7 +150,7 @@ class Charge(Thingy):
                 else:
                     yield "%s%s%s" % (c.desc, numtagbit, tagbit)
         if self.tincture:
-            if 'primary' in self.tags and not as_mod:
+            if 'primary' in self.tags and not as_mod and DOUBLE_PRIMARIES:
                 # Add an additonal instance, without the tincture, for 
                 # sig diffness
                 yield "%s:%s" % (self.desc, ':'.join(primtags))
