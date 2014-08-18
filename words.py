@@ -36,6 +36,7 @@ ANDS = {
     'conjoined to',
     'enfiling',
     'between the head and tail',
+    'suspended from',
 }
 
 SUSTAININGS = {
@@ -59,7 +60,7 @@ MAINTAININGS = {
     'vorant of': None,
     }
 
-# "Charged withs" or "withins".
+# "Charged withs" or "withins".  NOT "conjoined with"s.
 # Value is implied number, if any.
 WITHS = {
     'in': None,

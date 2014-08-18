@@ -89,3 +89,5 @@ lit
 counter-embowed
 in benediction
 threaded
+glissant
+strung

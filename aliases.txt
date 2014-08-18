@@ -119,3 +119,4 @@ field division, chaussé: field division, per chevron inverted
 fleur-de-lis: fleur de lys
 candle and holder: candle & candlestick
 mitre: clothing, headgear
+lions heads: head, beast, cat
