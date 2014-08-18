@@ -102,8 +102,20 @@ scepter: staff & mace
 sceptre: staff & mace
 gore sinister: gore
 field division, countercompony: field division, checky
+field division, counter-compony: field division, checky
 maunche: maunch
 sledge: tool, other
 pickax: tool, other
 jackdaw: bird, whole:raven
 coyote: beast, dog
+triskelions of spirals: triskelion
+sea-serpent: monster, sea, serpent
+three legged pot: cauldron
+norse sun crosses: symbol
+stag beetle: arthropod, beetle
+banana: foodstuff
+sea-cameleopard: beast, camel & beast, other & monster, sea, other
+field division, chaussé: field division, per chevron inverted
+fleur-de-lis: fleur de lys
+candle and holder: candle & candlestick
+mitre: clothing, headgear

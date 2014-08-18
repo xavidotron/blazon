@@ -56,6 +56,7 @@ MAINTAININGS = {
     'each tentacle maintaining': None,
     'playing a maintained': 1,
     'topped of': None,
+    'vorant of': None,
     }
 
 # "Charged withs" or "withins".
@@ -72,6 +73,8 @@ WITHS = {
     'each arm charged with a': 4,  # for crosses
     'each arm charged with an': 4,  # for crosses
     'decorated with': None,
+    'braced with': None,
+    'interlaced with': None,
     'surmounted by': None,
 }
 
@@ -94,6 +97,7 @@ NUMBERS = {
     'eight': 8,
     'nine': 9,
     'ten': 10,
+    'a pair of': 2,
     'a sheaf of': 3,
     'two sheaves of': 6,
     'three sheaves of': 9,
@@ -246,6 +250,7 @@ DETAIL_ADJ = {
 BLACKLIST = {
     'throughout',
     'cross of',
+    'respectant',
     'fish', # From head, fish
     'enflamed', # Can be a line, but usually isn't.
     'sceptre', # In aliases.txt to also consider mace
@@ -255,7 +260,7 @@ BLACKLIST = {
 # understand them in certain manually-coded contexts.
 MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
               'in', 'the', 'de', 'each',
-              'sinister'}
+              'sinister', 'respectant'}
 
 PRIMTAGS_WHITELIST = {'primary'}
 
