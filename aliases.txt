@@ -97,3 +97,4 @@ artist's paint brush: tool, artistic
 holly leaf: leaf
 tree blasted: tree, blasted
 natural sea turtle: reptile, turtle
+weinleiter: ladder & tool, other

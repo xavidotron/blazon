@@ -105,17 +105,22 @@ def prompt_for_edit(e):
     if action == 'a':
         import words
         charge = None
-        while not charge or (charge not in words.CHARGES
-                             and charge not in words.DESC_TO_CHARGE):
-            if charge:
-                print "%s is not a charge!" % charge
+        while True:
             charge = raw_input("Specify charge that '%s' is an alias of: "
                                % word)
-        if charge in words.DESC_TO_CHARGE:
-            name = words.DESC_TO_CHARGE[charge].name
-        else:
-            name = words.CHARGES[charge].name
-        add_entry('aliases', '%s: %s' % (word, name))
+            for c in charge.split(' & '):
+                if (c not in words.CHARGES
+                    and c not in words.DESC_TO_CHARGE):
+                    print "%s is not a charge!" % c
+            else:
+                break
+        names = []
+        for c in charge.split(' & '):
+            if c in words.DESC_TO_CHARGE:
+                names.append(words.DESC_TO_CHARGE[c].name)
+            else:
+                names.append(words.CHARGES[c].name)
+        add_entry('aliases', '%s: %s' % (word, ' & '.join(names)))
     elif action == 'd':
         add_entry('details', word)
     elif action.isdigit():
