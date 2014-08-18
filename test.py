@@ -467,6 +467,12 @@ class TestCases(unittest.TestCase):
              'BASE:1:vert:enarched',
              'BORDURE:1:sable:nebuly'],
             list(parse(u'Or, a hen sable and a mount vert, a bordure nebuly sable.').describe()))
-        
+
+        self.assertEquals(
+            ['GATE AND DOOR:1:multicolor:primary',
+             'GATE AND DOOR:1:primary',
+             'HEAD-BEAST,CAT AND LION:1:multicolor'],
+            list(parse(u"(Fieldless) On a chainless portcullis per pale argent and sable a lion's head cabossed counterchanged.").describe()))
+
 if __name__ == "__main__":
     unittest.main()

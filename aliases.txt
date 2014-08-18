@@ -92,7 +92,7 @@ fleur-de lys: fleur de lys
 cheveron: chevron
 pig: beast, boar
 hempbreak: tool, textile
-pair of calipers: caliper
+a pair of calipers: caliper:1
 artist's paint brush: tool, artistic
 holly leaf: leaf
 natural sea turtle: reptile, turtle

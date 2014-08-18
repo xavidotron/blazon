@@ -28,7 +28,13 @@ class stor(object):
 
 def proc(x, b, orig_b, blist):
     if b in CHARGES and CHARGES[b] is not None:
-        #print 'CHARGE', b
+        #print 'CHARGE', b, CHARGES[b].number
+        if CHARGES[b].number is not None:
+            if x.number is not None:
+                raise BlazonException(
+                    "Explicit number for charge '%s' with an implicit "
+                    "number: %s vs %s" % (b, x.number, t))
+            x.number = CHARGES[b].number
         if x.number is None:
             if x.maintained:
                 pass
@@ -511,7 +517,7 @@ def parse(blaz):
             if x.primary is not False:
                 if not x.field.tincture:
                     raise BlazonException("Counterchange without a field!")
-                if not x.field.tincture.is_complex():
+                if x.primary is True and not x.field.tincture.is_complex():
                     raise BlazonException(
                         "Counterchange over a simple field!")
                 unspec = [u for u in x.unspecified if not u.maintained]
