@@ -54,7 +54,8 @@ MAINTAININGS = {
     'grasping': None,
     'sinister forepaw resting on a maintained': None,
     'each tentacle maintaining': None,
-    'playing a maintained': 1
+    'playing a maintained': 1,
+    'topped of': None,
     }
 
 # "Charged withs" or "withins".
@@ -242,12 +243,14 @@ BLACKLIST = {
     'cross of',
     'fish', # From head, fish
     'enflamed', # Can be a line, but usually isn't.
+    'sceptre', # In aliases.txt to also consider mace
     }
 
 # These we want to treat as words for purposes of spellchecking, but we only
 # understand them in certain manually-coded contexts.
 MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
-              'in', 'the', 'de', 'each'}
+              'in', 'the', 'de', 'each',
+              'sinister'}
 
 ALL_WORDS = set()
 

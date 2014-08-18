@@ -98,3 +98,6 @@ holly leaf: leaf
 tree blasted: tree, blasted
 natural sea turtle: reptile, turtle
 weinleiter: ladder & tool, other
+sea-griffin: monster, sea, dragon
+scepter: staff & mace
+sceptre: staff & mace
