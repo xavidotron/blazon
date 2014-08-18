@@ -66,7 +66,8 @@ def prompt_n(letter, pattern, word, blist):
             limit = 3
             n = 0
             while (n < limit and i + n < len(parts)
-                   and parts[i + n] not in TINCTURES):
+                   and parts[i + n] not in TINCTURES
+                   and parts[i + n] not in (',', '.')):
                 w = ' '.join(parts[i:i+n+1])
                 if w != word:
                     opt_pl(pref + '%s' + str(n), w)

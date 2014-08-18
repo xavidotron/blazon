@@ -44,16 +44,17 @@ SUSTAININGS = {
 }
 
 MAINTAININGS = {
-    'maintaining',
-    'maintaining between them',
-    'maintaining on the outer swirl',
-    'gorged of',
-    'perched upon',
-    'distilling',
-    'attired of',
-    'grasping',
-    'sinister forepaw resting on a maintained',
-    'each tentacle maintaining',
+    'maintaining': None,
+    'maintaining between them': None,
+    'maintaining on the outer swirl': None,
+    'gorged of': None,
+    'perched upon': None,
+    'distilling': None,
+    'attired of': None,
+    'grasping': None,
+    'sinister forepaw resting on a maintained': None,
+    'each tentacle maintaining': None,
+    'playing a maintained': 1
     }
 
 # "Charged withs" or "withins".
@@ -63,6 +64,7 @@ WITHS = {
     'within': None,
     'all within': None,
     'within and conjoined to': None,
+    'within the horns of': None,
     # charged withs
     'charged with': None,
     'charged in base with': None,
@@ -95,6 +97,7 @@ NUMBERS = {
     'two sheaves of': 6,
     'three sheaves of': 9,
     'two pairs of': 4,
+    'three pairs of': 6,
     }
 
 CHARGES = {}
@@ -209,6 +212,7 @@ SEMYS = {
     'semy-de-lys': 'fleur de lys',
     'goutty': 'goute',
     'goutte': 'goute',
+    'mullety': 'mullet',
 }
 
 # vairy is a field treatment that's written like a field division

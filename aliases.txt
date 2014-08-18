@@ -94,3 +94,6 @@ pig: beast, boar
 hempbreak: tool, textile
 pair of calipers: caliper
 artist's paint brush: tool, artistic
+holly leaf: leaf
+tree blasted: tree, blasted
+natural sea turtle: reptile, turtle

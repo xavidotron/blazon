@@ -404,7 +404,7 @@ def parse(blaz):
                 elif x.fielddivision:
                     pass
                 else:
-                    raise BlazonException("Weird use of 'of %s'!" % num)
+                    raise BlazonException("Weird use of 'of %s'!" % b)
                     
                 x.mod = None
                 x.was = 'number'
@@ -726,6 +726,8 @@ def parse(blaz):
             elif b in MAINTAININGS:
                 x.maintained = True
                 x.primary = None
+                if MAINTAININGS[b] is not None:
+                    x.number = MAINTAININGS[b]
                 x.was = 'maintaining'
             elif b == '.':
                 x.was = 'period'
