@@ -94,15 +94,12 @@ class Charge(Thingy):
         self.category = category
         self.mods = []
         self.tags = []
-        # Ones where we'r moore likely to conflict with something without
-        self.iffy_tags = []
         self.seealso = []
 
     def combine_with(self, other):
         if (other.name == self.name and other.maintained == self.maintained
             and self.mods == other.mods
-            and self.tags == other.tags and self.between == other.between
-            and self.iffy_tags == other.iffy_tags):
+            and self.tags == other.tags and self.between == other.between):
             ret = copy.deepcopy(self)
             if other.number is not None:
                 ret.number += other.number
@@ -119,12 +116,13 @@ class Charge(Thingy):
         yield "Charge: %s %s" % (self.tincture, self.name)
 
     def describe(self, as_mod=False):
+        from words import PRIMTAGS_WHITELIST
+
         assert self.between is None, self.between
         if self.maintained:
             return
         tags = list(self.tags)
-        primtags = list(tags)
-        tags += self.iffy_tags
+        primtags = [t for t in tags if t in PRIMTAGS_WHITELIST]
         if self.tincture:
             tags = [self.tincture.tincture] + tags
 

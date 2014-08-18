@@ -109,17 +109,29 @@ def prompt_for_edit(e):
             charge = raw_input("Specify charge that '%s' is an alias of: "
                                % word)
             for c in charge.split(' & '):
+                c = c.split(':', 1)[0]
                 if (c not in words.CHARGES
                     and c not in words.DESC_TO_CHARGE):
                     print "%s is not a charge!" % c
+                    break
             else:
                 break
         names = []
         for c in charge.split(' & '):
-            if c in words.DESC_TO_CHARGE:
-                names.append(words.DESC_TO_CHARGE[c].name)
+            if ':' in c:
+                c, t = c.split(':', 1)
+                tags = t.split(':')
             else:
-                names.append(words.CHARGES[c].name)
+                tags = []
+            if c in words.DESC_TO_CHARGE:
+                n = words.DESC_TO_CHARGE[c].name
+                tags += words.DESC_TO_CHARGE[c].tags
+            else:
+                n = words.CHARGES[c].name
+                tags += words.CHARGES[c].tags
+            if t:
+                n += ':' + ':'.join(tags)
+            names.append(n)
         add_entry('aliases', '%s: %s' % (word, ' & '.join(names)))
     elif action == 'd':
         add_entry('details', word)
@@ -144,6 +156,7 @@ if __name__ == '__main__':
         try:
             lst = list(parse(b).describe())
         except BlazonException, e:
+            print
             print b
             if e.word:
                 traceback.print_exc()

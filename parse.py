@@ -147,17 +147,21 @@ def suggest(word):
     ret = PWL.suggest(word)
     return ret
 
-def unknown(typ, word, blist=[]):
+def unknown(typ, word, blist=[], prev=None):
     dym = []
+    if prev:
+        wd = prev + ' ' + word
+    else:
+        wd = word
     if PWL:
         if PWL.check(word):
             raise BlazonException("'%s' is not a %s expected here!"
-                                  % (word, typ), word, blist=blist)
+                                  % (word, typ), wd, blist=blist)
         else:
             sugg = suggest(word)
             if sugg:
                 dym.append("Did you mean: %s" % (', '.join(sugg)))
-    raise BlazonException("Unknown %s: %s" % (typ, word), word, dym,
+    raise BlazonException("Unknown %s: %s" % (typ, word), wd, dym,
                           blist=blist)
 
 def dont_understand(w1, w2, blist=[]):
@@ -167,8 +171,12 @@ def dont_understand(w1, w2, blist=[]):
             dym.append("Should '%s' be: %s?" % (w1, ', '.join(suggest(w1))))
         if not PWL.check(w2):
             dym.append("Should '%s' be: %s?" % (w2, ', '.join(suggest(w2))))
-    raise BlazonException("I don't understand '%s %s' here!"
-                          % (w1, w2), '%s %s' % (w1, w2), dym, blist=blist)
+    if w2 in ('.', ','):
+        raise BlazonException("I don't understand '%s' here!" % w1,
+                              w1, dym, blist=blist)
+    else:
+        raise BlazonException("I don't understand '%s %s' here!"
+                              % (w1, w2), '%s %s' % (w1, w2), dym, blist=blist)
 
 def check_no_adj(x):
     if x.adj:
@@ -219,7 +227,9 @@ def parse(blaz):
     x.was = None
     x.nextmods = []
 
+    b = None
     while len(blist) > 0:
+        lastb = b
         b = pop_blist(blist)
         #print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
@@ -743,7 +753,8 @@ def parse(blaz):
                         "%s of %s" % (x.lastcharge[-1].blazon, b),
                         blist)
             else:
-                unknown("noncharge word after '%s'" % x.was, b, blist)
+                unknown("noncharge word after '%s'" % x.was, b, blist,
+                        prev=lastb)
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

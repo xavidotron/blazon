@@ -137,10 +137,15 @@ CONTOURNYS = {
 }
 DETAILS.update(CONTOURNYS)
 
-LINES = {'grady': 'indented',
-         u'ployé': 'ploye',
-         'doubly-enarched': 'enarched',
-         'endorsed': 'cotised'}
+LINES = {
+    'grady': 'indented',
+    u'ployé': 'ploye',
+    'doubly-enarched': 'enarched',
+    'endorsed': 'cotised',
+    'flory counter-flory': 'complex line',
+    'flory counterflory': 'complex line',
+    'flory': 'complex line',
+    }
 
 BIRD_POSTURES = {}
 BIRD_POSTURE_ALIASES = {
@@ -251,6 +256,8 @@ BLACKLIST = {
 MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
               'in', 'the', 'de', 'each',
               'sinister'}
+
+PRIMTAGS_WHITELIST = {'primary'}
 
 ALL_WORDS = set()
 
@@ -449,7 +456,7 @@ def loadwords():
                     # Copying the seealso of just the first is weird
                     CHARGES[name].seealso = []
                 if 'bird, whole' in seenames and name in BIRD_TYPES:
-                    CHARGES[name].iffy_tags.append(BIRD_TYPES[name])
+                    CHARGES[name].tags.append(BIRD_TYPES[name])
                 for s in sees:
                     CHARGES[name].seealso.append(s)
                 if ', ' in name:
@@ -502,6 +509,7 @@ def loadwords():
 
     ALL_WORDS.update(TINCTURES,
                      CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
+                     LINES,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
                      WITHS, CROSS_FAMILIES, ATOPS,
                      DETAIL_ADJ, COUNTERCHANGEDS,

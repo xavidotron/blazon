@@ -36,7 +36,7 @@ sun: sun, whole
 baker's peel: tool, other
 # This is the default tree.
 tree: tree, rounded shape
-tree blasted : tree, rounded shape
+tree blasted: tree, rounded shape
 wreath: wreath, not laurel
 ram's horns respectant: horn, creature
 sea-horse: monster, sea, horse
@@ -95,9 +95,13 @@ hempbreak: tool, textile
 pair of calipers: caliper
 artist's paint brush: tool, artistic
 holly leaf: leaf
-tree blasted: tree, blasted
 natural sea turtle: reptile, turtle
 weinleiter: ladder & tool, other
 sea-griffin: monster, sea, dragon
 scepter: staff & mace
 sceptre: staff & mace
+gore sinister: gore
+field division, countercompony: field division, checky
+maunche: maunch
+sledge: tool, other
+pickax: tool, other
