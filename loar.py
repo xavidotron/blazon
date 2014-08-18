@@ -129,7 +129,7 @@ def prompt_for_edit(e):
             else:
                 n = words.CHARGES[c].name
                 tags += words.CHARGES[c].tags
-            if t:
+            if tags:
                 n += ':' + ':'.join(tags)
             names.append(n)
         add_entry('aliases', '%s: %s' % (word, ' & '.join(names)))
