@@ -34,24 +34,54 @@ def add_entry(typ, entry):
         fil.write(entry + '\n')
 
 def prompt_n(letter, pattern, word, blist):
+    global idx
     from parse import PLURALS
-    from words import TINCTURES, MISC_WORDS
+    from words import (TINCTURES, SMALL_WORDS, ALL_WORDS, NUMBERS, CHARGES, 
+                       COUNTERCHANGEDS)
+    idx = 0
     opts = {}
-    def opt(lpat, wd):
-        if wd not in MISC_WORDS:
-            print lpat % letter + '.', pattern % wd
-            opts[lpat % letter] = (letter, wd)
-    def opt_pl(lpat, wd):
-        opt(lpat, wd)
-        for suf, repl in PLURALS:
-            if wd.endswith(suf):
-                opt(lpat+suf, wd[:-len(suf)] + repl)
-                break
-            elif wd.split()[0].endswith(suf):
-                first, rest = wd.split(None, 1)
-                opt(lpat+suf, first[:-len(suf)] + repl + ' ' + rest)
-                break
-    opt_pl('%s', word)
+    def opt(wd):
+        global idx
+        if wd in ALL_WORDS or wd.split()[-1] in SMALL_WORDS:
+            return False
+        if (wd.count(' ') == 1 and wd.split()[0] in NUMBERS 
+            and wd.split()[-1] in CHARGES):
+            return False
+        itag = str(idx) if idx else ''
+        print letter + itag + '.', pattern % wd
+        opts[letter + itag] = (letter, wd)
+        idx += 1
+        return True
+    def opt_pl(wd):
+        if opt(wd):
+            for suf, repl in PLURALS:
+                if (wd.endswith(suf)
+                    and (wd[:-len(suf)] + repl in ALL_WORDS
+                         or wd.split()[-1][:-len(suf)] + repl in ALL_WORDS)):
+                    opt(wd[:-len(suf)] + repl)
+                    break
+            else:
+                if wd not in ALL_WORDS:
+                    for suf, repl in PLURALS:
+                        if wd.endswith(suf):
+                            opt(wd[:-len(suf)] + repl)
+
+            if ' ' not in wd:
+                return
+            for suf, repl in PLURALS:
+                if wd.split(' ')[0].endswith(suf):
+                    first, rest = wd.split(' ', 1)
+                    if (first[:-len(suf)] + repl in ALL_WORDS 
+                        or first[:-len(suf)] + repl + ' ' + rest in ALL_WORDS):
+                        opt(first[:-len(suf)] + repl + ' ' + rest)
+                        break
+            else:
+                if wd.split(' ')[0] not in ALL_WORDS:
+                    for suf, repl in PLURALS:
+                        if wd.split(' ')[0].endswith(suf):
+                            first, rest = wd.split(None, 1)
+                            opt(first[:-len(suf)] + repl + ' ' + rest)
+    opt_pl(word)
     if ' ' in word:
         parts = word.split(' ')
         parts = parts + blist
@@ -67,11 +97,12 @@ def prompt_n(letter, pattern, word, blist):
             n = 0
             while (n < limit and i + n < len(parts)
                    and parts[i + n] not in TINCTURES
+                   and parts[i + n] not in COUNTERCHANGEDS
                    and parts[i + n] not in (',', '.')):
                 w = ' '.join(parts[i:i+n+1])
                 if w != word:
-                    opt_pl(pref + '%s' + str(n), w)
-                if parts[i + n] in MISC_WORDS:
+                    opt_pl(w)
+                if parts[i + n] in SMALL_WORDS or parts[i + n] in NUMBERS:
                     limit += 1
                 n += 1
     return opts

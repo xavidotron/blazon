@@ -89,6 +89,8 @@ class Charge(Thingy):
     number = None
     maintained = False
     multiplier = None
+    blazon = None
+    adj = None
 
     def __init__(self, name, desc, category=False):
         self.name = name

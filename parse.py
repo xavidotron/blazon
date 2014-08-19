@@ -26,6 +26,12 @@ class BlazonException(Exception):
 class stor(object):
     pass
 
+def get_prev(x, offset=0):
+    retl = x.lastb[-2 - offset:-offset if offset else None]
+    while retl and ',' in retl:
+        del retl[0]
+    return ' '.join(retl)
+
 def proc(x, b, orig_b, blist):
     if b in CHARGES and CHARGES[b] is not None:
         #print 'CHARGE', b, CHARGES[b].number
@@ -33,14 +39,18 @@ def proc(x, b, orig_b, blist):
             if x.number is not None:
                 raise BlazonException(
                     "Explicit number for charge '%s' with an implicit "
-                    "number: %s vs %s" % (b, x.number, t))
+                    "number: %s vs %s" % (b, x.number, CHARGES[b].number))
+            assert not x.multiplier, x.multiplier
             x.number = CHARGES[b].number
         if x.number is None:
             if x.maintained:
                 pass
-            elif x.was not in ('charge', 'charge of'):
+            elif (x.was not in ('charge', 'charge of') 
+                  or not x.unspecified[-1].blazon):
+                lb = get_prev(x)
                 raise BlazonException("No number/a/an for a charge: %s" % b,
-                                      orig_b, blist=blist)
+                                      lb + ' ' + orig_b if lb else orig_b, 
+                                      blist=blist)
             elif x.unspecified[-1].name != CHARGES[b].name:
                 if x.was == 'charge':
                     glued = '%s %s' % (x.unspecified[-1].blazon, orig_b)
@@ -187,9 +197,9 @@ def dont_understand(w1, w2, blist=[]):
         raise BlazonException("I don't understand '%s %s' here!"
                               % (w1, w2), '%s %s' % (w1, w2), dym, blist=blist)
 
-def check_no_adj(x):
+def check_no_adj(x, b, blist=[], prev=None):
     if x.adj:
-        unknown("charge", x.adj)
+        unknown("charge", x.adj, blist=[b] + blist, prev=prev)
 
 def parse(blaz):
     global PWL
@@ -221,6 +231,7 @@ def parse(blaz):
     x.on = x.field
     x.onstack = [None,x.field]
     x.number = None
+    x.multiplier = None
     x.betweenness = None
     x.mod = None
     x.adj = None
@@ -232,13 +243,16 @@ def parse(blaz):
     x.maintained = False
     x.primary = True
     x.commadeprim = False
+    x.commamult = None
     x.numdeprim = False
     x.was = None
     x.nextmods = []
+    x.lastb = []
 
     b = None
     while len(blist) > 0:
-        lastb = b
+        if b:
+            x.lastb.append(b)
         b = pop_blist(blist)
         #print b, [x.unspecified[-1].category if x.unspecified else None]
         if x.mod == 'in':
@@ -316,7 +330,7 @@ def parse(blaz):
                 CHARGES['arrangement, head, %s' % b])
             continue
         elif b in POSTURES or b in BIRD_POSTURES or b in FISH_POSTURES:
-            check_no_adj(x)
+            check_no_adj(x, b)
             if not x.lastcharge:
                 raise BlazonException("Posture '%s' with no charge to modify!"
                                       % b, b)
@@ -324,7 +338,7 @@ def parse(blaz):
             while (x.lastcharge
                    and x.lastcharge[-1].category not in (
                     'monster', 'beast', 'human', 'reptile', 'bird',
-                    'monster, sea', 'fish', 'flower')
+                    'monster, sea', 'fish', 'flower', 'head, beast')
                    and x.lastcharge[-1].name not in (
                     'amphibian', 'ship', 'bow', 'axe')):
                 x.lastcharge.pop()
@@ -333,7 +347,7 @@ def parse(blaz):
             if ((x.lastcharge[-1].category in ('monster', 'beast', 'human',
                                                'reptile',
                                                'monster, sea',
-                                               'flower')
+                                               'flower', 'head, beast')
                  or x.lastcharge[-1].name in ('amphibian', 'ship', 'bow', 
                                               'axe'))
                 and b in POSTURES):
@@ -359,7 +373,7 @@ def parse(blaz):
         elif ('field division, %s' % b in CHARGES or b in VAIRYS
               or b in ('parted',)):
             #print 'field division', b
-            check_no_adj(x)
+            check_no_adj(x, b)
             if b in ('parted',):
                 if blist[0].endswith('wise'):
                     del blist[0]
@@ -398,9 +412,11 @@ def parse(blaz):
             if x.number is not None:
                 if x.adj == 'sets' and x.mod == 'of':
                     x.number *= NUMBERS[b]
+                    x.adj = None
+                    x.mod = None
                     continue
                 else:
-                    check_no_adj(x)
+                    check_no_adj(x, b)
                     raise BlazonException(
                         "Multiple numbers without a charge between: %s and %s" 
                         % (x.number, b), b, blist=blist)
@@ -434,6 +450,9 @@ def parse(blaz):
             else:
                 assert x.mod in (None, 'of') or x.mod in WITHS or x.mod in ATOPS, x.mod
                 x.number = NUMBERS[b]
+                if x.multiplier:
+                    x.number *= x.multiplier
+                    x.multiplier = None
                 if x.mod == 'of':
                     x.was = 'of number'
                 else:
@@ -443,7 +462,7 @@ def parse(blaz):
         if b in TINCTURES:
             #print 'TINCTURE', b, x.unspecified, x.was
             t = copy.deepcopy(TINCTURES[b])
-            check_no_adj(x)
+            check_no_adj(x, b, blist=blist, prev=get_prev(x, 2))
             if not x.unspecified:
                 if x.was in ('field treatment', 'counterchange'):
                     continue
@@ -506,7 +525,7 @@ def parse(blaz):
             continue
         elif b in COUNTERCHANGEDS:
             if len(x.unspecified) == 0:
-                check_no_adj(x)
+                check_no_adj(x, b)
                 if x.was in ('detail',):
                     continue
                 elif x.wasi in ('field treatment',):
@@ -587,9 +606,12 @@ def parse(blaz):
                 x.unspecified.append(ft)
                 x.lasttincture.add_extra(ft)
                 chg.tags.append('seme on field')
+            x.lastb.append(b)
+            b = charge
             continue
         #print '!', b
         if b == 'the':
+            assert not x.multiplier, x.multiplier
             x.number = 'the'
             x.was = 'number'
             continue
@@ -606,6 +628,11 @@ def parse(blaz):
         elif b == ',':
             if x.commadeprim:
                 x.primary = False
+            if x.commamult:
+                assert not x.multiplier, x.multiplier
+                assert not x.number, x.number
+                x.multiplier = x.commamult
+                x.commamult = None
             #if x.on is not None:
             #    assert x.on.kid is not None,"Excess punctuation!"
             assert x.betweenness is None or len(x.betweenness) > 0, "Unfilled between!"
@@ -615,20 +642,24 @@ def parse(blaz):
                 x.was = 'comma'
             continue
         elif x.number is None and b in MAJOR_DETAILS:
+            check_no_adj(x, b)
             x.on.kid.append(copy.deepcopy(CHARGES[MAJOR_DETAILS[b]]))
             x.was = 'detail'
             continue
         elif b in DETAILS:
+            check_no_adj(x, b)
             if x.was not in ('field division',):
                 x.was = 'detail'
             x.primary = None  # Not primary until "and"
             continue
         elif b in ARRANGEMENTS:
             #print 'ARRANGEMENT'
+            check_no_adj(x, b)
             x.was = 'arrangement'
             continue
         elif x.number is not None and b in CHARGE_ADJ:
             #print 'CHARGE_ADJ'
+            check_no_adj(x, b, prev=get_prev(x, 1))
             adj = copy.deepcopy(CHARGES[CHARGE_ADJ[b]])
             x.unspecified.append(adj)
             x.nextmods.append(adj)
@@ -655,8 +686,9 @@ def parse(blaz):
             del blist[:2]
             x.was = 'detail'
             continue
-        elif b == 'with' and blist[0] == 'its' and blist[1] in CHARGES:
-            # e.g., "enfiling with its tail"
+        elif b == 'with' and blist[0] == 'its' and (
+            blist[1] in CHARGES or blist[1] not in ALL_WORDS):
+            # e.g., "enfiling with its tail" or "sustaining with its talons"
             del blist[:2]
             continue
 
@@ -664,6 +696,7 @@ def parse(blaz):
             clear_fielddivision(x)
 
         if x.number is None and b in IMPLIED_NUMBER:
+            assert not x.multiplier, x.multiplier
             x.number = IMPLIED_NUMBER[b]
 
         res = proc(x, depluralize(b), b, blist)
@@ -713,8 +746,9 @@ def parse(blaz):
                     x.primary = None # Not primary until 'and'
                 x.mod = b
                 if WITHS[b] is not None:
+                    assert not x.multiplier, x.multiplier
                     x.number = WITHS[b]
-                x.was = 'in'
+                x.was = 'with'
             elif (b == 'charged' and blist[0] == 'on' and blist[1] == 'the'
                   and blist[3] == 'with'
                   and (blist[2] in CHARGES or blist[2] not in ALL_WORDS)):
@@ -722,24 +756,32 @@ def parse(blaz):
                 del blist[:4]
                 x.primary = None # Not primary until 'and'
                 x.mod = 'charged with'
-                x.was = 'in'
+                x.was = 'with'
+            elif b == 'each of' and x.was == 'with':
+                if blist[0] not in NUMBERS:
+                    raise BlazonException(
+                        "'each of' followed by '%s', not a number!" % blist[0],
+                        b, blist=blist)
+                x.commamult = NUMBERS[blist[0]]
             elif b == 'each':
                 b2 = pop_blist(blist)
                 if b2 in WITHS and blist[0] in ('a', 'an'):
                     del blist[0]
                     x.primary = None # Not primary until 'and'
+                    assert not x.multiplier, x.multiplier
                     x.number = x.lastcharge[-1].number
                     x.mod = 'charged with'
-                    x.was = 'in'
+                    x.was = 'with'
                 elif b2 == depluralize(x.lastcharge[-1].name):
                     b3 = pop_blist(blist)
                     if b3 not in WITHS or blist[0] not in ('a', 'an'):
                         dont_understand('%s %s' % (b, b2), b3, blist)
                     del blist[0]
                     x.primary = None # Not primary until 'and'
+                    assert not x.multiplier, x.multiplier
                     x.number = x.lastcharge[-1].number
                     x.mod = 'charged with'
-                    x.was = 'in'
+                    x.was = 'with'
                 else:
                     dont_understand(b, b2, blist)
             elif b in ATOPS or b in ('issuant', 'elongated'):
@@ -759,6 +801,7 @@ def parse(blaz):
                 x.maintained = True
                 x.primary = None
                 if MAINTAININGS[b] is not None:
+                    assert not x.multiplier, x.multiplier
                     x.number = MAINTAININGS[b]
                 x.was = 'maintaining'
             elif b == '.':
@@ -776,7 +819,7 @@ def parse(blaz):
                         blist)
             else:
                 unknown("noncharge word after '%s'" % x.was, b, blist,
-                        prev=lastb)
+                        prev=get_prev(x))
 
     #assert x.betweenness is None, x.betweenness
     assert not x.fielddivision, x.fielddivision

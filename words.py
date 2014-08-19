@@ -37,6 +37,7 @@ ANDS = {
     'enfiling',
     'between the head and tail',
     'suspended from',
+    'and on the sinister with', # after "charged on the dexter with"
 }
 
 SUSTAININGS = {
@@ -58,6 +59,7 @@ MAINTAININGS = {
     'playing a maintained': 1,
     'topped of': None,
     'vorant of': None,
+    'wearing': None,
     }
 
 # "Charged withs" or "withins".  NOT "conjoined with"s.
@@ -123,6 +125,7 @@ ARRANGEMENTS = {
     'two and two',
     'two , two and two',
     'two , two , and two',
+    'two , two , and one',
 }
 ORIENTATIONS = {}
 
@@ -150,6 +153,7 @@ LINES = {
     'flory counter-flory': 'complex line',
     'flory counterflory': 'complex line',
     'flory': 'complex line',
+    'embowed to base': 'embowed',
     }
 
 BIRD_POSTURES = {}
@@ -259,9 +263,12 @@ BLACKLIST = {
 
 # These we want to treat as words for purposes of spellchecking, but we only
 # understand them in certain manually-coded contexts.
-MISC_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
-              'in', 'the', 'de', 'each',
-              'sinister', 'respectant'}
+#
+# Small words are those that can't likely be the end of an alias or desc,
+# misc words are others.
+SMALL_WORDS = {'of', 'on', 'to', 'her', 'his', 'its', 'at', 'with',
+               'in', 'the', 'de', 'each', 'it'}
+MISC_WORDS = {'sinister', 'respectant', 'each of'}
 
 PRIMTAGS_WHITELIST = {'primary'}
 
@@ -521,6 +528,6 @@ def loadwords():
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
                      WITHS, CROSS_FAMILIES, ATOPS,
                      DETAIL_ADJ, COUNTERCHANGEDS,
-                     MISC_WORDS)
+                     SMALL_WORDS, MISC_WORDS)
 
     LOADED = True

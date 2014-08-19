@@ -474,5 +474,16 @@ class TestCases(unittest.TestCase):
              'HEAD-BEAST,CAT AND LION:1:multicolor'],
             list(parse(u"(Fieldless) On a chainless portcullis per pale argent and sable a lion's head cabossed counterchanged.").describe()))
 
+        self.assertEquals(
+            ['SA',
+             'EYE:1:or:primary',
+             'EYE:1:primary',
+             'ARROW:1:or:bendwise sinister',
+             'CHIEF:1:or',
+             'ANNULET:6:sable',
+             'TORSE:6:sable',
+             'ROUNDEL:3:sable'],
+            list(parse(u'Sable, an eye Or, irised sable, transfixed by an arrow bendwise sinister and on a chief Or within each of three sets of two concentric annulets, a roundel sable.').describe()))
+
 if __name__ == "__main__":
     unittest.main()

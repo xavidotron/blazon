@@ -101,6 +101,7 @@ sea-griffin: monster, sea, dragon
 scepter: staff & mace
 sceptre: staff & mace
 gore sinister: gore
+field division, compony: field division, checky
 field division, countercompony: field division, checky
 field division, counter-compony: field division, checky
 maunche: maunch
@@ -120,3 +121,22 @@ fleur-de-lis: fleur de lys
 candle and holder: candle & candlestick
 mitre: clothing, headgear
 lions heads: head, beast, cat
+laurel sprig: plant, sprig
+wild man's face: head, human
+arrangement, crossed in saltire: arrangement, in saltire
+crossed in saltire: arrangement, in saltire
+edelweiss blossom: flower, multipetaled
+arrangement, trunks crossed in saltire: arrangement, in saltire
+trunks crossed in saltire: arrangement, in saltire
+bee skep: beehive
+staircase: architecture
+natural sea-tortoise: reptile, turtle
+broadarrow: pheon
+stalk of wheat: plant, wheat
+spark: sparks
+bunch of grapes: fruit, berry
+crescent pendant: crescent
+tricorporate wolf: beast, dog*3 & monster, multibodied
+morion: helmet
+four-leafed clover: foil, quatrefoil
+pea-vine: plant, vine
