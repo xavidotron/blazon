@@ -37,6 +37,7 @@ ANDS = {
     'enfiling',
     'between the head and tail',
     'suspended from',
+    'pierced by',
     'and on the sinister with', # after "charged on the dexter with"
 }
 

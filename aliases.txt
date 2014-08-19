@@ -140,3 +140,6 @@ tricorporate wolf: beast, dog*3 & monster, multibodied
 morion: helmet
 four-leafed clover: foil, quatrefoil
 pea-vine: plant, vine
+calamarie: mollusk, octopus
+otelle: goute
+oak branch: tree branch

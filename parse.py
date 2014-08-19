@@ -28,13 +28,14 @@ class stor(object):
 
 def get_prev(x, offset=0):
     retl = x.lastb[-2 - offset:-offset if offset else None]
-    while retl and ',' in retl:
-        del retl[0]
+    for i in xrange(len(retl)):
+        if retl[i] in (',',) or retl[i] in WITHS:
+            del retl[:i+1]
+            break
     return ' '.join(retl)
 
 def proc(x, b, orig_b, blist):
     if b in CHARGES and CHARGES[b] is not None:
-        #print 'CHARGE', b, CHARGES[b].number
         if CHARGES[b].number is not None:
             if x.number is not None:
                 raise BlazonException(
@@ -42,6 +43,9 @@ def proc(x, b, orig_b, blist):
                     "number: %s vs %s" % (b, x.number, CHARGES[b].number))
             assert not x.multiplier, x.multiplier
             x.number = CHARGES[b].number
+        if x.number is None and x.was == 'with' and x.lastcharge[-1].number > 1:
+            # This is something like "two plates charged with triskelions".
+            x.number = x.lastcharge[-1].number
         if x.number is None:
             if x.maintained:
                 pass
@@ -97,13 +101,19 @@ def proc(x, b, orig_b, blist):
             c.mods += x.nextmods
         if b in IMPLIED_TINCTURES:
             c.tincture = copy.deepcopy(TINCTURES[IMPLIED_TINCTURES[b]])
-            if x.was == 'of number':
+            if (x.was == 'of number' 
+                or (x.unspecified and
+                    x.unspecified[-1].category == 'arrangement')):
                 assert len(x.unspecified) == 1
                 for u in x.unspecified:
                     u.tincture = c.tincture
                 x.unspecified = []
             else:
-                assert not x.unspecified, x.unspecified
+                if x.unspecified:
+                    raise BlazonException(
+                        "Unspecified charges (%s) followed by something "
+                        "with an implied tincture (%s)!"
+                        % (', '.join(c.name for c in x.unspecified), b))
         else:
             x.unspecified.append(c)
         x.lastcharge.append(c)

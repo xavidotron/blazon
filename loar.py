@@ -44,8 +44,8 @@ def prompt_n(letter, pattern, word, blist):
         global idx
         if wd in ALL_WORDS or wd.split()[-1] in SMALL_WORDS:
             return False
-        if (wd.count(' ') == 1 and wd.split()[0] in NUMBERS 
-            and wd.split()[-1] in CHARGES):
+        if (' ' in wd and wd.split(' ', 1)[0] in NUMBERS 
+            and wd.split(' ', 1)[-1] in CHARGES):
             return False
         itag = str(idx) if idx else ''
         print letter + itag + '.', pattern % wd
@@ -108,6 +108,7 @@ def prompt_n(letter, pattern, word, blist):
     return opts
 
 def prompt_for_edit(e):
+    from words import CHARGES
     word = e.word
     options = e.options
     print
@@ -115,6 +116,10 @@ def prompt_for_edit(e):
         for d in e.dym:
             print d
         print
+
+    if word in CHARGES:
+        print '("%s" is already a charge.)' % word
+
     opts = {}
     if options:
         for i in xrange(len(options)):

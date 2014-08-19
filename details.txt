@@ -24,6 +24,8 @@ apaumy
 gowned
 eradicated
 fimbriated
+# Error for "fimbriated"
+fimbrated
 irradiated
 queue-forchy
 fitchy
@@ -101,3 +103,4 @@ entwined about a stake
 the hilts winged
 irised
 concentric
+involved

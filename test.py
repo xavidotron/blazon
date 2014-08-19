@@ -485,5 +485,15 @@ class TestCases(unittest.TestCase):
              'ROUNDEL:3:sable'],
             list(parse(u'Sable, an eye Or, irised sable, transfixed by an arrow bendwise sinister and on a chief Or within each of three sets of two concentric annulets, a roundel sable.').describe()))
 
+        self.assertEquals(
+            ['PPALE:gules:~and sable',
+             'BIRD:1:argent:raven:primary:displayed',
+             'BIRD9DEMI:1:argent:raven:primary:displayed',
+             'BIRD:1:primary',
+             'ROUNDEL:2:argent',
+             'INPALE:argent',
+             'TRISKELION:2'],
+            list(parse(u'Per pale gules and sable, a raven displayed argent between in pale two plates charged with triskelions of spirals.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
