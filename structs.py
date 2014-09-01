@@ -131,8 +131,11 @@ class Charge(Thingy):
             tags = [self.tincture.tincture] + tags
 
         numtag = numtag_for(self.number)
-        if self.number and self.number != 'the' and self.number < 4:
-            primtags = ['%d' % self.number] + primtags
+        if self.number and self.number != 'the':
+            if self.number < 4:
+                primtags = ['%d' % self.number] + primtags
+            else:
+                primtags = ['4 or more'] + primtags
 
         tagbit = ''
         if tags:

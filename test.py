@@ -300,7 +300,7 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             [u'PPALE:argent:~and sable',
              'ROUNDEL:4:multicolor:primary',
-             'ROUNDEL:primary',
+             'ROUNDEL:4 or more:primary',
              'CHIEF:1:vert:engrailed',
              'BELL:3:argent'],
             list(parse(u"Per pale argent and sable, four\n  roundels counterchanged two and two and on a chief engrailed vert\n  three hawk's bells argent.\n").describe()))
@@ -374,7 +374,7 @@ class TestCases(unittest.TestCase):
             ['CRAC:1:purpure:primary',
              'CRAC:1:primary',
              'ROUNDEL:5:purpure:primary',
-             'ROUNDEL:primary'],
+             'ROUNDEL:4 or more:primary'],
             list(parse(u'(Fieldless) A cross of five golpes.').describe()))
 
         self.assertEquals(
@@ -421,7 +421,7 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             ['PC:argent:~and sable',
              'TREE9BRANCH:4:vert:primary',
-             'TREE9BRANCH:primary',
+             'TREE9BRANCH:4 or more:primary',
              'INSA:4:vert:primary',
              'SWORD:1:argent:primary',
              'SWORD:1:primary'],
