@@ -7,6 +7,7 @@ from structs import Tincture, Fieldless, Charge
 
 TINCTURES = {
     '(fieldless)': Fieldless(),
+    'multicolor': Tincture('multicolor'),
 }
 TINCTURE_ALIASES = {
     'azure': ['de larmes'],
@@ -208,6 +209,7 @@ IMPLIED_TINCTURES = {
     'pellet': 'sable',
     'pomme': 'vert',
     'golpe': 'purpure',
+    'fountain': 'multicolor',
     }
 
 MULTIPLE_TINCTURES = {
