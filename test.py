@@ -495,5 +495,13 @@ class TestCases(unittest.TestCase):
              'TRISKELION:2'],
             list(parse(u'Per pale gules and sable, a raven displayed argent between in pale two plates charged with triskelions of spirals.').describe()))
 
+        self.assertEquals(
+            ['AZ',
+             'REPTILE-SNAKE:3:or:primary',
+             'REPTILE-SNAKE:3:primary',
+             'KNOT AND ROPE:1:or:primary',
+             'KNOT AND ROPE:1:primary'],
+            list(parse(u'Azure, three snakes nowed in a trefoil knot Or.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
