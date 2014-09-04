@@ -143,3 +143,4 @@ pea-vine: plant, vine
 calamarie: mollusk, octopus
 otelle: goute
 oak branch: tree branch
+chessrook: chess piece

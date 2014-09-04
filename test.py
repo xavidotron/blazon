@@ -520,5 +520,14 @@ class TestCases(unittest.TestCase):
              'SUN:3:or'],
             list(parse(u"Per bend sinister purpure and vert, a bend sinister Or between a unicorn's head erased argent and 3 mullets Or").describe()))
 
+        self.assertEquals(
+            ['VT',
+             'FESS:1:multicolor:primary',
+             'FIELD DIV.-BARRY:1:multicolor:primary',
+             'FESS:1:primary',
+             'FLEAM:1',
+             'CHESS PIECE:1'],
+            list(parse(u'Vert, on a fess per pale azure and Or, a fleam and a chessrook counterchanged.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
