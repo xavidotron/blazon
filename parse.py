@@ -543,7 +543,7 @@ def parse(blaz):
                 else:
                     raise BlazonException(
                         "Counterchange without anything to color: %s" % b)
-            if x.primary is not False:
+            if True: #x.primary is not False:
                 if not x.field.tincture:
                     raise BlazonException("Counterchange without a field!")
                 if x.primary is True and not x.field.tincture.is_complex():
@@ -660,7 +660,8 @@ def parse(blaz):
             check_no_adj(x, b)
             if x.was not in ('field division',):
                 x.was = 'detail'
-            x.primary = None  # Not primary until "and"
+            if x.primary:
+                x.primary = None  # Not primary until "and"
             continue
         elif b in ARRANGEMENTS:
             #print 'ARRANGEMENT'
@@ -752,7 +753,7 @@ def parse(blaz):
                 # Sable, in base a wombat Or.
                 # or
                 # Vert, within an annulet an acorn argent.
-                if x.lastcharge:
+                if x.lastcharge and x.primary:
                     x.primary = None # Not primary until 'and'
                 x.mod = b
                 if WITHS[b] is not None:
@@ -764,7 +765,8 @@ def parse(blaz):
                   and (blist[2] in CHARGES or blist[2] not in ALL_WORDS)):
                 # charged on the cuff/head/shoulder with
                 del blist[:4]
-                x.primary = None # Not primary until 'and'
+                if x.primary:
+                    x.primary = None # Not primary until 'and'
                 x.mod = 'charged with'
                 x.was = 'with'
             elif b == 'each of' and x.was == 'with':
@@ -777,7 +779,8 @@ def parse(blaz):
                 b2 = pop_blist(blist)
                 if b2 in WITHS and blist[0] in ('a', 'an'):
                     del blist[0]
-                    x.primary = None # Not primary until 'and'
+                    if x.primary:
+                        x.primary = None # Not primary until 'and'
                     assert not x.multiplier, x.multiplier
                     x.number = x.lastcharge[-1].number
                     x.mod = 'charged with'
@@ -787,7 +790,8 @@ def parse(blaz):
                     if b3 not in WITHS or blist[0] not in ('a', 'an'):
                         dont_understand('%s %s' % (b, b2), b3, blist)
                     del blist[0]
-                    x.primary = None # Not primary until 'and'
+                    if x.primary:
+                        x.primary = None # Not primary until 'and'
                     assert not x.multiplier, x.multiplier
                     x.number = x.lastcharge[-1].number
                     x.mod = 'charged with'
@@ -809,7 +813,8 @@ def parse(blaz):
                     x.was = 'of'
             elif b in MAINTAININGS:
                 x.maintained = True
-                x.primary = None
+                if x.primary:
+                    x.primary = None
                 if MAINTAININGS[b] is not None:
                     assert not x.multiplier, x.multiplier
                     x.number = MAINTAININGS[b]

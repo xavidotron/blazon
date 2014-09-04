@@ -40,7 +40,7 @@ ANDS = {
     'suspended from',
     'pierced by',
     'and on the sinister with', # after "charged on the dexter with"
-    'nowed in',
+    'nowed in', # More of a "in the shape of" than an "and", but this works.
 }
 
 SUSTAININGS = {
@@ -110,6 +110,8 @@ NUMBERS = {
     'two pairs of': 4,
     'three pairs of': 6,
     }
+for i in xrange(1, 11):
+    NUMBERS[str(i)] = i
 
 CHARGES = {}
 DESC_TO_CHARGE = {}

@@ -100,7 +100,12 @@ class TestCases(unittest.TestCase):
             list(parse(u'(Fieldless) An estoile of five rays argent\n\n').describe()))
 
         self.assertEquals(
-            [u'PB:sable:~and argent', 'BEND:1:azure:primary', 'FIELD DIV.-BENDY:1:azure:primary', 'BEND:1:primary', 'CRAMPET:3:argent', 'MONSTER-PHOENIX:2'],
+            [u'PB:sable:~and argent',
+             'BEND:1:azure:primary',
+             'FIELD DIV.-BENDY:1:azure:primary',
+             'BEND:1:primary',
+             'CRAMPET:3:argent',
+             'MONSTER-PHOENIX:2:multicolor'],
             list(parse(u'Per bend sable and argent, on a bend azure between two phoenixes counterchanged, three crampets argent').describe()))
 
         self.assertEquals(
@@ -502,6 +507,18 @@ class TestCases(unittest.TestCase):
              'KNOT AND ROPE:1:or:primary',
              'KNOT AND ROPE:1:primary'],
             list(parse(u'Azure, three snakes nowed in a trefoil knot Or.').describe()))
+
+        self.assertEquals(
+            ['PBS:purpure:~and vert',
+             'BS:1:or:primary',
+             'FIELD DIV.-BENDY*3:1:or:primary',
+             'BS:1:primary',
+             'HEAD-MONSTER,UNICORN:1:argent',
+             'STAR:3:or',
+             'CALTRAP:3:or',
+             'ESTOILE:3:or',
+             'SUN:3:or'],
+            list(parse(u"Per bend sinister purpure and vert, a bend sinister Or between a unicorn's head erased argent and 3 mullets Or").describe()))
 
 if __name__ == "__main__":
     unittest.main()
