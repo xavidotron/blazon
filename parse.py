@@ -361,15 +361,15 @@ def parse(blaz):
                  or x.lastcharge[-1].name in ('amphibian', 'ship', 'bow', 
                                               'axe'))
                 and b in POSTURES):
-                x.lastcharge[-1].tags.append(POSTURES[b])
+                x.lastcharge[-1].add_posture(POSTURES[b])
                 continue
             elif (x.lastcharge[-1].category in ('bird', 'monster')
                   and b in BIRD_POSTURES):
-                x.lastcharge[-1].tags.append(BIRD_POSTURES[b])
+                x.lastcharge[-1].add_posture(BIRD_POSTURES[b])
                 continue
             elif (x.lastcharge[-1].category in ('monster, sea', 'fish') 
                   and b in FISH_POSTURES):
-                x.lastcharge[-1].tags.append(FISH_POSTURES[b])
+                x.lastcharge[-1].add_posture(FISH_POSTURES[b])
                 continue
             else:
                 raise BlazonException("%s is a posture, but a '%s' is a %s, not an appropriate creature!" % (b, x.lastcharge[-1].name, x.lastcharge[-1].category or x.lastcharge[-1].name), b)
@@ -722,7 +722,6 @@ def parse(blaz):
                 demi.number = chg.number
                 chg.mods.append(demi)
                 x.unspecified.append(demi)
-                x.lastcharge.append(demi)
                 x.multi = None
         if res:
             x.mod = None

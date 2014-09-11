@@ -167,6 +167,11 @@ class Charge(Thingy):
                 assert isinstance(d, basestring), d
                 yield d
 
+    def add_posture(self, posture):
+        self.tags.append(posture)
+        for c in self.mods:
+            c.tags.append(posture)
+
     def __repr__(self):
         return 'Charge:'+repr((self.name, self.desc, self.category))
 

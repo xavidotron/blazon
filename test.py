@@ -92,7 +92,11 @@ class TestCases(unittest.TestCase):
             list(parse(u'(Fieldless) A heart gules winged argent\n\n').describe()))
 
         self.assertEquals(
-            ['VT', 'BEAST-BULL AND BISON:1:argent:primary:passant', 'BEAST-BULL AND BISON:1:primary', 'MONSTER9WINGED:argent', 'BASE:1:or'],
+            ['VT',
+             'BEAST-BULL AND BISON:1:argent:primary:passant',
+             'BEAST-BULL AND BISON:1:primary',
+             'MONSTER9WINGED:argent:passant',
+             'BASE:1:or'],
             list(parse(u'Vert, a winged bull courant wings elevated and addorsed argent and a base Or').describe()))
 
         self.assertEquals(
@@ -299,7 +303,7 @@ class TestCases(unittest.TestCase):
              'LEG AND FOOT-HUMAN:6:or',
              'SEAWOLF:1:argent:primary:naiant to dexter',
              'SEAWOLF:1:primary',
-             'MONSTER9WINGED:argent'],
+             'MONSTER9WINGED:argent:naiant to dexter'],
             list(parse(u'Per chevron Or and vert, two pommes each charged with a triskelion of armored legs Or and a winged sea-fox naiant argent.').describe()))
 
         self.assertEquals(
@@ -355,7 +359,7 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             ['FISH8OTHER:1:argent:primary:naiant to dexter:embowed',
              'FISH8OTHER:1:primary',
-             'MONSTER9WINGED:argent',
+             'MONSTER9WINGED:argent:naiant to dexter',
              'ARRANGEMENT-IN ANNULO:1:argent:primary:naiant to dexter:embowed'],
             list(parse(u"(Fieldless) A bat-winged fish attired of a stag's antlers naiant embowed in annulo argent.").describe()))
 
@@ -528,6 +532,13 @@ class TestCases(unittest.TestCase):
              'FLEAM:1',
              'CHESS PIECE:1'],
             list(parse(u'Vert, on a fess per pale azure and Or, a fleam and a chessrook counterchanged.').describe()))
+
+        self.assertEquals(
+            ['VT',
+             'BEAST-DEER AND STAG:1:or:primary:passant to sinister',
+             'BEAST-DEER AND STAG:1:primary',
+             'BEAST9DEMI:1:or:passant to sinister'],
+            list(parse(u'Vert, a demi-stag passant to sinister reguardant Or.\n').describe()))
 
 if __name__ == "__main__":
     unittest.main()
