@@ -179,7 +179,6 @@ FISH_POSTURE_ALIASES = {
 POSTURES = {}
 POSTURE_ALIASES = {
     'rampant': ['segreant', 'salient', 'clymant'],
-    'passant': ['courant'],
     'affronte': ['affronty', 'sejant affronty'],
     }
 

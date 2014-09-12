@@ -152,7 +152,7 @@
 |fish_posture:hauriant
 |fish_posture:naiant to dexter
 |fish_posture:naiant to sinister
-|group:debruising<secondary
+|group:debruising
 |group:g2pa<gpa
 |group:g2pna<gpna
 |group:g3pa<gpa
@@ -225,6 +225,9 @@
 |posture:couchant
 |posture:couchant to dexter<couchant
 |posture:couchant to sinister<couchant
+|posture:courant<passant
+|posture:courant to dexter<passant<passant to dexter
+|posture:courant to sinister<passant<passant to sinister
 |posture:dormant to dexter<dormant<couchant to dexter
 |posture:dormant to sinister<dormant<couchant to sinister
 |posture:dormant<couchant
@@ -901,6 +904,7 @@ badger's head - see head, beast, badger
 bag - see clothing, pouch
 bagpipe - see musical instrument, bagpipe
 bagwyn - see monster, antelope
+baker's peel - see tool, other
 baldric - see clothing, belt
 ball - see roundel, whole and toy
 banner - see flag
@@ -2532,6 +2536,7 @@ peak - see mountain
 peapod - see fruit, other
 pear - see fruit, other
 pear tree - see tree, rounded shape
+peel, bakers - see tool, other
 pegasi - see monster, pegasus
 pegasus - see monster, pegasus
 pelican - see bird, whole and bird, demi

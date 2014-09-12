@@ -16,7 +16,10 @@ class TestCases(unittest.TestCase):
              'FDL:1:sable'], 
             list(parse(u'(Fieldless) On a cross couped Or, a fleur-de-lys sable').describe()))
         self.assertEquals(
-            ['AR', 'DOG:1:sable:primary:passant', 'DOG:1:primary', 'ESCALLOP:3:gules'], 
+            ['AR', 
+             'DOG:1:sable:primary:courant', 
+             'DOG:1:primary', 
+             'ESCALLOP:3:gules'], 
             list(parse(u'Argent, a greyhound courant sable between three escallops gules.').describe()))
         self.assertEquals(
             ['AR', 'SPINDLE:1:purpure:primary', 'TOOL-SEWING AND WEAVING:1:purpure:primary', 'SPINDLE:1:primary', 'CHIEF:1:purpure', 'POLE-AXE:1:argent'], 
@@ -71,7 +74,14 @@ class TestCases(unittest.TestCase):
             ['GYRONNY:argent:~and gules', 'CUP:1:purpure:primary', 'CUP:1:primary', 'BEAST-WEASEL AND OTTER:1:sable', 'BEAST9DEMI:1:sable'], 
             list(parse(u'Gyronny argent and gules, issuant from a mug purpure a demi-weasel sable.\n\n').describe()))
         self.assertEquals(
-            ['PB:azure:~and argent', 'ROSE:1:argent:primary', 'ROSE:1:primary', 'DOG:1:proper:primary:passant:bendwise', 'DOG:1:primary', 'CHIEF:1:argent', 'BIRD:3:sable', 'BIRD9DEMI:3:sable'], 
+            ['PB:azure:~and argent', 
+             'ROSE:1:argent:primary', 
+             'ROSE:1:primary', 
+             'DOG:1:proper:primary:courant:bendwise', 
+             'DOG:1:primary', 
+             'CHIEF:1:argent', 
+             'BIRD:3:sable', 
+             'BIRD9DEMI:3:sable'], 
             list(parse(u'Per bend azure and argent, a rose argent and a fox courant bendwise proper, on a chief argent three martlets sable').describe()))
         self.assertEquals(
             ['FIELD TREATMENT-VAIRY', 'PALL*7:1:gules:primary', 'PALL*7:1:primary'], 
@@ -93,9 +103,9 @@ class TestCases(unittest.TestCase):
 
         self.assertEquals(
             ['VT',
-             'BEAST-BULL AND BISON:1:argent:primary:passant',
+             'BEAST-BULL AND BISON:1:argent:primary:courant',
              'BEAST-BULL AND BISON:1:primary',
-             'MONSTER9WINGED:argent:passant',
+             'MONSTER9WINGED:argent:courant',
              'BASE:1:or'],
             list(parse(u'Vert, a winged bull courant wings elevated and addorsed argent and a base Or').describe()))
 
