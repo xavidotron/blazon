@@ -550,5 +550,39 @@ class TestCases(unittest.TestCase):
              'BEAST9DEMI:1:or:passant to sinister'],
             list(parse(u'Vert, a demi-stag passant to sinister reguardant Or.\n').describe()))
 
+        self.assertEquals(
+            ['AZ',
+             'FLOWER-CUP SHAPE:1:argent:primary',
+             'FLOWER-CUP SHAPE:1:primary',
+             'STAR:5:argent',
+             'ARRANGEMENT-IN CHEVRON:5:argent',
+             'ORLE AND TRESSURE:1:argent'],
+            list(parse(u'Azure, a lotus blossom in profile beneath five compass stars in chevron, an orle argent.').describe()))
+
+        self.assertEquals(
+            ['AR',
+             'FESS:1:sable:primary',
+             'FIELD DIV.-BARRY:1:sable:primary',
+             'FESS:1:primary',
+             'CRESCENT:3:gules',
+             'MONSTER-ENFIELD:1:gules'],
+            list(parse(u'Argent, surmounting a fess sable between three crescents an enfield gules.').describe()))
+
+        self.assertEquals(
+            ['VT',
+             'TRISKELION:1:or:primary',
+             'TRISKELION:1:primary',
+             'HEADDOG:3:or:primary',
+             'HEADDOG:3:primary'],
+            list(parse(u"Vert, a triskelion of wolves' heads Or.\n").describe()))
+
+        self.assertEquals(
+            ['AZ',
+             'LETTERS,RUNES AND SYMBOLS:seme:argent:seme on field',
+             'FIELD TREATMENT-SEME (9OTHER):argent',
+             'BEAST-RABBIT:1:argent:primary:rampant',
+             'BEAST-RABBIT:1:primary'],
+            list(parse(u'Azure semy of Greek letters pi, a rabbit rampant maintaining an hourglass argent.\n').describe()))
+
 if __name__ == "__main__":
     unittest.main()

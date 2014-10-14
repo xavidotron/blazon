@@ -144,3 +144,22 @@ calamarie: mollusk, octopus
 otelle: goute
 oak branch: tree branch
 chessrook: chess piece
+demi-escarbuncle: escarbuncle
+chimera: monster, other
+wedge of cheese: foodstuff
+chaplet of thorns: wreath, not laurel & plant, thorn
+six-armed escarbuncle: escarbuncle
+badger-hound: beast, dog
+rolling pin: tool, other
+sinister gauntleted fist: hand
+cross formy quadrate: cross, as charge:formy
+sea-hedgehog: monster, sea, other
+drop-spindle: spindle
+fishhook: hook
+crown of a tree: tree, rounded shape
+woolpack: pillow
+triquetrae: triquetra
+gem ring: jewelry
+wolves' heads: head, beast, dog
+cameleopard: beast, other
+ivy leaf: leaf

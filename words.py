@@ -7,6 +7,7 @@ from structs import Tincture, Fieldless, Charge
 
 TINCTURES = {
     '(fieldless)': Fieldless(),
+    '(tinctureless)': Fieldless(),
     'multicolor': Tincture('multicolor'),
 }
 TINCTURE_ALIASES = {
@@ -35,6 +36,7 @@ ANDS = {
     'conjoined with',
     'conjoined in pale with',
     'conjoined to',
+    'surrounded by and conjoined to',
     'enfiling',
     'between the head and tail',
     'suspended from',
@@ -46,6 +48,10 @@ ANDS = {
 SUSTAININGS = {
     'sustaining',
     'sustained by',
+    'conjoined to and sustaining',
+    'conjoined in base to and sustaining',
+    'rising from',
+    'transfixed by',
 }
 
 MAINTAININGS = {
@@ -73,6 +79,7 @@ WITHS = {
     'all within': None,
     'within and conjoined to': None,
     'within the horns of': None,
+    'between the horns of': None,
     # charged withs
     'charged with': None,
     'charged in base with': None,
@@ -89,6 +96,8 @@ ATOPS = {
     'fastened to',
     'hanging from',
     'on',  # Can also be used in other ways.
+    'beneath',
+    'surmounting',
 }
 
 NUMBERS = {
@@ -113,6 +122,10 @@ NUMBERS = {
 for i in xrange(1, 11):
     NUMBERS[str(i)] = i
 
+OF_CHARGES = {
+    'triskelion': 3,
+}
+
 CHARGES = {}
 DESC_TO_CHARGE = {}
 
@@ -125,12 +138,16 @@ LOCATIONS = {
     'sinister chief',
     'canton',
     }
+DEPRIM = {
+    'in fess point', # To disambig vs "in fess"
+}
 ARRANGEMENTS = {
     'one and two', 'two and one',
     'two and two',
     'two , two and two',
     'two , two , and two',
     'two , two , and one',
+    'two , one , and two',
 }
 ORIENTATIONS = {}
 
@@ -159,6 +176,7 @@ LINES = {
     'flory counterflory': 'complex line',
     'flory': 'complex line',
     'embowed to base': 'embowed',
+    'raguly bretessed': 'raguly',
     }
 
 BIRD_POSTURES = {}
@@ -178,8 +196,9 @@ FISH_POSTURE_ALIASES = {
 
 POSTURES = {}
 POSTURE_ALIASES = {
-    'rampant': ['segreant', 'salient', 'clymant'],
+    'rampant': ['segreant', 'salient', 'clymant', 'springing'],
     'affronte': ['affronty', 'sejant affronty'],
+    'combattant': ['combatant'],
     }
 
 CROSS_FAMILIES = {}
@@ -233,6 +252,7 @@ SEMYS = {
     'goutty': 'goute',
     'goutte': 'goute',
     'mullety': 'mullet',
+    'platy': 'plate',
 }
 
 # vairy is a field treatment that's written like a field division
@@ -252,6 +272,7 @@ DETAIL_ADJ = {
     'bottom-whorl',
     'elder futhark',
     'lower case',
+    'greek',
     'brunette',
     'caucasian',
     'hexagonal',
@@ -529,7 +550,7 @@ def loadwords():
 
     ALL_WORDS.update(TINCTURES,
                      CHARGES, DETAILS, ARRANGEMENTS, ORIENTATIONS, POSTURES,
-                     LINES,
+                     LINES, LOCATIONS, DEPRIM,
                      BIRD_POSTURES, NUMBERS, ANDS, SUSTAININGS, MAINTAININGS,
                      WITHS, CROSS_FAMILIES, ATOPS,
                      DETAIL_ADJ, COUNTERCHANGEDS,

@@ -46,6 +46,10 @@ def proc(x, b, orig_b, blist):
         if x.number is None and x.was == 'with' and x.lastcharge[-1].number > 1:
             # This is something like "two plates charged with triskelions".
             x.number = x.lastcharge[-1].number
+        if (x.number is None and x.was == 'charge of' 
+            and x.lastcharge[-1].name in OF_CHARGES):
+            x.number = (x.lastcharge[-1].number 
+                        * OF_CHARGES[x.lastcharge[-1].name])
         if x.number is None:
             if x.maintained:
                 pass
@@ -208,6 +212,7 @@ def dont_understand(w1, w2, blist=[]):
                               % (w1, w2), '%s %s' % (w1, w2), dym, blist=blist)
 
 def check_no_adj(x, b, blist=[], prev=None):
+    #print 'cna', prev
     if x.adj:
         unknown("charge", x.adj, blist=[b] + blist, prev=prev)
 
@@ -316,6 +321,7 @@ def parse(blaz):
                 x.lastcharge[-1].tags.append(ORIENTATIONS[b])
             else:
                 unknown("charge", x.adj)
+            x.was = 'orientation'
             continue
         elif x.was == 'field division' and x.fielddivision and b in LINES:
             if x.fielddivision[-1].fielddesc:
@@ -345,12 +351,15 @@ def parse(blaz):
                 raise BlazonException("Posture '%s' with no charge to modify!"
                                       % b, b)
             orig_lastcharge = x.lastcharge[-1]
+            POST_MISC = (
+                    'amphibian', 'ship', 'bow', 'axe', 'escarbuncle')
+            BIRD_MISC = ('wing',)
             while (x.lastcharge
                    and x.lastcharge[-1].category not in (
                     'monster', 'beast', 'human', 'reptile', 'bird',
                     'monster, sea', 'fish', 'flower', 'head, beast')
-                   and x.lastcharge[-1].name not in (
-                    'amphibian', 'ship', 'bow', 'axe')):
+                   and x.lastcharge[-1].name not in POST_MISC
+                   and x.lastcharge[-1].name not in BIRD_MISC):
                 x.lastcharge.pop()
             if not x.lastcharge:
                 raise BlazonException("%s is a posture, but a '%s' is not an appropriate creature!" % (b, orig_lastcharge.name), orig_lastcharge.blazon+' '+b)
@@ -358,12 +367,12 @@ def parse(blaz):
                                                'reptile',
                                                'monster, sea',
                                                'flower', 'head, beast')
-                 or x.lastcharge[-1].name in ('amphibian', 'ship', 'bow', 
-                                              'axe'))
+                 or x.lastcharge[-1].name in POST_MISC)
                 and b in POSTURES):
                 x.lastcharge[-1].add_posture(POSTURES[b])
                 continue
-            elif (x.lastcharge[-1].category in ('bird', 'monster')
+            elif ((x.lastcharge[-1].category in ('bird', 'monster')
+                   or x.lastcharge[-1].name in BIRD_MISC)
                   and b in BIRD_POSTURES):
                 x.lastcharge[-1].add_posture(BIRD_POSTURES[b])
                 continue
@@ -381,6 +390,8 @@ def parse(blaz):
             x.mod = None
             continue
         elif ('field division, %s' % b in CHARGES or b in VAIRYS
+              or (b in CHARGES
+                  and CHARGES[b].name.startswith('field division,'))
               or b in ('parted',)):
             #print 'field division', b
             check_no_adj(x, b)
@@ -390,8 +401,10 @@ def parse(blaz):
                 charge = None
             elif b in VAIRYS:
                 charge = copy.deepcopy(CHARGES['field treatment, %s' % b])
-            else:
+            elif 'field division, %s' % b in CHARGES:
                 charge = CHARGES['field division, %s' % b]
+            else:
+                charge = CHARGES[b]
             if not x.fielddivision:
                 if x.unspecified:
                     if charge:
@@ -452,7 +465,9 @@ def parse(blaz):
                 elif x.fielddivision:
                     pass
                 else:
-                    raise BlazonException("Weird use of 'of %s'!" % b, 'of '+b,
+                    lb = get_prev(x)
+                    raise BlazonException("Weird use of 'of %s'!" % b, 
+                                          lb + ' ' + b,
                                           blist=blist)
                     
                 x.mod = None
@@ -472,7 +487,7 @@ def parse(blaz):
         if b in TINCTURES:
             #print 'TINCTURE', b, x.unspecified, x.was
             t = copy.deepcopy(TINCTURES[b])
-            check_no_adj(x, b, blist=blist, prev=get_prev(x, 2))
+            check_no_adj(x, b, blist=blist, prev=get_prev(x, 1))
             if not x.unspecified:
                 if x.was in ('field treatment', 'counterchange'):
                     continue
@@ -573,14 +588,18 @@ def parse(blaz):
         elif b in ('semy', 'orle', 'annulet') and blist[0] == 'of':
             blist.pop(0)
             #print 'SEMY'
+            if blist[0] in NUMBERS:
+                num = NUMBERS[blist.pop(0)]
+            else:
+                num = 'seme'
             charge = depluralize(pop_blist(blist))
             while charge in DETAIL_ADJ:
                 charge = depluralize(pop_blist(blist))
             if charge not in CHARGES:
                 raise BlazonException("Semy of unknown charge: '%s'" % charge,
-                                      charge)
+                                      charge, blist=blist)
             chg = copy.deepcopy(CHARGES[charge])
-            chg.number = 'seme'
+            chg.number = num
             if x.lasttincture is None:
                 if (blist[0] == 'counterchanged'
                     or (blist[0] == 'all' and blist[1] == 'counterchanged')):
@@ -660,8 +679,12 @@ def parse(blaz):
             check_no_adj(x, b)
             if x.was not in ('field division',):
                 x.was = 'detail'
-            if x.primary:
-                x.primary = None  # Not primary until "and"
+            continue
+        elif b in DEPRIM:
+            check_no_adj(x, b)
+            if x.was not in ('field division',):
+                x.was = 'detail'
+            x.primary = False
             continue
         elif b in ARRANGEMENTS:
             #print 'ARRANGEMENT'
@@ -697,10 +720,21 @@ def parse(blaz):
             del blist[:2]
             x.was = 'detail'
             continue
+        elif (b in ('in',) and blist[0] == 'its' and blist[1] in LOCATIONS
+              and (blist[2] not in ALL_WORDS or blist[2] in CHARGES)):
+            # e.g., "in its sinister paw"
+            del blist[:3]
+            x.was = 'detail'
+            continue
         elif b == 'with' and blist[0] == 'its' and (
             blist[1] in CHARGES or blist[1] not in ALL_WORDS):
-            # e.g., "enfiling with its tail" or "sustaining with its talons"
+            # e.g., enfiling "with its tail" or sustaining "with its talons"
             del blist[:2]
+            continue
+        elif b in CHARGES and blist[0] == 'to' and blist[1] in LOCATIONS:
+            # e.g., a belt "buckle to base"
+            del blist[:2]
+            x.was = 'detail'
             continue
 
         if b not in ('of',):
@@ -726,7 +760,7 @@ def parse(blaz):
         if res:
             x.mod = None
         else:
-            if x.unspecified and x.unspecified[-1].name == 'symbol':
+            if x.lastcharge and x.lastcharge[-1].name == 'symbol':
                 x.was = 'symbol'
                 pass
             elif x.number is not None and x.adj != 'sets':
@@ -798,7 +832,7 @@ def parse(blaz):
                 else:
                     dont_understand(b, b2, blist)
             elif b in ATOPS or b in ('issuant', 'elongated'):
-                if x.was == 'charge':
+                if x.was in ('charge', 'detail'):
                     x.primary = False
                 else:
                     x.commadeprim = True
