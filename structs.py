@@ -289,7 +289,7 @@ class Tincture(object):
 
     def fielddescription(self):
         fd = self.fielddesc
-        if self.fdtincts:
+        if self.fdtincts and len(self.fdtincts) < 3:
             fd += ':' + self.fdtincts[0].tincture
             if len(self.fdtincts) > 1:
                 fd += ':~and ' + self.fdtincts[1].tincture
@@ -322,10 +322,7 @@ class Tincture(object):
         assert self.is_complex()
         assert self.fdtincts is not None
         assert isinstance(tincture, Tincture), tincture
-        if len(self.fdtincts) < 2:
-            self.fdtincts.append(tincture)
-        else:
-            self.fdtincts = [Tincture('multicolor'), Tincture('multicolor')]
+        self.fdtincts.append(tincture)
 
 class Fieldless(Tincture):
     def __init__(self):

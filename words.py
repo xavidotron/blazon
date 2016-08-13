@@ -41,6 +41,7 @@ ANDS = {
     'between the head and tail',
     'suspended from',
     'pierced by',
+    'pierced through by',
     'and on the sinister with', # after "charged on the dexter with"
     'nowed in', # More of a "in the shape of" than an "and", but this works.
 }

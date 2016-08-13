@@ -473,7 +473,7 @@ class TestCases(unittest.TestCase):
             list(parse(u'Gules, a pair of calipers and in chief three crescents argent each crescent charged with a mullet of six points sable.').describe()))
 
         self.assertEquals(
-            ['FIELD DIV.-PER PALL:multicolor:~and multicolor',
+            ['FIELD DIV.-PER PALL',
              'TRISKELION:3:multicolor:primary',
              'TRISKELION:3:primary'],
             list(parse(u'Per pall vert, Or, and argent, three triskeles argent, purpure, and azure.\n').describe()))
@@ -583,6 +583,12 @@ class TestCases(unittest.TestCase):
              'BEAST-RABBIT:1:argent:primary:rampant',
              'BEAST-RABBIT:1:primary'],
             list(parse(u'Azure semy of Greek letters pi, a rabbit rampant maintaining an hourglass argent.\n').describe()))
+
+        self.assertEquals(
+            ['FIELD DIV.-PER PALL',
+             'BEAST-HORSE:seme:or:seme on field:passant',
+             'FIELD TREATMENT-SEME (9OTHER):or'],
+            list(parse(u'Per pall gules, azure and vert, semy of horses passant Or').describe()))
 
 if __name__ == "__main__":
     unittest.main()
