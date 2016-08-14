@@ -87,7 +87,6 @@ def numtag_for(num):
 class Charge(Thingy):
     name = None
     number = None
-    maintained = False
     multiplier = None
     blazon = None
     adj = None
@@ -101,7 +100,7 @@ class Charge(Thingy):
         self.seealso = []
 
     def combine_with(self, other):
-        if (other.name == self.name and other.maintained == self.maintained
+        if (other.name == self.name
             and self.mods == other.mods
             and self.tags == other.tags and self.between == other.between):
             ret = copy.deepcopy(self)
@@ -123,8 +122,6 @@ class Charge(Thingy):
         from words import PRIMTAGS_WHITELIST
 
         assert self.between is None, self.between
-        if self.maintained:
-            return
         tags = list(self.tags)
         primtags = [t for t in tags if t in PRIMTAGS_WHITELIST]
         if self.tincture:

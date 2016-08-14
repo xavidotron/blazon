@@ -55,6 +55,7 @@ SUSTAININGS = {
     'transfixed by',
 }
 
+# Maintained charges now count for difference.
 MAINTAININGS = {
     'maintaining': None,
     'maintaining between them': None,

@@ -51,9 +51,7 @@ def proc(x, b, orig_b, blist):
             x.number = (x.lastcharge[-1].number 
                         * OF_CHARGES[x.lastcharge[-1].name])
         if x.number is None:
-            if x.maintained:
-                pass
-            elif (x.was not in ('charge', 'charge of') 
+            if (x.was not in ('charge', 'charge of') 
                   or not x.unspecified[-1].blazon):
                 lb = get_prev(x)
                 raise BlazonException("No number/a/an for a charge: %s" % b,
@@ -99,7 +97,7 @@ def proc(x, b, orig_b, blist):
             c.mods.append(x.arrangement)
             x.arrangement = None
         if x.maintained:
-            c.maintained = True
+            c.tags.append('maintained')
             x.maintained = False
         if x.nextmods:
             c.mods += x.nextmods
@@ -564,7 +562,7 @@ def parse(blaz):
                 if x.primary is True and not x.field.tincture.is_complex():
                     raise BlazonException(
                         "Counterchange over a simple field!")
-                unspec = [u for u in x.unspecified if not u.maintained]
+                unspec = [u for u in x.unspecified]
                 if len(unspec) == 1:
                     # Do this even if unspec[0].number != 1; that's how
                     # oanda does it.
@@ -653,6 +651,14 @@ def parse(blaz):
         elif b in SUSTAININGS:
             x.primary = False
             x.was = 'sustaining'
+            continue
+        elif b in MAINTAININGS:
+            x.maintained = True
+            x.primary = False
+            if MAINTAININGS[b] is not None:
+                assert not x.multiplier, x.multiplier
+                x.number = MAINTAININGS[b]
+            x.was = 'maintaining'
             continue
         elif b == ',':
             if x.commadeprim:
@@ -844,14 +850,6 @@ def parse(blaz):
                     x.was = 'charge of'
                 else:
                     x.was = 'of'
-            elif b in MAINTAININGS:
-                x.maintained = True
-                if x.primary:
-                    x.primary = None
-                if MAINTAININGS[b] is not None:
-                    assert not x.multiplier, x.multiplier
-                    x.number = MAINTAININGS[b]
-                x.was = 'maintaining'
             elif b == '.':
                 x.was = 'period'
                 pass

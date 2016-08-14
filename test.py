@@ -48,7 +48,8 @@ class TestCases(unittest.TestCase):
             ['PU', 'CASTLE:1:or:primary', 'BEACON AND BRAZIER:1:or:primary', 'CASTLE:1:primary'], 
             list(parse(u'Purpure, a lighthouse Or').describe()))
         self.assertEquals(
-            ['PU', 'HEADDOG:1:argent:primary', 'HEADDOG:1:primary'], 
+            ['PU', 'HEADDOG:1:argent:primary', 'HEADDOG:1:primary',
+             'FLOWER-IRIS AND ORCHID:1:argent:maintained'], 
             list(parse(u"Purpure, a wolf's head erased maintaining an iris slipped and leaved argent").describe()))
         self.assertEquals(
             ['MONSTER-SPHINX:1:or:primary:couchant', 'MONSTER-SPHINX:1:primary'], 
@@ -176,7 +177,8 @@ class TestCases(unittest.TestCase):
             list(parse(u'Quarterly sable and Or, on a bend argent between two wolves rampant contourney five paw prints sable.\n\n').describe()))
 
         self.assertEquals(
-            [u'PFESS:azure:~and or', 'MONSTER-SEA LION:1:multicolor:primary', 'MONSTER-SEA LION:1:primary'],
+            [u'PFESS:azure:~and or', 'MONSTER-SEA LION:1:primary',
+             'MACE AND MORNINGSTAR:1:maintained'],
             list(parse(u'Per fess azure and Or, a sea lion maintaining a spiked mace counterchanged\n\n').describe()))
 
         self.assertEquals(
@@ -195,7 +197,8 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             [u'GYRONNY:sable:~and vert',
              'DRAGON:1:argent:primary:rampant',
-             'DRAGON:1:primary'],
+             'DRAGON:1:primary',
+             'SWORD:1:or:maintained'],
             list(parse(u'Gyronny of eight, sable and vert a wyvern rampant argent langued gules, maintaining in dexter claw a sword erect Or.').describe()))
 
         self.assertEquals(
@@ -370,7 +373,8 @@ class TestCases(unittest.TestCase):
             ['FISH8OTHER:1:argent:primary:naiant to dexter:embowed',
              'FISH8OTHER:1:primary',
              'MONSTER9WINGED:argent:naiant to dexter',
-             'ARRANGEMENT-IN ANNULO:1:argent:primary:naiant to dexter:embowed'],
+             'ARRANGEMENT-IN ANNULO:1:argent:primary:naiant to dexter:embowed',
+             'HORN AND ATTIRES:1:argent:maintained'],
             list(parse(u"(Fieldless) A bat-winged fish attired of a stag's antlers naiant embowed in annulo argent.").describe()))
 
         self.assertEquals(
@@ -581,7 +585,8 @@ class TestCases(unittest.TestCase):
              'LETTERS,RUNES AND SYMBOLS:seme:argent:seme on field',
              'FIELD TREATMENT-SEME (9OTHER):argent',
              'BEAST-RABBIT:1:argent:primary:rampant',
-             'BEAST-RABBIT:1:primary'],
+             'BEAST-RABBIT:1:primary',
+             'HOURGLASS:1:argent:maintained'],
             list(parse(u'Azure semy of Greek letters pi, a rabbit rampant maintaining an hourglass argent.\n').describe()))
 
         self.assertEquals(
