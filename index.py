@@ -26,9 +26,6 @@ if mode and mode[0].isupper() and hasattr(words, mode):
         print """<li>%s</li>""" % cgi.escape(w)
     print """</ul>"""
 else:
-    double = fs.getfirst("double", False)
-    structs.DOUBLE_PRIMARIES = double
-    
     blazon = fs.getfirst("blazon", None)
 
     print """<h1>Kihō's Blazon to Complex Search Form Parser</h1>
@@ -56,7 +53,9 @@ else:
     (i.e., <a href="http://oanda.sca.org/my.cat">my.cat</a>).  This means
     that a single charge in your blazon may be represented by multiple armory
     descriptions, so keep this in mind when counting distinct changes from
-    Complex Search Form score totals.</p>"""
+    Complex Search Form score totals. In such cases, it may be easiest to
+    perform multiple searches with different combinations of checked
+    descriptions.</p>"""
 
     if blazon:
         import complexify
@@ -77,36 +76,45 @@ else:
             print "<p>Try simplifying your blazon, removing unnecessary detail or using more common names for charges.  If you think this is something that should be fixed, feel free to email kihou at xavid dot us with your blazon.</p>"
         else:
             print '<h3>Armory descriptions:</h3>'
-            print '<ul>'
-            for l in lst:
-                print '<li>%s</li>' % l
-            print '</ul>'
-            url = complexify.url_for(lst)
-            print '<p><a href="%s">Search the Complex Search Form with these descriptions</a></p>' % (url)
+            print '<form method="get" action="http://oanda.sca.org/oanda_complex.cgi">'
+            print '<input type="hidden" name="a" value="enabled" />'
+            for i in xrange(len(lst)):
+                l = lst[i]
+                if l.startswith('?'):
+                    l = l[1:]
+                    checkedness = ''
+                else:
+                    checkedness = ' checked'
+                print '<label><input type="checkbox" name="p%d" value="%s"%s />%s</label><br />' % (i + 1, l, checkedness, l)
+                print '<input type="hidden" name="w%d" value="1" />' % (i + 1)
+                print '<input type="hidden" name="m%d" value="armory description" />' % (i + 1)
+            print '<input type="submit" value="Search the Complex Search Form with checked descriptions" />'
+            print '</form>'
+            #url = complexify.url_for(lst)
+            #print '<p><a href="%s">Search the Complex Search Form with these descriptions</a></p>' % (url)
 
     print """<h2>Blazon Search</h2>
 
     <form method="get">
     <textarea name="blazon" cols="100" rows="5">%s</textarea><br />
-    <label><input name="double" type="checkbox"%s /> Double Primaries (see below)</label><br />
     <input type="submit" value="Parse" />
-    </form>""" % (cgi.escape(blazon) if blazon else "Or, a Laurel wreath vert.",
-                  " checked" if double else "")
+    </form>""" % (cgi.escape(blazon) if blazon else "Or, a Laurel wreath vert.")
 
-    print """<h3>Options</h3>
+    print """<h3>Usage Notes</h3>
 
     <h4>Doubling Primaries</h4>
     <p>Sometimes, a straightforward search will give you large numbers of
     blazons that are a substantial change away, making it hard to see
-    any conflicts.  To help with this, you can ask the parser to
-    generate two descriptions for primary charge groups:
-    a precise one and a simpler one without
-    tags like tincture.  This will give two points to armory that has exactly
+    any conflicts.  To help with this, the parser will generate a second,
+    default-unchecked description for primary charge groups in additoon
+    to the normal precise one. This second, simpler description omits
+    tags like tincture.  If checked, these two descriptions
+    will give two points to armory that has exactly
     your primary charge group and one point to armory that has something
     close to your primary charge group.  The intent is that armory with
     a substatial change to the primary charge group will lose two points this
-    way, equivalent to two DCs; however, this won't necessarily be the case
-    for armory with coprimary charges and such cases.  As always, check
+    way, equivalent to two DCs; however, this won't necessarily be valid in
+    all cases, such as for armory with coprimary charges.  As always, check
     the descriptions being used.</p>"""
 
 print """

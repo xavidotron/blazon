@@ -155,7 +155,7 @@ class Charge(Thingy):
             if 'primary' in self.tags and not as_mod and DOUBLE_PRIMARIES:
                 # Add an additonal instance, without the tincture, for 
                 # sig diffness
-                yield "%s:%s" % (self.desc, ':'.join(primtags))
+                yield "?%s:%s" % (self.desc, ':'.join(primtags))
             for c in self.tincture.chargeextras:
                 for d in c.describe():
                     yield d
