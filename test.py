@@ -595,5 +595,18 @@ class TestCases(unittest.TestCase):
              'FIELD TREATMENT-SEME (9OTHER):or'],
             list(parse(u'Per pall gules, azure and vert, semy of horses passant Or').describe()))
 
+        self.assertEquals(
+            ['SA',
+             'FIRE AND FLAME:1:proper:primary',
+             'FIRE AND FLAME:1:primary',
+             'REPTILE-SNAKE:1:argent',
+             'ARRANGEMENT-IN ANNULO:1:argent',
+             'STAR:1:argent:of 8',
+             'CALTRAP:1:argent:of 8',
+             'ESTOILE:1:argent:of 8',
+             'SUN:1:argent:of 8',
+             'BORDURE:1:argent'],
+            list(parse(u'Sable, on a flame proper a serpent in annulo with head to base argent surrounding a mullet of eight points pierced argent within a bordure argent').describe()))
+
 if __name__ == "__main__":
     unittest.main()

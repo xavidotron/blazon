@@ -91,6 +91,7 @@ WITHS = {
     'braced with': None,
     'interlaced with': None,
     'surmounted by': None,
+    'surrounding': None,
 }
 
 ATOPS = {
