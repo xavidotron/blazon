@@ -36,6 +36,7 @@ ANDS = {
     'conjoined with',
     'conjoined in pale with',
     'conjoined to',
+    'conjoined at the base to',
     'surrounded by and conjoined to',
     'enfiling',
     'between the head and tail',

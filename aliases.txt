@@ -163,3 +163,6 @@ gem ring: jewelry
 wolves' heads: head, beast, dog
 cameleopard: beast, other
 ivy leaf: leaf
+coney's head: head, beast, rabbit
+artist's paintbrush: tool, artistic
+card-pique: card pique

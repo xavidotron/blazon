@@ -38,8 +38,9 @@ else:
     useful for conflict-checking.</p>
 
     <p>This is a work in progress; not all tags will be included and it
-    <emph>will</emph> make mistakes in weird cases.  If you have suggestions
-    or find bugs, please let me know at kihou at xavid dot us so I can improve
+    <emph>will</emph> make mistakes.  If you have suggestions
+    or find omissions, mistakes, or bugs,
+    please let me know at kihou at xavid dot us so I can improve
     it.</p>
 
     <h3>Nota Bene!</h3>

@@ -124,7 +124,7 @@ class Charge(Thingy):
         assert self.between is None, self.between
         tags = list(self.tags)
         primtags = [t for t in tags if t in PRIMTAGS_WHITELIST]
-        if self.tincture:
+        if self.tincture and self.tincture.tincture != 'proper':
             tags = [self.tincture.tincture] + tags
 
         numtag = numtag_for(self.number)

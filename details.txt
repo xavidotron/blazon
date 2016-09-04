@@ -122,3 +122,5 @@ all fretted
 points to base
 with head to base
 pierced
+attired
+new world
