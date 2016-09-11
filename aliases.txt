@@ -166,3 +166,5 @@ ivy leaf: leaf
 coney's head: head, beast, rabbit
 artist's paintbrush: tool, artistic
 card-pique: card pique
+jessant-de-lys: head, jessant de lys
+lion's head jessant-de-lys: head, beast, cat & head, jessant de lys

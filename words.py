@@ -225,6 +225,7 @@ EXPLICIT_CATEGORIES = {'human figure': 'human'}
 IMPLIED_NUMBER = {
     'flames': 1,
     'flaunches': 2,
+    'jessant-de-lys': 'the',
     }
 IMPLIED_TINCTURES = {
     'bezant': 'or',
@@ -439,6 +440,9 @@ def loadwords():
                     charge = Charge(name, desc)
                 CHARGES[name] = charge
 
+                if name.startswith('head, beast, '):
+                    CHARGES["%s's head" % name[len('head, beast, '):]] = charge
+                
                 assert desc not in DESC_TO_CHARGE, desc
                 DESC_TO_CHARGE[desc] = charge
             elif ' - see ' in l:

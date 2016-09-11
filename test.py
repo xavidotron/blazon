@@ -78,7 +78,7 @@ class TestCases(unittest.TestCase):
             ['PB:azure:~and argent', 
              'ROSE:1:argent:primary', 
              '?ROSE:1:primary', 
-             'DOG:1:proper:primary:courant:bendwise', 
+             'DOG:1:primary:courant:bendwise', 
              '?DOG:1:primary', 
              'CHIEF:1:argent', 
              'BIRD:3:sable', 
@@ -124,7 +124,7 @@ class TestCases(unittest.TestCase):
             list(parse(u'Per bend sable and argent, on a bend azure between two phoenixes counterchanged, three crampets argent').describe()))
 
         self.assertEquals(
-            ['AR', 'BEAST-MOUSE AND RAT:1:proper:primary:passant', '?BEAST-MOUSE AND RAT:1:primary', 'BORDURE:1:purpure'],
+            ['AR', 'BEAST-MOUSE AND RAT:1:primary:passant', '?BEAST-MOUSE AND RAT:1:primary', 'BORDURE:1:purpure'],
             list(parse(u'Argent, a brown mouse passant proper and a bordure purpure\n').describe()))
         
         self.assertEquals(
@@ -154,13 +154,13 @@ class TestCases(unittest.TestCase):
              'ESTOILE:1:or:primary',
              'SUN:1:or:primary',
              '?STAR:1:primary',
-             'HAMMER:2:proper:primary',
+             'HAMMER:2:primary',
              '?HAMMER:2:primary',
-             'INSA:2:proper:primary'],
+             'INSA:2:primary'],
             list(parse(u"Per bend sinister sable and argent, a spur rowel Or and two smith's hammers in saltire proper.").describe()))
 
         self.assertEquals(
-            ['AR', 'MONSTER-PHOENIX:1:gules:primary', '?MONSTER-PHOENIX:1:primary', 'FIRE AND FLAME:1:proper', 'BORDURE:1:gules', 'ROUNDEL:seme:or'],
+            ['AR', 'MONSTER-PHOENIX:1:gules:primary', '?MONSTER-PHOENIX:1:primary', 'FIRE AND FLAME:1', 'BORDURE:1:gules', 'ROUNDEL:seme:or'],
             list(parse(u'Argent, a phoenix gules rising from flames proper and a bordure gules semy of bezants').describe()))
 
         self.assertEquals(
@@ -229,7 +229,7 @@ class TestCases(unittest.TestCase):
 
         self.assertEquals(
             [u'PBS:argent:~and gules',
-             'HUMAN FIGURE:1:proper:primary',
+             'HUMAN FIGURE:1:primary',
              '?HUMAN FIGURE:1:primary',
              'ROSE:3:argent:primary',
              '?ROSE:3:primary'],
@@ -241,7 +241,7 @@ class TestCases(unittest.TestCase):
              'ANVIL:1:sable:primary:bendwise sinister',
              '?TOOL9OTHER:1:primary',
              'FOODSTUFF:3:or',
-             'ARM:1:proper:embowed',
+             'ARM:1:embowed',
              'CHIEF:1:gules:rayonny'],
             list(parse(u"Or, a baker's peel bendwise sinister sable charged with three loaves of bread Or sustained by an arm embowed issuant from sinister proper vested sable, a chief rayonny gules.").describe()))
 
@@ -597,7 +597,7 @@ class TestCases(unittest.TestCase):
 
         self.assertEquals(
             ['SA',
-             'FIRE AND FLAME:1:proper:primary',
+             'FIRE AND FLAME:1:primary',
              '?FIRE AND FLAME:1:primary',
              'REPTILE-SNAKE:1:argent',
              'ARRANGEMENT-IN ANNULO:1:argent',
@@ -607,6 +607,14 @@ class TestCases(unittest.TestCase):
              'SUN:1:argent:of 8',
              'BORDURE:1:argent'],
             list(parse(u'Sable, on a flame proper a serpent in annulo with head to base argent surrounding a mullet of eight points pierced argent within a bordure argent').describe()))
+
+        self.assertEquals(
+            ['GU',
+             'HEAD-BEAST,RABBIT:1:argent:primary',
+             '?HEAD-BEAST,RABBIT:1:primary',
+             'HEAD-JESSANT-DE-LYS:or:primary',
+             '?HEAD-JESSANT-DE-LYS:primary'],
+            list(parse(u"Gules, a rabbit's head argent jessant-de-lys Or.\n\n").describe()))
 
 if __name__ == "__main__":
     unittest.main()
