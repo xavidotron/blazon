@@ -1,6 +1,7 @@
 import copy
 
 DOUBLE_PRIMARIES = True
+SPLIT_PRIMARIES = True
 
 def coalesce(l):
     l = list(l)
@@ -140,19 +141,30 @@ class Charge(Thingy):
         numtagbit = ''
         if numtag:
             numtagbit = ':' + numtag
-        yield "%s%s%s" % (self.desc, numtagbit, tagbit)
+
+        should_double = DOUBLE_PRIMARIES
+        if SPLIT_PRIMARIES and 'primary' in tags and not as_mod:
+            if numtag:
+                tags = [numtag] + tags
+            tags.remove('primary')
+            for t in tags:
+                yield "%s:primary:%s" % (self.desc, t)
+            if len(tags) > 1:
+                should_double = False
+        else:
+            yield "%s%s%s" % (self.desc, numtagbit, tagbit)
         if not as_mod:
             for c in self.seealso:
                 if c.number:
-                    yield "%s:%s%s" % (c.desc, numtag_for(c.number), tagbit)
+                    yield "?%s:%s%s" % (c.desc, numtag_for(c.number), tagbit)
                 elif c.multiplier and numtagbit:
-                    yield "%s:%s%s" % (c.desc,
+                    yield "?%s:%s%s" % (c.desc,
                                        numtag_for(self.number * c.multiplier),
                                        tagbit)
                 else:
-                    yield "%s%s%s" % (c.desc, numtagbit, tagbit)
+                    yield "?%s%s%s" % (c.desc, numtagbit, tagbit)
         if self.tincture:
-            if 'primary' in self.tags and not as_mod and DOUBLE_PRIMARIES:
+            if 'primary' in self.tags and not as_mod and should_double:
                 # Add an additonal instance, without the tincture, for 
                 # sig diffness
                 yield "?%s:%s" % (self.desc, ':'.join(primtags))

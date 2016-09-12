@@ -91,6 +91,8 @@ def proc(x, b, orig_b, blist):
             assert not x.maintained
             assert 'primary' not in c.tags, c.tags
             c.tags.append('primary')
+        if c.name in CENTRAL_ORDINARIES:
+            x.numdeprim = True
         if c.name == 'cross, as charge' and x.adj in CROSS_FAMILIES:
             c.tags.append(CROSS_FAMILIES[x.adj])
         if x.arrangement is not None:
@@ -258,6 +260,7 @@ def parse(blaz):
     x.commadeprim = False
     x.commamult = None
     x.numdeprim = False
+    x.nonordinarydeprim = False
     x.was = None
     x.nextmods = []
     x.lastb = []

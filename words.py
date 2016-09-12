@@ -157,6 +157,9 @@ ORIENTATIONS = {}
 
 PERIPHERALS = {'chief', 'base', 'bordure', 'orle', 'gore', 'flaunch', 'fillet'}
 
+CENTRAL_ORDINARIES = {'bend', 'bend sinister', 'chevron', 'chevron inverted',
+                      'fess', 'pale', 'pall', 'pall inverted', 'saltire'}
+
 BETWEEN = frozenset(('between',))
 
 MAJOR_DETAILS = {
