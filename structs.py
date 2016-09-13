@@ -256,6 +256,7 @@ class Tincture(object):
         self.fielddesc = fielddesc
         self.fieldextras = []
         self.chargeextras = []
+        self.codivisions = []
         self.on_field = False
         self.fieldcharge = None
         self.fdtincts = None
@@ -303,6 +304,9 @@ class Tincture(object):
             if len(self.fdtincts) > 1:
                 fd += ':~and ' + self.fdtincts[1].tincture
         yield fd
+        for t in self.codivisions:
+            for d in t.fielddescription():
+                yield d
         for e in self.fieldextras:
             for d in e.describe():
                 yield d
@@ -332,6 +336,8 @@ class Tincture(object):
         assert self.fdtincts is not None
         assert isinstance(tincture, Tincture), tincture
         self.fdtincts.append(tincture)
+        for t in self.codivisions:
+            t.add_tincture(tincture)
 
 class Fieldless(Tincture):
     def __init__(self):

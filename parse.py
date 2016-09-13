@@ -394,7 +394,7 @@ def parse(blaz):
               or (b in CHARGES
                   and CHARGES[b].name.startswith('field division,'))
               or b in ('parted',)):
-            #print 'field division', b
+            #print 'field division', b, x.fielddivision
             check_no_adj(x, b)
             if b in ('parted',):
                 if blist[0].endswith('wise'):
@@ -423,9 +423,12 @@ def parse(blaz):
                 x.lasttincture = ComplexTincture(charge)
                 if b in VAIRYS:
                     x.lasttincture.fieldextras.append(charge)
-            if x.fielddivision:
-                x.fielddivision[-1].add_tincture(x.lasttincture)
-            x.fielddivision.append(x.lasttincture)
+            if x.was == 'and' and len(x.fielddivision[-1].fdtincts) == 0:
+                x.fielddivision[-1].codivisions.append(x.lasttincture)
+            else:
+                if x.fielddivision:
+                    x.fielddivision[-1].add_tincture(x.lasttincture)
+                x.fielddivision.append(x.lasttincture)
             x.was = 'field division'
             continue
         else:
@@ -646,6 +649,7 @@ def parse(blaz):
             x.was = 'number'
             continue
         elif b in ANDS:
+            #print 'AND', x.was
             if x.primary is None:
                 x.primary = True
             if x.was not in ('field treatment', 'counterchange'):

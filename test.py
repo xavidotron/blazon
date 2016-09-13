@@ -759,5 +759,25 @@ class TestCases(unittest.TestCase):
              'BEAST-HORSE:3:gules:rampant'],
             list(parse(u'Argent, a fess and three stallions rampant gules.').describe()))
 
+        self.assertEquals(
+            ['AR',
+             'CAT:seme:vert:seme on field',
+             'FIELD TREATMENT-SEME (9OTHER):vert'],
+            list(parse(u'Argent, seme of lions vert.\n').describe()))
+
+        self.assertEquals(
+            ['FIELD DIV.-CHECKY:or:~and sable',
+             'FIELD DIV.-BENDY:or:~and sable'],
+            list(parse(u'Checky and bendy Or and sable.').describe()))
+
+        self.assertEquals(
+            ['FIELD DIV.-CHECKY:or:~and sable',
+             'FIELD DIV.-BENDY:or:~and sable'],
+            list(parse(u'Checky of nine and bendy Or and sable.').describe()))
+
+        self.assertEquals(
+            ['FIELD DIV.-CHECKY:multicolor:~and vert'],
+            list(parse(u'Checky bendy Or and sable and vert.').describe()))
+
 if __name__ == "__main__":
     unittest.main()
