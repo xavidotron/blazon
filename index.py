@@ -32,7 +32,7 @@ else:
 
     <h2>About</h2>
 
-    <p>This page is a convenice interface to the <a href="http://oanda.sca.org/oanda_complex.cgi">Complex Search Form</a> for searching the <a href="http://oanda.sca.org/">SCA Armorial</a>.  Blazon is a highly structured language, and it
+    <p>This page is a convenience interface to the <a href="http://oanda.sca.org/oanda_complex.cgi">Complex Search Form</a> for searching the <a href="http://oanda.sca.org/">SCA Armorial</a>.  Blazon is a highly structured language, and it
     takes advantage of that to automatically interpret blazon and convert
     it into the armory descriptions used in the Armorial.  This is primarily
     useful for conflict-checking.</p>
@@ -79,7 +79,6 @@ else:
         else:
             print '<h3>Armory descriptions:</h3>'
             print '<form method="get" action="http://oanda.sca.org/oanda_complex.cgi">'
-            print '<input type="hidden" name="a" value="enabled" />'
             for i in xrange(len(lst)):
                 l = lst[i]
                 if l.startswith('?'):
@@ -91,6 +90,7 @@ else:
                 print '<input type="hidden" name="w%d" value="1" />' % (i + 1)
                 print '<input type="hidden" name="m%d" value="armory description" />' % (i + 1)
             print '<input type="submit" value="Search the Complex Search Form with checked descriptions" />'
+            print '(<label><input type="checkbox" name="a" value="enabled" checked /> Show Armory Descriptions</label>)'
             print '</form>'
             #url = complexify.url_for(lst)
             #print '<p><a href="%s">Search the Complex Search Form with these descriptions</a></p>' % (url)
