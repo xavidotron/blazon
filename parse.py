@@ -586,7 +586,7 @@ def parse(blaz):
             x.was = 'field treatment'
             #clear_fielddivision(x)
             continue
-        elif b in ('semy', 'orle', 'annulet') and blist[0] == 'of':
+        elif b in ('semy', 'seme', 'orle', 'annulet') and blist[0] == 'of':
             blist.pop(0)
             #print 'SEMY'
             if blist[0] in NUMBERS:
