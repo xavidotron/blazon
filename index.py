@@ -54,7 +54,8 @@ else:
     (i.e., <a href="http://oanda.sca.org/my.cat">my.cat</a>).  This means
     that a single charge in your blazon may be represented by multiple armory
     descriptions, so keep this in mind when counting distinct changes from
-    Complex Search Form score totals. In such cases, it may be easiest to
+    Complex Search Form score totals. "See also" references are generally
+    not checked by default. In these cases, it may be easiest to
     perform multiple searches with different combinations of checked
     descriptions.</p>"""
 
@@ -103,20 +104,11 @@ else:
 
     print """<h3>Usage Notes</h3>
 
-    <h4>Doubling Primaries</h4>
-    <p>Sometimes, a straightforward search will give you large numbers of
-    blazons that are a substantial change away, making it hard to see
-    any conflicts.  To help with this, the parser will generate a second,
-    default-unchecked description for primary charge groups in additoon
-    to the normal precise one. This second, simpler description omits
-    tags like tincture.  If checked, these two descriptions
-    will give two points to armory that has exactly
-    your primary charge group and one point to armory that has something
-    close to your primary charge group.  The intent is that armory with
-    a substatial change to the primary charge group will lose two points this
-    way, equivalent to two DCs; however, this won't necessarily be valid in
-    all cases, such as for armory with coprimary charges.  As always, check
-    the descriptions being used.</p>"""
+    <h4>Primaries</h4>
+    <p>Primary charges are given multiple lines, one for each aspect of the
+    primary, to find the most possible DCs. This may in some cases not be
+    what you want, such as when you've got co-primary charges some of which
+    are less than half of the primary charge group.</p>"""
 
 print """
 <hr />
