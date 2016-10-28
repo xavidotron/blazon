@@ -469,6 +469,9 @@ def loadwords():
                         'bird': 'bird, whole',
                         'sun': 'sun, whole',
                         'roundel': 'roundel, whole',
+                        'portcullis': 'gate',
+                        'gridiron': 'tool, other',
+                        'monster, composite': 'monster, other',
                         }
                     if n in CORRECTIONS:
                         n = CORRECTIONS[n]
