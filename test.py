@@ -190,11 +190,10 @@ class TestCases(unittest.TestCase):
             list(parse(u'Vert, a winged bull courant wings elevated and addorsed argent and a base Or').describe()))
 
         self.assertEquals(
-            ['ESTOILE:primary:1',
-             'ESTOILE:primary:argent',
-             'ESTOILE:primary:of 5',
-             '?STAR:1:argent:primary:of 5',
-             '?ESCARB:1:argent:primary:of 5'],
+            ['STAR:primary:1',
+             'STAR:primary:argent',
+             'STAR:primary:of 5',
+             'STAR:primary:estoile'],
             list(parse(u'(Fieldless) An estoile of five rays argent\n\n').describe()))
 
         self.assertEquals(
@@ -229,8 +228,7 @@ class TestCases(unittest.TestCase):
              'BEND:primary:cotised',
              '?FIELD DIV.-BENDY:1:azure:primary:cotised',
              'FDL:1:or:palewise',
-             'FOIL-5:2:or',
-             '?ROSE:2:or',
+             'ROSE:2:or',
              'CHIEF:1:gules',
              'CAT:1:or:passant'],
             list(parse(u'Or, on a bend cotised azure a fleur-de-lys palewise between two cinquefoils Or and on a chief gules a lion passant guardant Or\n\n').describe()))
@@ -249,9 +247,8 @@ class TestCases(unittest.TestCase):
             [u'PBS:sable:~and argent',
              'STAR:primary:1',
              'STAR:primary:or',
+             'STAR:primary:mullet',
              '?CALTRAP:1:or:primary',
-             '?ESTOILE:1:or:primary',
-             '?SUN:1:or:primary',
              'HAMMER:primary:2',
              '?HAMMER:2:primary',
              'INSA:2:primary'],
@@ -326,9 +323,8 @@ class TestCases(unittest.TestCase):
              'STAR:primary:1',
              'STAR:primary:sable',
              'STAR:primary:of 9 or more',
+             'STAR:primary:mullet',
              '?CALTRAP:1:sable:primary:of 9 or more',
-             '?ESTOILE:1:sable:primary:of 9 or more',
-             '?SUN:1:sable:primary:of 9 or more',
              'BORDURE:1:sable'],
             list(parse(u'Or, a mullet of five greater and five lesser points within a bordure sable.\n\n').describe()))
 
@@ -375,10 +371,9 @@ class TestCases(unittest.TestCase):
              'HEAD-BEAST,RAM AND GOAT:primary:fesswise',
              'ARRANGEMENT-IN FESS:argent',
              'ARRANGEMENT9HEAD,RESPECTANT',
-             'STAR:2:or',
+             'STAR:2:or:mullet',
              '?CALTRAP:2:or',
-             '?ESTOILE:2:or',
-             '?SUN:2:or',
+             '?STAR:2:or',
              'INPALE:or'],
             list(parse(u"Gules, in fess two lamb's heads fesswise respectant erased conjoined at the forehead argent between in pale two mullets Or.").describe()))
 
@@ -595,10 +590,9 @@ class TestCases(unittest.TestCase):
              'CALIPER AND COMPASS:primary:argent',
              '?TOOL9OTHER:1:argent:primary',
              'CRESCENT:3:argent',
-             'STAR:3:sable:of 6',
+             'STAR:3:sable:of 6:mullet',
              '?CALTRAP:3:sable:of 6',
-             '?ESTOILE:3:sable:of 6',
-             '?SUN:3:sable:of 6'],
+             '?STAR:3:sable:of 6'],
             list(parse(u'Gules, a pair of calipers and in chief three crescents argent each crescent charged with a mullet of six points sable.').describe()))
 
         self.assertEquals(
@@ -659,10 +653,9 @@ class TestCases(unittest.TestCase):
              'BS:primary:or',
              '?FIELD DIV.-BENDY*3:1:or:primary',
              'HEAD-MONSTER,UNICORN:1:argent',
-             'STAR:3:or',
+             'STAR:3:or:mullet',
              '?CALTRAP:3:or',
-             '?ESTOILE:3:or',
-             '?SUN:3:or'],
+             '?STAR:3:or'],
             list(parse(u"Per bend sinister purpure and vert, a bend sinister Or between a unicorn's head erased argent and 3 mullets Or").describe()))
 
         self.assertEquals(
@@ -730,10 +723,9 @@ class TestCases(unittest.TestCase):
              '?FIRE AND FLAME:1:primary',
              'REPTILE-SNAKE:1:argent',
              'ARRANGEMENT-IN ANNULO:1:argent',
-             'STAR:1:argent:of 8',
+             'STAR:1:argent:of 8:mullet',
              '?CALTRAP:1:argent:of 8',
-             '?ESTOILE:1:argent:of 8',
-             '?SUN:1:argent:of 8',
+             '?STAR:1:argent:of 8',
              'BORDURE:1:argent'],
             list(parse(u'Sable, on a flame proper a serpent in annulo with head to base argent surrounding a mullet of eight points pierced argent within a bordure argent').describe()))
 
@@ -778,6 +770,45 @@ class TestCases(unittest.TestCase):
         self.assertEquals(
             ['FIELD DIV.-CHECKY:multicolor:~and vert'],
             list(parse(u'Checky bendy Or and sable and vert.').describe()))
+
+        self.assertEquals(
+            ['OR', 'WELL:primary:1', 'WELL:primary:vert',
+             '?ARCHITECTURE:1:vert:primary'],
+            list(parse(u'Or, a well vert.').describe()))
+
+        self.assertEquals(
+            ['OR',
+             'STAR:primary:1',
+             'STAR:primary:vert',
+             'STAR:primary:sun'],
+            list(parse(u'Or, a sun vert.').describe()))
+        self.assertEquals(
+            ['OR',
+             'STAR:primary:1',
+             'STAR:primary:vert',
+             'STAR:primary:estoile'],
+            list(parse(u'Or, an estoile vert.').describe()))
+        self.assertEquals(
+            ['OR',
+             'STAR:primary:1',
+             'STAR:primary:vert',
+             'STAR:primary:mullet',
+             '?CALTRAP:1:vert:primary'],
+            list(parse(u'Or, a mullet vert.').describe()))
+        self.assertEquals(
+            ['FIELD TREATMENT-POTENTY:argent:~and sable',
+             'PALL:primary:1',
+             'PALL:primary:gules'],
+            list(parse(u'Potenty argent and sable, a pall gules').describe()))
+
+        self.assertEquals(
+            ['VT',
+             'CHEVRON*7:primary:1',
+             'CHEVRON*7:primary:azure',
+             'SPINDLE:2:argent',
+             '?TOOL-SEWING AND WEAVING:2:argent',
+             'ROUNDEL-DEMI:3:argent'],
+            list(parse(u'Vert, on a chevron inverted azure fimbriated Or two drop spindles and in base three demi-roundel two and one argent').describe()))
 
 if __name__ == "__main__":
     unittest.main()

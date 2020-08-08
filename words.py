@@ -216,6 +216,8 @@ CROSS_ALIASES = {
     'other cross': ['of saint brigid', 'canterbury'],
     }
 
+STAR_TYPES = {}
+
 DEFAULT_CHARGE = Charge('?', '?')
 
 #SYMBOLS = {'elder futhark'}
@@ -268,6 +270,7 @@ VAIRYS = {
     'vairy',
     'counter-vairy',
     'papellony', 'papelonny',
+    'potenty',
 }
 
 CHARGE_ADJ = {
@@ -382,7 +385,9 @@ def loadwords():
                 elif l.startswith('|posture:'):
                     typ, post = l.split(':')
                     if '<' in post:
-                        post, rest = post.split('<', 1)
+                        post, _ = post.split('<', 1)
+                    if '=' in post:
+                        post, _ = post.split('=', 1)
                     name = post
                     names = [name]
                     for a in POSTURE_ALIASES:
@@ -404,6 +409,9 @@ def loadwords():
                     if fam in CROSS_ALIASES:
                         for a in CROSS_ALIASES[fam]:
                             CROSS_FAMILIES[a] = fam
+                elif l.startswith('|star_type:'):
+                    _, fam = l.split(':')
+                    STAR_TYPES[fam] = fam
                 elif l.startswith('|orientation:'):
                     typ, orient = l.split(':')
                     if '<' in orient:
@@ -460,6 +468,7 @@ def loadwords():
                     also = name in ALSOS
                 seenames = see.split(' and ')
                 sees = []
+                seesdone = set()
                 for n in seenames:
                     # We don't handle sees referring to a see later in the
                     # alphabet; so sees referring to other sees need correction.
@@ -472,6 +481,11 @@ def loadwords():
                         'portcullis': 'gate',
                         'gridiron': 'tool, other',
                         'monster, composite': 'monster, other',
+                        'sun': 'mullet',
+                        'tree, branch': 'tree branch',
+                        'bird, penguin': 'penguin',
+                        'sun, whole, charged': 'mullet, charged',
+                        'wheel, heraldic': 'wheel',
                         }
                     if n in CORRECTIONS:
                         n = CORRECTIONS[n]
@@ -482,6 +496,7 @@ def loadwords():
                         if n not in CHARGES:
                             assert ', ' in n, n
                             most, lastbit = n.rsplit(', ', 1)
+                            assert most in CHARGES, n
                             chargemod = copy.deepcopy(CHARGES[most])
                             if lastbit == 'seme':
                                 chargemod.number = 'seme'
@@ -490,13 +505,17 @@ def loadwords():
                             elif lastbit == 'charged':
                                 chargemod.tags.append('charged')
                             else:
-                                assert most == 'cross, as charge', n
+                                assert most in (
+                                    'cross, as charge',
+                                    'saltire, as charge'), n
                                 assert lastbit in CROSS_FAMILIES, n
                                 chargemod.tags.append(CROSS_FAMILIES[lastbit])
                             sees.append(chargemod)
                         else:
                             assert CHARGES[n] is not None, n
-                            sees.append(CHARGES[n])
+                            if CHARGES[n].desc not in seesdone:
+                                seesdone.add(CHARGES[n].desc)
+                                sees.append(CHARGES[n])
                         assert None not in sees, (sees, n)
                 if also:
                     assert name in CHARGES, name
@@ -506,10 +525,14 @@ def loadwords():
                             or CHARGES[name].category), (name, CHARGES[name], sees[0])
                     first = sees.pop(0)
                     CHARGES[name] = copy.deepcopy(first)
+                    CHARGES[name].maintags = []
                     # Copying the seealso of just the first is weird
                     CHARGES[name].seealso = []
                 if 'bird, whole' in seenames and name in BIRD_TYPES:
                     CHARGES[name].tags.append(BIRD_TYPES[name])
+                if name in STAR_TYPES:
+                    CHARGES[name].maintags.append(STAR_TYPES[name])
+                #assert name != 'mullet', (name, CHARGES[name].tags, sees)
                 for s in sees:
                     CHARGES[name].seealso.append(s)
                 if ', ' in name:

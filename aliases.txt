@@ -31,8 +31,6 @@ ears of wheat: plant, wheat
 ear of wheat: plant, wheat
 roundel: roundel, whole
 sail: ship, part
-sun, whole, charged: sun, whole
-sun: sun, whole
 baker's peel: tool, other
 # This is the default tree.
 tree: tree, rounded shape
@@ -114,7 +112,6 @@ sea-serpent: monster, sea, serpent
 three legged pot: cauldron
 norse sun crosses: symbol
 stag beetle: arthropod, beetle
-banana: foodstuff
 sea-cameleopard: beast, camel & beast, other & monster, sea, other
 field division, chaussé: field division, per chevron inverted
 fleur-de-lis: fleur de lys
@@ -168,3 +165,5 @@ artist's paintbrush: tool, artistic
 card-pique: card pique
 jessant-de-lys: head, jessant de lys
 lion's head jessant-de-lys: head, beast, cat & head, jessant de lys
+well: well, water
+demi-roundel: roundel, demi

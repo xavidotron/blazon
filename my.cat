@@ -127,8 +127,9 @@
 |count:of 5
 |count:of 6
 |count:of 7
-|count:of 8
-|count:of 9 or more
+|count:of 8 or more
+|count:of 8<of 8 or more
+|count:of 9 or more<of 8 or more
 |count:of 9<of 9 or more
 |crescent_dir:decrescent
 |crescent_dir:increscent
@@ -171,7 +172,8 @@
 |group:spna<sole primary
 |group:sustained<held
 |group:tertiary
-|line:arrondi<complex line
+|line:arrondi<complex line<cl
+|line:cl=complex line
 |line:complex line
 |line:cotised<pl
 |line:dovetailed<square
@@ -182,10 +184,10 @@
 |line:engrailed<jagged
 |line:indented<jagged
 |line:invected<jagged
-|line:jagged<complex line
-|line:long<complex line
+|line:jagged<complex line<cl
+|line:long<complex line<cl
 |line:nebuly<wavy
-|line:pl<plain line
+|line:pl=plain line
 |line:plain line
 |line:ploye<pl
 |line:pointed<jagged
@@ -193,16 +195,18 @@
 |line:raguly<square
 |line:rayonny<long
 |line:rompu<square
-|line:square<complex line
+|line:square<complex line<cl
 |line:triangular<indented
-|line:urdy<jagged
-|line:wavy<complex line
+|line:urdy<wavy
+|line:wavy<complex line<cl
 |number:10 or more<5 or more
-|number:1<4 or fewer
+|number:2 or fewer
+|number:3 or fewer
+|number:1<4 or fewer<3 or fewer<2 or fewer
 |number:2 or more=4 or fewer
-|number:2<2 or more<4 or fewer
+|number:2<2 or more<4 or fewer<3 or fewer<2 or fewer
 |number:3 or more<2 or more=4 or fewer
-|number:3<3 or more<4 or fewer<2 or more
+|number:3<3 or more<4 or fewer<2 or more<3 or fewer
 |number:4 or fewer=2 or more=3 or more=4 or more
 |number:4 or more<3 or more=4 or fewer
 |number:4<4 or fewer<4 or more<2 or more
@@ -212,7 +216,7 @@
 |number:7<5 or more<2 or more
 |number:8<5 or more<2 or more
 |number:9<5 or more<2 or more
-|number:seme<5 or more<2 or more
+|number:seme<5 or more<2 or more=6=7=8=9=10 or more
 |orientation:bendwise
 |orientation:bendwise sinister
 |orientation:chevronwise inverted<fesswise
@@ -232,33 +236,33 @@
 |ordinary:pile
 |ordinary:pile inverted
 |ordinary:saltire
-|posture:addorsed<rampant
+|posture:addorsed=rampant
 |posture:affronte
-|posture:combattant<rampant
+|posture:combattant=rampant
 |posture:couchant
 |posture:couchant to dexter<couchant
 |posture:couchant to sinister<couchant
-|posture:courant<passant
-|posture:courant to dexter<passant<passant to dexter
-|posture:courant to sinister<passant<passant to sinister
-|posture:dormant to dexter<dormant<couchant to dexter
-|posture:dormant to sinister<dormant<couchant to sinister
-|posture:dormant<couchant
+|posture:courant=passant=statant
+|posture:courant to dexter<passant=passant to dexter<statant=statant to dexter
+|posture:courant to sinister=passant=passant to sinister<statant=statant to sinister
+|posture:dormant to dexter<dormant=couchant to dexter
+|posture:dormant to sinister<dormant=couchant to sinister
+|posture:dormant=couchant
 |posture:passant
 |posture:passant to dexter<passant
 |posture:passant to sinister<passant
 |posture:rampant
 |posture:rampant to dexter<rampant
 |posture:rampant to sinister<rampant
-|posture:salient to dexter<rampant<rampant to dexter
-|posture:salient to sinister<rampant<rampant to sinister
-|posture:salient<rampant
+|posture:salient to dexter<rampant=rampant to dexter
+|posture:salient to sinister<rampant=rampant to sinister
+|posture:salient=rampant
 |posture:sejant
 |posture:sejant to dexter<sejant
 |posture:sejant to sinister<sejant
-|posture:statant to dexter<statant<passant to dexter
-|posture:statant to sinister<statant<passant to sinister
-|posture:statant<passant
+|posture:statant to dexter<statant=passant to dexter
+|posture:statant to sinister<statant=passant to sinister
+|posture:statant=passant
 |posture:tergiant
 |relation:between<not surrounding
 |relation:not surrounding
@@ -275,6 +279,9 @@
 |relation:surrounding 8<surrounding 3 or more
 |relation:surrounding 9 or more<surrounding 3 or more
 |relation:surrounding seme<surrounding 3 or more
+|star_type:mullet
+|star_type:sun
+|star_type:estoile
 |style:heraldic
 |style:natural
 |subtype:t1
@@ -482,7 +489,6 @@ ermine spot|ERMINE SPOT
 erminois field|ES
 escarbuncle|ESCARB
 escutcheon|ESCUTCHEON
-estoile|ESTOILE
 ewer|EWER AND PITCHER
 eye|EYE
 eyeglasses|EYEGLASSES
@@ -550,7 +556,6 @@ flower, multipetaled|FLOWER-MULTI-PETALED
 flower, rose|ROSE
 flower, thistle|FLOWER-THISTLE
 flower, trumpet shape|FLOWER-TRUMPET SHAPE
-foil, cinquefoil|FOIL-5
 foil, octofoil|FOIL-8
 foil, quatrefoil|FOIL-4
 foil, septfoil|FOIL-7
@@ -662,7 +667,6 @@ monster, panther|MONSTER-PANTHER
 monster, pegasus|PEGASUS
 monster, phoenix|MONSTER-PHOENIX
 monster, pithon|MONSTER-PITHON
-monster, sea, dragon|MONSTER-SEA DRAGON AND SEA GRIFFIN
 monster, sea, horse|MONSTER-SEA HORSE AND SEA UNICORN
 monster, sea, lion|MONSTER-SEA LION
 monster, sea, other|MONSTER-SEA9BEAST,OTHER
@@ -758,7 +762,6 @@ spindle|SPINDLE
 staff|STAFF
 stream|STREAM
 sun, demi|SUN-DEMI
-sun, whole|SUN
 sunburst|SUNBURST
 sword|SWORD
 symbol|LETTERS,RUNES AND SYMBOLS
@@ -780,9 +783,7 @@ torch|TORCH
 torse|TORSE
 toy|TOY
 tree branch|TREE9BRANCH
-tree, elongated shape|TREE-ELONGATED SHAPE
 tree, multiple|TREES-MULTIPLE
-tree, palm tree shape|TREE-PALM TREE SHAPE
 tree, pine tree shape|TREE-PINE TREE SHAPE
 tree, rounded shape|TREE-ROUNDED SHAPE
 tree, stump|TREE9STUMP
@@ -791,6 +792,7 @@ trident|TRIDENT
 tripod|TRIPOD AND TRIVET
 triquetra|TRIQUETRA
 triskelion|TRISKELION
+umebachi|UMEBACHI
 vert field|VT
 wagon|WAGON
 water bouget|WATER BOUGET
@@ -804,6 +806,7 @@ wolf's tooth|WOLF-TOOTH
 wreath, laurel|LW
 wreath, not laurel|WREATH,OTHER
 aardvark - see beast, anteater
+Aaron's rod - see staff
 abalone - see shell, other
 acorn - see fruit, nut, acorn
 adder - see reptile, snake
@@ -816,7 +819,7 @@ agricultural tool - see tool, agricultural
 alaunt - see beast, dog
 alaunt's head - see head, beast, dog
 albatross - see bird, whole and bird, demi
-alder - see tree, elongated shape
+alder - see tree, rounded shape
 alembic flask - see alembic
 alerion - see bird, whole and bird, demi
 alewife - see fish, other
@@ -837,7 +840,9 @@ andiron - see tool, other
 anemone flower - see flower, rose
 angel - see monster, humanoid
 angelfish - see fish, angelfish
+angevine - see foil, sexfoil
 angle - see tool, other and chevron
+anille - see millrind
 ankh - see cross
 ankh - see cross, as charge, other cross
 ankhus - see staff
@@ -852,16 +857,19 @@ antelope, heraldic - see monster, antelope
 antelope, natural - see beast, deer
 antler - see horn, creature
 ape - see beast, monkey
+ape clog - see tool, other
 apothecary jar - see ewer
 apple - see fruit, apple
 apple blossom - see flower, rose
 apple tree - see tree, rounded shape
 apron - see clothing, other
 arachnid - see arthropod
+arbalest stock - see gun and bow
 arch - see architecture and arrangement, in arch
 archer - see human figure and monster, centaur
 architecture - see also windmill and castle and keystone and gate
 ark - see ship
+Ark of the Covenant - see box
 armadillo - see beast, anteater
 armillary sphere - see tool, astronomical
 armor - see also helmet and hand and clothing
@@ -879,9 +887,11 @@ arrangement, in triangle - see triangle
 arrangement, in triskele - see triskelion
 arrangement, in triskelion - see triskelion
 arrangement, monster - see arrangement, creature
+arrow fletching - see arrow
 arrow head - see pheon
 arrow notch - see pheon
 arrow pointer - see arrow and spear
+arrowhead - see pheon
 arthropod, butterfly - see arthropod, moth
 arthropod, cockroach - see arthropod, beetle
 arthropod, crab - see arthropod, lobster
@@ -891,25 +901,29 @@ arthropod, grasshopper - see arthropod, mantis
 arthropod, hornet - see arthropod, bee
 arthropod, ladybug - see arthropod, beetle
 arthropod, mosquito - see arthropod, dragonfly
+arthropod, prawn - see arthropod, lobster
 arthropod, roach - see arthropod, beetle
 arthropod, scarab - see arthropod, beetle
+arthropod, scorpion - see also arthropod, lobster
 arthropod, shrimp - see arthropod, lobster
 arthropod, wasp - see arthropod, bee
 artichoke - see fruit, other
 artistic tool - see tool, artistic
+arum lily - see flower, trumpet shape
 ash - see tree, rounded shape
 ash key - see seed
 asp - see reptile, snake
 aspen - see tree, rounded shape
 ass - see beast, horse
 aster - see flower, multipetaled
-astrolabe - see tool, astronomical and roundel
-astronomical tool - see tool, astronomical and roundel
+astrolabe - see tool, astronomical and roundel, whole
+astronomical tool - see tool, astronomical and roundel, whole
 athanor - see tool, other
 attire - see horn, creature
 auk - see bird, whole and bird, demi
 aurochs - see beast, bull
 avosetta - see bird, whole and bird, demi
+awl - see tool, carpentry
 axe - see also pole axe
 axe blade - see head, weapon
 axe head - see head, weapon
@@ -918,6 +932,7 @@ backpack - see clothing, pouch
 badger - see beast, badger
 badger's head - see head, beast, badger
 bag - see clothing, pouch
+bag of madder - see pillow
 bagpipe - see musical instrument, bagpipe
 bagwyn - see monster, antelope
 baker's peel - see tool, other
@@ -925,6 +940,8 @@ baldric - see clothing, belt
 ball - see roundel, whole and toy
 ball of yarn - see roundel, whole
 bamboo - see plant, wheat
+banana - see fruit, other
+banana leaf - see leaf and feather
 banner - see flag
 bar - see fess
 bar gemel - see fess
@@ -937,6 +954,8 @@ barry - see field division, barry
 bars gemel - see fess
 basil flower - see flower, multifloreted
 basilisk - see monster, dragon
+bass cornetto - see musical instrument, horn
+bassinet - see basket
 bat - see beast, bat
 baton - see bend and staff
 baton sinister - see bend sinister
@@ -1015,6 +1034,7 @@ beast, leopard - see beast, cat
 beast, levrier - see beast, dog
 beast, lion - see beast, cat
 beast, lioness - see beast, cat
+beast, llama - see beast, camel
 beast, loat - see beast, dog
 beast, loris - see beast, other
 beast, lynx - see beast, cat
@@ -1037,6 +1057,7 @@ beast, pig - see beast, boar
 beast, platypus - see beast, other
 beast, polecat - see beast, squirrel
 beast, porcupine - see beast, hedgehog
+beast, puppy - see beast, dog
 beast, raccoon - see beast, badger
 beast, ram - see beast, goat
 beast, rat - see beast, mouse
@@ -1073,11 +1094,13 @@ beast, yak - see beast, bull
 beast, zebra - see beast, horse
 beaver - see beast, other
 bee - see arthropod, bee
-beech tree - see tree, elongated shape
+bee hive - see beehive
+beech tree - see tree, rounded shape
 beetle - see arthropod, beetle
 belaying pin - see ship, part
 bell - see also clothing, fool's motley
 belled hood - see bell and clothing, headgear
+bellflower - see flower, trumpet shape
 bellows - see tool, other
 belt - see clothing, belt
 bend - see also field division, bendy
@@ -1091,14 +1114,14 @@ berdiche - see pole axe
 beret - see clothing, headgear
 berry - see fruit, berry
 besom - see broom
-bezant - see roundel
+bezant - see roundel, whole
 bezanty - see roundel, whole
 bicapitate - see monster, multiheaded
 bickern - see anvil
 bicorporate - see monster, multibodied
 billetty - see billet
 billhook - see pole axe
-birch - see tree, elongated shape
+birch - see tree, rounded shape
 bird bolt - see arrow
 bird cage - see portcullis and gridiron
 bird of paradise plant - see plant, other
@@ -1137,6 +1160,7 @@ bolt, lightning - see lightning bolt
 bolt, thunder - see thunderbolt
 bomb - see grenade
 bone - see also head, beast, skull and head, human skull and tooth and horn, creature
+bookbinder's plough - see tool, other
 bookroll - see book
 boot - see clothing, footgear
 borage flower - see flower, few petals
@@ -1155,7 +1179,7 @@ bouquet - see flower, bouquet
 bourchier knot - see knot
 bow - see also musical instrument, lute and rainbow
 Bowen cross - see cross, as charge, other cross
-bowen cross - see knot and cross
+bowen cross - see knot and cross, as charge, other cross
 bowen knot - see knot
 Bowen knot crosswise - see cross, as charge, other cross
 bowen knot in cross - see cross, as charge, other cross
@@ -1163,6 +1187,7 @@ bowl - see cup and cauldron
 boy - see human figure
 brachet - see beast, dog
 bracket - see axle bracket
+braid of garlic - see plant, onion
 bramble - see plant, thorn
 branch - see tree branch
 brazier - see beacon
@@ -1212,8 +1237,11 @@ cactus - see plant, cactus
 caduceus - see staff
 cairn - see architecture
 calamarie - see mollusk, octopus
+caldera - see cauldron
+caldera gringolada - see cauldron and reptile, snake
 caliper - see also tool, other
 calla lily - see flower, trumpet shape
+calligrapher's knife - see tool, artistic
 caltrap - see also mullet
 caltrop - see caltrap
 calygreyhound - see monster, other
@@ -1234,6 +1262,7 @@ cape - see clothing, gown
 carabao - see beast, bull
 caravel - see ship
 carnation - see flower, multipetaled
+carpenter's square - see tool, carpentry
 carpentry tool - see tool, carpentry
 carrack - see ship
 carriage - see wagon
@@ -1246,9 +1275,12 @@ cat - see beast, cat
 cat's face - see head, beast, cat
 cat's head - see head, beast, cat
 catamount - see beast, cat
-catamount, sea - see monster, sea, other
+catamount, sea - see monster, sea, lion
 catapult - see siege engine
+caterpillar - see reptile, worm
 catfish - see fish, other
+catamount, sea - see monster, sea, other
+caterpillar - see reptile, worm
 catherine wheel - see wheel
 catnip - see plant, herb
 cattail - see plant, reed and tail
@@ -1265,10 +1297,12 @@ celtic cross pommety - see cross, as charge, pomelly
 Celtic cross potent - see cross, as charge, potent
 centaur - see monster, centaur
 centauress - see monster, centaur
+centipede - see reptile, worm
+chabot - see fish, other
 chalice - see cup
 chamelion - see reptile, lizard
 chamfron - see saddlery
-chamomile flower - see flower, few petals
+chamomile flower - see flower, multipetaled
 chamomile plant - see plant, herb
 chape - see field division, per chevron
 chapeau - see clothing, headgear
@@ -1300,7 +1334,9 @@ chicken - see bird, whole and bird, demi
 chicory flower - see flower, multipetaled
 child - see human figure
 child's head - see head, human
+chimera - see monster, other
 chipmunk - see beast, squirrel
+chive flower - see flower, multifloreted
 chough - see bird, whole and bird, demi
 chrysanthemum - see flower, multipetaled
 church - see architecture
@@ -1308,7 +1344,7 @@ churchbell - see bell
 cider press - see press and tool, agricultural and tool, other
 cinnamon tree - see tree, rounded shape
 cinquedea - see sword
-cinquefoil - see foil, cinquefoil and flower, rose
+cinquefoil - see flower, rose
 circlet - see crown
 citadel - see castle
 cithara - see musical instrument, lute
@@ -1320,9 +1356,11 @@ claw - see also leg, bird and leg, monster
 claw hammer - see hammer
 claymore - see sword
 cleaver - see axe and sword
-clew - see roundel
-clew of yarn - see roundel
+clew - see roundel, whole
+clew of yarn - see roundel, whole
 cloak - see clothing, gown
+clockface - see roundel, whole
+clog, ape - see tool, other
 cloth snip - see shear
 clothing, baldric - see clothing, belt
 clothing, beret - see clothing, headgear
@@ -1363,6 +1401,7 @@ cockatoo - see bird, whole and bird, demi
 cockatrice - see monster, dragon
 cockroach - see arthropod, beetle
 cogwheel - see wheel
+coin die set - see tool, other
 collie - see beast, dog
 columbine - see flower, trumpet shape
 column - see architecture
@@ -1383,13 +1422,16 @@ corbie - see bird, whole and bird, demi
 corbie's head - see head, bird
 cormorant - see bird, whole and bird, demi
 corn - see plant, wheat
+corncrake - see bird, whole
 cornetto - see musical instrument, horn
 cornflower - see flower, rose
 cornice - see architecture
 coronet - see crown
 corsica - see sword
+costrel - see bottle
 couch - see chair
 cougar - see beast, cat
+coulter - see tool, agricultural and sword
 counter vair - see field treatment, vairy
 cow - see beast, bull
 coxcomb - see body part
@@ -1399,11 +1441,14 @@ crane - see bird, whole and bird, demi
 crane, building - see castle
 cranequin - see tool, other
 crawfish - see arthropod, lobster
+crayfish - see arthropod, lobster
+crequier - see tree, rounded shape
 crequier plant - see tree, rounded shape
 crescenty - see crescent
 cresset - see beacon
 cresset torch - see torch
 crest - see helm crest
+cricket - see arthropod, mantis
 crocodile - see reptile, lizard
 crocus - see flower, trumpet shape
 crook - see staff
@@ -1486,7 +1531,7 @@ cross of Jerusalem - see cross, as charge, potent
 cross of Lorraine - see cross, as charge, doubled
 cross of Saint Bridget - see cross, as charge, other cross
 cross of Saint Brigid - see cross, as charge, other cross
-cross of Saint Julian - see cross, as charge, crosslet
+cross of Saint Julian - see saltire, as charge, crosslet
 cross of Samildanach - see cross, as charge, other cross
 cross of Santiago - see cross, as charge, flory
 cross of six annulets interlaced - see cross, as charge, other cross
@@ -1524,6 +1569,7 @@ cross, arrangement in - see arrangement, in cross
 crossbow - see bow
 crow - see bird, whole and bird, demi
 crown - see also jewelry and wreath and torse
+crowth - see musical instrument, harp
 crozier - see staff
 crusilly - see cross, as charge, crosslet
 crusilly - see field treatment, seme, crusily and cross, as charge, seme
@@ -1578,7 +1624,7 @@ curlew - see bird, whole and bird, demi
 cushion - see pillow
 cygnet - see bird, whole and bird, demi
 cypher - see symbol
-cypress - see tree, elongated shape
+cypress - see tree, rounded shape
 daffodil - see flower, trumpet shape
 dagger - see sword
 daisy - see flower, multipetaled
@@ -1586,7 +1632,7 @@ dance - see fess
 dances - see fess
 dandelion - see flower, multipetaled
 dane, great - see beast, dog
-date palm - see tree, palm tree shape
+date palm - see tree, rounded shape
 death's head - see head, human skull
 decrescent - see crescent
 decrescent moon - see crescent
@@ -1615,12 +1661,14 @@ dinosaur - see reptile, lizard
 dirk - see sword
 distaff - see tool, textile
 dittany - see plant, herb
+dividing iron - see tool, other
 dodo - see bird, whole and bird, demi
 doe - see beast, deer
 dog - see beast, dog
 dog's head - see head, beast, dog
 dog, sea - see monster, sea, wolf
-dogwood blossom - see flower, few petals
+dogwood blossom - see flower, few petals and quatrefoil
+dogwood flower - see flower, few petals and quatrefoil
 doll - see toy
 dolmen - see architecture
 dolphin - see fish, dolphin
@@ -1635,11 +1683,13 @@ dove's head - see head, bird
 dragon - see monster, dragon
 dragon's head - see head, monster, dragon
 dragon's jambe - see leg, monster
-dragon, sea - see monster, sea, dragon
+dragon's tail - see tail
+dragon, sea - see monster, dragon
 dragonfly - see arthropod, dragonfly
 dragonship - see ship
 drake - see bird, whole and bird, demi
 drakkar - see ship
+drape - see clothing, other
 drawer handle - see handle
 drawknife - see tool, carpentry
 drinking cup - see cup
@@ -1650,6 +1700,7 @@ dryas flower - see flower, rose
 ducal coronet - see crown
 duck - see bird, whole and bird, demi
 dulcimer - see musical instrument, dulcimer
+dulcimer hammer - see hammer and tool, other
 dumbeg - see musical instrument, drum
 dumbek - see musical instrument, drum
 dune - see mountain
@@ -1664,26 +1715,30 @@ earwig - see arthropod, beetle
 Eastern Orthodox cross - see cross, as charge, doubled
 eating fork - see tool, eating
 edelweiss - see flower, multipetaled
-egg - see cartouche and foodstuff
 eel - see fish, other
 eel fork - see trident and tool, other
+eel-fork - see trident and tool, other
+egg - see cartouche and foodstuff
 eglantine - see flower, rose
 egret - see bird, whole and bird, demi
+elder tree - see tree, rounded shape
 elderflower - see flower, rose
 elephant - see beast, elephant
 elephant's head - see head, beast, elephant
 elf bolt - see pheon
+elfbolt - see pheon
 elk - see beast, deer
 elk's head - see head, beast, deer
 elm - see tree, rounded shape
 embroiderer's broach - see tool, textile
 emerald - see jewelry
+emmet - see arthropod, ant
 endorse - see pale
 enfield - see monster, enfield
 enflamed object - see fire and beacon and torch and grenade and reptile, lizard and candle and lamp and monster, phoenix
 engine - see siege engine
 epinette - see musical instrument, dulcimer
-equatorium - see tool, astronomical
+equatorium - see tool, astronomical and roundel, whole
 equestrian - see human figure and beast, horse
 equestrian gear - see saddlery and horseshoe
 equine - see beast, horse
@@ -1693,19 +1748,21 @@ ermine, beast - see beast, weasel
 ermined - see field treatment, ermined
 escallop - see shell, escallop
 escallopy - see shell, escallop
-escarbuncle - see also estoile and compass rose
+escroll - see book
 escucheon - see escutcheon
-estencely - see roundel, whole
+estencele - see sparks
+estencely - see sparks
 estoc - see sword
-estoile - see also mullet and escarbuncle
+estoile - see mullet
 estoile, charged - see mullet, charged
-estoilly - see estoile
+estoilly - see mullet
 ewe - see beast, goat
 facade - see architecture
 facine - see staff
 falchion - see sword
 falcon - see bird, whole and bird, demi
 falcon's head - see head, bird
+falling star - see comet
 fan - see also shell, escallop
 fang - see tooth
 fasces - see axe
@@ -1734,6 +1791,7 @@ field division, chevronelly - see also chevron
 field division, fusilly - see field division, lozengy
 field division, gurgity - see gurges
 field division, paly - see also pale
+field division, party of six - see field division, other
 field division, per chevron throughout - see field division, per chevron and pile inverted
 field division, per pile - see pile
 field division, per pile inverted - see pile inverted
@@ -1745,8 +1803,9 @@ field treatment, fretty - see fret
 field treatment, seme, crusily - see also cross, as charge
 field treatment, seme, de lys - see also fleur de lys
 field treatment, seme, ermined - see field treatment, ermined
-field treatment, seme, goutty - see also goute
-field treatment, seme, mulletty - see also mullet
+field treatment, seme, estencely - see sparks
+field treatment, seme, goutty - see goute
+field treatment, seme, mulletty - see mullet
 field treatment, seme, roundels - see roundel, whole
 fig - see fruit, other
 figure, human - see human figure
@@ -1762,6 +1821,7 @@ fire - see also beacon and torch and grenade and reptile, lizard and candle and 
 firearm - see gun
 fireball - see grenade
 firebird - see monster, phoenix
+firebrand - see torch
 fireplace - see architecture
 firewheel blossom - see flower, multipetaled
 fish fin - see body part
@@ -1801,6 +1861,7 @@ flask - see bottle
 flax blossom - see flower, rose
 fleece - see hide and beast, goat
 flesh hook - see tool, eating
+fleshpot - see cauldron
 fleury - see fleur de lys
 flower, adonis - see flower, rose
 flower, almond - see flower, rose
@@ -1811,15 +1872,17 @@ flower, blackeyed susan - see flower, multipetaled
 flower, bluebottle - see flower, multipetaled
 flower, borage - see flower, few petals
 flower, brooklime - see flower, few petals
+flower, bryony - see flower, few petals
 flower, buttercup - see flower, cup shape
 flower, calla lily - see flower, trumpet shape
 flower, camellia - see flower, multipetaled
 flower, carnation - see flower, multipetaled
-flower, chamomile - see flower, few petals
-flower, cherry - see flower, few petals
+flower, chamomile - see flower, multipetaled
+flower, cherry - see flower, rose
 flower, chicory - see flower, multipetaled
+flower, chive - see flower, multifloreted
 flower, chrysanthemum - see flower, multipetaled
-flower, cinquefoil - see foil, cinquefoil
+flower, cinquefoil - see flower, rose
 flower, clover - see flower, rose
 flower, columbine - see flower, trumpet shape
 flower, copihue - see flower, trumpet shape
@@ -1828,7 +1891,7 @@ flower, crocus - see flower, trumpet shape
 flower, daffodil - see flower, trumpet shape
 flower, daisy - see flower, multipetaled
 flower, dandelion - see flower, multipetaled
-flower, dogwood - see flower, few petals
+flower, dogwood - see flower, few petals and quatrefoil
 flower, dondril - see flower, few petals
 flower, dryas - see flower, rose
 flower, edelweiss - see flower, multipetaled
@@ -1860,8 +1923,11 @@ flower, lilac - see flower, multifloreted
 flower, lily - see flower, trumpet shape
 flower, lily of the valley - see flower, multifloreted
 flower, lotus - see flower, cup shape and flower, multipetaled
+flower, lupin - see flower, trumpet shape
+flower, magnolia - see flower, few petals
 flower, marguerite - see flower, multipetaled
 flower, marigold - see flower, multipetaled
+flower, mustard - see flower, few petals and quatrefoil
 flower, narcissus - see flower, trumpet shape
 flower, orchid - see flower, iris
 flower, peony - see flower, rose
@@ -1872,24 +1938,30 @@ flower, poppy - see flower, cup shape
 flower, primrose - see flower, rose
 flower, quatrefoil - see foil, quatrefoil
 flower, rampion - see flower, trumpet shape
-flower, rose - see also foil, cinquefoil
+flower, rue - see flower, few petals and foil, quatrefoil
+flower, sage - see flower, few petals
 flower, sedum - see flower, few petals
 flower, sexfoil - see foil, sexfoil
 flower, silver bell - see flower, trumpet shape
+flower, snowdrop - see flower, trumpet shape
+flower, spiderwort - see flower, few petals
 flower, starflower - see mullet
+flower, stitchwort - see flower, few petals
 flower, sunflower - see flower, multipetaled
+flower, tiger lily - see flower, few petals and flower, trumpet shape
 flower, touch me not - see flower, multipetaled
 flower, trefoil - see foil, trefoil
 flower, trillium - see flower, few petals
 flower, tulip - see flower, trumpet shape
-flower, violet - see flower, few petals
+flower, violet - see flower, rose
 flower, water lily - see flower, cup shape
+flower, wild ginger - see flower, few petals
 flower, wisteria - see flower, multifloreted
 flute - see musical instrument, recorder
 foal - see beast, horse
 foi - see hand
-foil, cinquefoil - see also flower, rose and foil, sexfoil
-foil, sexfoil - see also foil, cinquefoil
+foil, cinquefoil - see flower, rose and foil, sexfoil
+foil, sexfoil - see also flower, rose
 foodstuff - see also fruit and fungus and plant
 fool - see human figure and clothing, fool's motley
 fool's bauble - see toy
@@ -1905,6 +1977,7 @@ forearm - see arm
 foreleg - see leg, beast
 forepaw - see leg, beast
 forget me not - see flower, few petals
+forget-me-not - see flower, few petals
 fork, eating - see tool, eating
 fork, mowing - see tool, agricultural
 fork, pitch - see tool, agricultural
@@ -1944,6 +2017,7 @@ fruit, pumpkin - see fruit, other
 fruit, raspberry - see fruit, berry
 fruit, turnip - see fruit, other
 fruit, vegetable - see fruit, other
+frying pan - see tool, other
 fusil - see lozenge
 fusilly - see field division, lozengy
 galleon - see ship
@@ -1967,6 +2041,7 @@ gendy flower - see flower, iris
 gentian blossom - see flower, cup shape
 gerbil - see beast, mouse
 gillyflower - see flower, multipetaled
+gimlet - see tool, carpentry
 giraffe - see beast, other
 girl - see human figure
 gittern - see musical instrument, lute
@@ -1985,6 +2060,7 @@ goad - see staff
 goat - see beast, goat
 goat's head - see head, beast, goat
 goblet - see cup
+goblet drum - see musical instrument, drum
 golpe - see roundel, whole
 gondola - see ship
 gonfannon - see flag
@@ -1996,11 +2072,14 @@ goshawk - see bird, whole and bird, demi
 gout - see goute
 goutte - see goute
 goutty - see goute
+gower - see beast, dog
 gown - see clothing, gown
+grail - see cup
 grain - see plant, wheat
 grape - see fruit, berry
 grapevine - see plant, vine
 grasshopper - see arthropod, mantis
+grater - see tool, other
 great dane - see beast, dog
 Greek cross - see cross, as charge, plain cross
 Greek Orthodox cross - see cross, as charge, doubled
@@ -2010,13 +2089,15 @@ greyhound - see beast, dog
 gridiron - see tool, other
 griffin - see monster, griffin
 griffin's head - see head, monster, griffin
-griffin, sea - see monster, sea, dragon
+griffin, sea - see monster, dragon
+grillage - see pale and fess
 grozing iron - see tool, other
 gryphon - see monster, griffin
 guinea pig - see beast, mouse
 gull - see bird, whole and bird, demi
+gunbai - see fan
 gunrest - see clarion
-gunstone - see roundel
+gunstone - see roundel, whole
 gurgity - see gurges
 gusset - see gore
 gyrfalcon - see bird, whole and bird, demi
@@ -2027,12 +2108,17 @@ hachet - see axe
 hair - see moustache
 halberd - see pole axe
 halberd head - see head, weapon
+half moon knife - see tool, other
+half-moon knife - see tool, other
 hames - see saddlery
 hand axe - see axe
+hand sling - see tool, other
 handbasket - see basket
 handbell - see bell
 handgonne rest - see clarion and tool, other
 hare - see beast, rabbit
+harebell - see flower, trumpet shape
+hares head - see head, beast, rabbit
 harness - see saddlery
 harp - see musical instrument, harp
 harpy - see monster, humanoid
@@ -2051,6 +2137,7 @@ hayfork - see tool, agricultural
 hayhook - see tool, agricultural
 hazel nut - see fruit, nut, not acorn
 hazel tree - see tree, rounded shape
+hazelnut - see fruit, nut, not acorn
 head, arrow - see pheon
 head, badger - see head, beast, badger
 head, bear - see head, beast, bear
@@ -2076,12 +2163,14 @@ head, lynx - see head, beast, cat
 head, marten - see head, beast, marten
 head, monster, humanoid - see head, human
 head, rabbit - see head, beast, rabbit
+head, raccoon - see head, beast, badger
 head, ram - see head, beast, goat
 head, rhino - see head, beast, other
 head, rhinoceros - see head, beast, other
 head, sheep - see head, beast, goat
 head, skull - see head, beast, skull and head, human skull
 head, stag - see head, beast, deer
+head, troll - see head, human and head, monster, other
 head, ursine - see head, beast, bear
 head, weapon - see also pheon
 head, wolf - see head, beast, dog
@@ -2094,6 +2183,7 @@ heather - see plant, heather
 heather blossom - see flower, multifloreted
 heather vine - see plant, vine
 heavenly body - see sun and mullet and crescent and comet
+heckle - see tool, textile
 hedgehog - see beast, hedgehog
 heliotrope - see flower, multifloreted
 hellene - see human figure
@@ -2116,6 +2206,7 @@ hippogriff - see monster, griffin
 hippopotamus - see beast, hippopotamus
 hive - see beehive
 hobby horse - see toy
+hobbyhorse - see toy
 hoe - see tool, agricultural
 holly - see plant, holly
 holstein - see beast, bull
@@ -2127,7 +2218,7 @@ hoof - see leg, beast
 hoofprint - see paw print
 hookah - see pipe, smoking
 hop - see plant, other
-hop cone - see pinecone
+hop cone - see fruit, pinecone
 horn of plenty - see cornucopia
 horn, bugle - see musical instrument, horn
 horn, creature - see also tooth and bone
@@ -2149,6 +2240,7 @@ hose - see clothing, footgear
 hosen - see clothing, footgear
 hound - see beast, dog
 hound's head - see head, beast, dog
+house - see architecture
 hulk - see ship
 human - see human figure
 human body - see human figure
@@ -2163,8 +2255,9 @@ human skull - see head, human skull
 humanoid monster - see monster, humanoid
 hummingbird - see bird, whole and bird, demi
 hunting horn - see musical instrument, horn
+hurdy-gurdy - see musical instrument, lute
 hurst - see tree, multiple
-hurt - see roundel
+hurt - see roundel, whole
 husky - see beast, dog
 hyacinth - see flower, multifloreted
 hydra - see monster, dragon and monster, multiheaded
@@ -2192,11 +2285,14 @@ insect - see arthropod
 instrument, astronomical - see tool, astronomical
 instrument, musical - see musical instrument
 iris - see flower, iris
+iron, dividing - see tool, other
 iron, grozing - see tool, other
 island - see mountain
 ivy - see plant, vine
 jaculus - see monster, pithon
 jambe - see leg, beast and leg, bird
+Japanese nail puller - see tool, other and billet
+Japanese well frame - see billet
 jar - see ewer
 jasmine blossom - see flower, rose
 javelin - see spear
@@ -2211,7 +2307,8 @@ jewelry - see also crown
 jocelyn - see torse
 jonquil blossom - see flower, trumpet shape
 joscelyn - see torse
-juniper - see tree, elongated shape
+jug - see bottle
+juniper - see tree, rounded shape
 kalpag - see clothing, headgear
 kangaroo - see beast, other
 kanji - see symbol
@@ -2228,6 +2325,7 @@ kingfisher - see bird, whole and bird, demi
 kite, bird - see bird, whole and bird, demi
 kite, shield - see escutcheon
 kite, toy - see toy
+kitten - see beast, cat
 knapsack - see clothing, pouch
 knife - see sword
 knight - see human figure
@@ -2240,6 +2338,7 @@ kris - see sword
 krummhorn - see musical instrument, recorder
 kudzu vine - see plant, vine
 labrys - see axe
+labyrinth - see roundel, whole
 lacy knot - see knot
 ladle - see tool, eating
 lady - see human figure
@@ -2252,6 +2351,7 @@ lanthorn - see lamp
 lanthorne - see lamp
 lark - see bird, whole and bird, demi
 lathe - see tool, other
+laurel branch - see tree, branch and plant, sprig and plant, herb
 laurel tree - see tree, rounded shape
 laurel wreath - see wreath, laurel
 lavender flower - see flower, multifloreted
@@ -2277,6 +2377,7 @@ linden leaf - see leaf
 linden tree - see tree, rounded shape
 linnet - see bird, whole and bird, demi
 lion - see beast, cat
+lion-dragon - see monster, dragon and monster, sea, lion and monster, composite and monster, winged
 lion's gamb - see leg, beast
 lion's head - see head, beast, cat
 lion's jambe - see leg, beast
@@ -2288,9 +2389,11 @@ lion, winged - see monster, winged
 lioness - see beast, cat
 lip - see body part
 lizard - see reptile, lizard
+llama - see beast, camel
 loaf - see foodstuff
 loat - see beast, dog
 lobster - see arthropod, lobster
+lock-plate - see billet and tool, other
 log - see tree, stump
 longbow - see bow
 longship - see ship
@@ -2302,6 +2405,7 @@ lotus flower - see flower, cup shape and flower, multipetaled
 lozenge - see also mascle and field division, vetu and field division, lozengy
 lozengy - see field division, lozengy and lozenge
 lucy - see fish, other
+lupin - see flower, trumpet shape
 lure, arrangement - see wing
 lute - see musical instrument, lute
 lymphad - see ship
@@ -2312,6 +2416,7 @@ macaw - see bird, whole and bird, demi
 madder, sack of - see pillow
 madrone - see tree, rounded shape
 madu - see escutcheon
+magnolia blossom - see flower, few petals
 magpie - see bird, whole and bird, demi
 mahi mahi - see fish, dolphin
 maiden - see human figure
@@ -2336,10 +2441,12 @@ mare - see beast, horse
 marguerite - see flower, multipetaled
 marigold - see flower, multipetaled
 marlin - see fish, other
+marmot - see beast, mouse
 marten - see beast, weasel
 marten's head - see head, beast, marten
 martlet - see bird, whole and bird, demi
 mascully - see field treatment, mascully
+masculyn - see mascle
 mash rake - see tool, agricultural
 mask - see also head, beast, dog
 masoned - see field treatment, masoned
@@ -2347,6 +2454,7 @@ massacre - see horn, creature
 mastiff - see beast, dog
 match - see knot
 mattock - see tool, agricultural
+maueranker - see millrind
 mazer - see cup
 meadow beauty - see flower, few petals
 melusine - see monster, merfolk
@@ -2357,12 +2465,15 @@ mermaid - see monster, merfolk
 merman - see monster, merfolk
 mew, sea - see bird, whole and bird, demi
 mice - see beast, mouse
+mill - see tool, agricultural
+mill rind - see millrind
 mill, wind - see windmill
 millstone - see roundel, whole
 minaret - see castle
 mink - see beast, weasel
 mistletoe - see plant, holly
 mistral - see cloud and head, human
+mitsutomoe - see symbol and alembic and goutte
 mjollnir - see hammer
 mole - see beast, other
 mollusk, squid - see mollusk, octopus
@@ -2404,7 +2515,8 @@ monster, sagittarius - see monster, centaur
 monster, sagittary - see monster, centaur
 monster, salamander - see reptile, lizard
 monster, sea, dog - see monster, sea, wolf
-monster, sea, griffin - see monster, sea, dragon
+monster, sea, dragon - see monster, dragon
+monster, sea, griffin - see monster, dragon
 monster, sea, human - see monster, merfolk
 monster, sea, loat - see monster, sea, wolf
 monster, sea, pegasus - see monster, sea, horse
@@ -2435,6 +2547,7 @@ mount - see base, enarched
 mountain lion - see beast, cat
 mountain range - see mountain
 mouse - see beast, mouse
+mouse of India - see beast, weasel
 mowing fork - see tool, agricultural
 mug - see cup
 mulberry - see fruit, berry
@@ -2484,18 +2597,24 @@ musical instrument, zither - see musical instrument, harp
 musical note - see symbol
 musimon - see beast, goat and monster, other
 musimon's head - see head, beast, goat
+mustard flower - see flower, few petals and foil, quatrefoil
+naga - see monster, multiheaded and reptile, snake
 naginata - see spear
+nail puller, Japanese - see tool, other and billet
+narcissi - see flower, trumpet shape
 narcissus blossom - see flower, trumpet shape
 narwhal - see fish, whale
+nautilus - see shell, other and mollusk, snail
 necklace - see jewelry
 necklet - see jewelry
 needle - see also tool, textile
 nefr - see musical instrument, lute
+nesselblat - see nesselblatt
 net - see knot
 nettle - see flower, thistle
 nightingale - see bird, whole and bird, demi
 nimbus - see cloud
-nine man morris - see toy
+nine man morris - see toy and billet
 no primary - see field only and peripheral only
 Non cross - see cross, as charge, other cross
 non cross - see knot and cross
@@ -2515,18 +2634,21 @@ ocotillo - see plant, cactus
 octagon - see polygon
 octofoil - see foil, octofoil
 octopus - see mollusk, octopus
-ogress - see roundel
+ogress - see roundel, whole
 olive tree - see tree, rounded shape
 onion - see plant, onion and fruit, other
 opinicus - see monster, griffin
-orange - see roundel
+orange - see roundel, whole
+orange blossom - see flower, rose
 orange tree - see tree, rounded shape
 orb - see roundel, whole and cross and eye
 orca - see fish, whale
 orchid - see flower, iris
 organ - see musical instrument, organ
+organ pipe - see musical instrument, organ
 oriole - see bird, whole and bird, demi
 orm - see monster, dragon
+orm's tail - see tail
 oryc - see beast, deer
 oryx - see beast, deer
 osprey - see bird, whole and bird, demi
@@ -2549,7 +2671,8 @@ palet - see pale
 palette - see tool, artistic
 pallet - see pale
 pallium - see pall
-palm tree - see tree, palm tree shape
+palm frond - see leaf
+palm tree - see tree, rounded shape
 palmer - see human figure
 palmer's staff - see staff
 palomino - see beast, horse
@@ -2566,6 +2689,7 @@ panther's head - see head, beast, cat
 panther, natural - see beast, cat
 papelonny - see field treatment, papelonny
 papillion - see arthropod, moth
+papyrus - see plant, reed
 paraclete - see bird, whole and bird, demi
 parchment - see book
 parrot - see bird, whole and bird, demi
@@ -2575,6 +2699,7 @@ Passion cross - see cross, as charge, plain cross
 passion cross botonny - see cross, as charge, crosslet
 passion cross, ends formee - see cross, as charge, formy
 passion nail - see lozenge and nail
+paternoster - see jewelry
 patriarchal cross - see cross, as charge, doubled
 patriarchal cross bottony - see cross, as charge, crosslet and cross, as charge, doubled
 patriarchal cross calvary orthodox botonny - see cross, as charge, calvary and cross, as charge, crosslet and cross, as charge, doubled
@@ -2590,11 +2715,12 @@ peak - see mountain
 peapod - see fruit, other
 pear - see fruit, other
 pear tree - see tree, rounded shape
+peascod - see fruit, other
 peel, bakers - see tool, other
 pegasi - see monster, pegasus
 pegasus - see monster, pegasus
 pelican - see bird, whole and bird, demi
-pellet - see roundel
+pellet - see roundel, whole
 pellety - see roundel, whole
 pelt - see hide
 pen - see also feather
@@ -2622,6 +2748,7 @@ per saltire - see field division, per saltire
 perch - see fish, other
 peregrine - see bird, whole and bird, demi
 periwinkle - see flower, few petals
+perruque - see clothing, headgear
 persimmon - see fruit, other
 pestle - see mortar & pestle
 petrel - see bird, whole and bird, demi
@@ -2630,6 +2757,7 @@ pheon - see also head, weapon
 phoenix - see monster, phoenix
 pick - see hammer and tool, agricultural and tool, other
 pick axe - see tool, other
+pickaxe - see tool, other
 pie - see foodstuff
 pig, beast - see beast, boar
 pig, guinea - see beast, mouse
@@ -2701,13 +2829,19 @@ plate - see roundel, whole
 platy - see roundel, whole
 platypus - see beast, other
 plaything - see toy
+plough - see tool, agricultural
 plover - see bird, whole and bird, demi
+plow - see tool, agricultural
+plum - see fruit, other
+plumb-line - see tool, carpentry
 plume - see feather
 plumeria blossom - see flower, rose
 plumetty - see field treatment, plumetty
+plummet - see tool, carpentry
 pod - see fruit, other
 point - see base and gore
 poison ivy - see plant, vine
+pole-cannon - see gun
 poleaxe - see pole axe
 polecat - see beast, squirrel
 polygon - see also billet and triangle
@@ -2716,9 +2850,10 @@ pomegranate - see fruit, pomegranate
 pomme - see roundel, whole
 poodle - see beast, dog
 popinjay - see bird, whole and bird, demi
-poplar - see tree, elongated shape
+poplar - see tree, rounded shape
 poppy - see flower, cup shape
 porcupine - see beast, hedgehog
+porphyrio - see bird, whole
 portcullis - see gate
 porte arnois - see tool, other
 pot, cooking - see cauldron
@@ -2726,6 +2861,7 @@ pot, ink - see inkhorn
 potent - see field treatment, potenty and cross
 potenty - see field treatment, potenty
 pouch - see clothing, pouch
+prawn - see arthropod, lobster
 press - see also tool, other
 pretzel - see foodstuff and knot
 prickly pear flower - see flower, rose
@@ -2739,8 +2875,12 @@ pruning hook - see hook and tool, agricultural
 psaltry - see musical instrument, dulcimer
 puffin - see bird, whole and bird, demi
 pumpkin - see fruit, other
+punch - see tool, other
 puncheon - see barrel
+punner - see tool, other
+pup - see beast, dog
 puppet - see toy
+puppy - see beast, dog
 purse - see clothing, pouch
 python - see monster, pithon and reptile, snake
 quadrant - see tool, astronomical
@@ -2755,8 +2895,10 @@ quetzal - see bird, whole and bird, demi
 quill - see feather and pen
 quill of yarn - see tool, textile
 quill pen - see pen
+quince - see fruit, other
 rabbit - see beast, rabbit
 raccoon - see beast, badger
+raccoon head - see head, beast, badger
 radish - see fruit, other
 ragweed - see plant, herb
 rake - see tool, agricultural
@@ -2775,6 +2917,8 @@ rat - see beast, mouse
 raven - see bird, whole and bird, demi
 raven's head - see head, bird
 ray - see fish, ray
+ray of the sun - see sun, demi
+razorbill - see bird, penguin
 reaping hook - see tool, agricultural and hook
 rebec - see musical instrument, lute
 recorder - see musical instrument, recorder
@@ -2819,19 +2963,23 @@ rising sun - see sun, demi
 roach, fish - see fish, other
 roach, insect - see arthropod, beetle
 roadrunner - see bird, whole and bird, demi
+roasting spit - see tool, other
 robe - see clothing, gown
 robin - see bird, whole and bird, demi
 roc - see bird, whole and bird, demi
 rocket - see gun
 rod - see staff
+rod of Aesculapius - see staff
 roebuck - see beast, deer
 rogacina - see cross, as charge and symbol
 rogacina crossed and fourchy - see cross, as charge, other cross
 rogacina doubly crossed and fourchy - see cross, as charge, doubled
+Roman dining couch - see chair
 roman numeral - see symbol
 rook - see chess piece and bird, whole
 rooster - see bird, whole and bird, demi
 rope - see knot
+rosary - see jewelry
 rose - see flower, rose
 rose bud - see flower, rose
 rosemary - see plant, herb
@@ -2883,6 +3031,7 @@ saw - see tool, carpentry
 scabbard - see sword
 scale - see balance
 scale, dragon - see dragon scale
+scallop - see shell, escallop
 scaly - see field treatment, scaly
 scarab - see arthropod, beetle
 scarf - see clothing, headgear and clothing, belt and ribbon
@@ -2904,11 +3053,12 @@ scythe - see sickle
 sea bear - see monster, sea, other and beast, bear
 sea bird - see bird and monster, other
 sea bull - see monster, sea, other and beast, bull
+sea catamount - see monster, sea, lion
 sea dog - see monster, sea, wolf
-sea dragon - see monster, sea, dragon
+sea dragon - see monster, dragon
 sea elephant - see beast, seal and monster, sea, other
 sea food - see arthropod, lobster and shell and mollusk, octopus
-sea griffin - see monster, sea, dragon
+sea griffin - see monster, dragon
 sea gull - see bird, whole and bird, demi
 sea horse - see monster, sea, horse
 sea horse, natural - see fish, seahorse
@@ -2920,7 +3070,7 @@ sea mew - see bird, whole and bird, demi
 sea monster - see monster, sea
 sea moose - see monster, sea, other
 sea mule - see monster, sea, horse
-sea-nettle - see monster, sea, other
+sea nettle - see monster, sea, other
 sea otter - see beast, weasel
 sea pegasus - see monster, sea, horse
 sea serpent - see monster, sea, serpent
@@ -2930,6 +3080,8 @@ sea unicorn - see monster, sea, horse
 sea urchin - see monster, sea, other
 sea weed - see plant, other
 sea wolf - see monster, sea, wolf
+sea-fox - see monster, sea, wolf
+sea-nettle - see monster, sea, other
 seagull - see bird, whole and bird, demi
 seal - see beast, seal
 sealion - see sea lion
@@ -2938,6 +3090,7 @@ seax - see sword
 sedum blossum - see flower, few petals
 seeblatt - see leaf and heart
 seed - see also fruit, nut
+selkie - see monster, merfolk
 semy de lys - see fleur de lys
 senmurv - see monster, other and monster, winged and beast, dog
 septfoil - see foil, septfoil
@@ -2968,7 +3121,7 @@ sheep's head - see head, beast, goat
 shell, scallop - see shell, escallop
 shellfish - see shell and arthropod, lobster and mollusk
 shepherd's crook - see staff
-shield - see escutcheon and roundel and cartouche
+shield - see escutcheon and roundel, whole and cartouche
 shillelagh - see staff
 shin bone - see bone
 ship, anchor - see anchor
@@ -2986,12 +3139,15 @@ sickle - see also tool, agricultural
 side - see flaunch
 siege engine - see also battering ram and castle
 siege tower - see siege engine and castle
+sieve - see roundel, whole and tool, agricultural
 silkie - see monster, humanoid
 silver bell flower - see flower, trumpet shape
 simurgh - see bird, whole and bird, demi
 sitar - see musical instrument, lute
-skeleton - see bone and human figure and head, human skull
+skeleton - see bone and human figure and head, human skull and fish, other
+skeleton of fish - see fish, other
 skene - see sword
+skillet - see tool, other
 skin, beast - see hide
 skin, snake - see reptile, snake
 skold - see helmet
@@ -3011,7 +3167,9 @@ snail - see mollusk, snail
 snake - see reptile, snake
 snake skin - see reptile, snake
 snip, cloth - see shear
+snowdrop - see flower, trumpet shape
 snowflake - see escarbuncle
+sock - see clothing, footgear
 sole - see clothing, footgear
 songbird - see bird, whole and bird, demi
 sow - see beast, boar
@@ -3019,6 +3177,7 @@ spade, shape - see card pique
 spade, tool - see tool, agricultural
 spangenhelm - see helmet
 spaniel - see beast, dog
+sparks - see also field treatment, seme, estencely
 sparrow - see bird, whole and bird, demi
 sparrowhawk - see bird, whole and bird, demi
 spear head - see pheon
@@ -3031,9 +3190,11 @@ spider web - see also knot
 spiderweb - see spider web
 spiderwort blossom - see flower, few petals
 spindle - see also tool, textile
+spinning wheel - see tool, textile
 spiral - see gurges
 spiral horn - see musical instrument, horn
 spool - see tool, textile
+spool of thread - see tool, textile
 spoon - see tool, eating
 spot - see ermine spot
 spray - see flower, bouquet
@@ -3054,6 +3215,7 @@ stallion - see beast, horse
 stand - see tripod
 standing seraph - see monster, humanoid
 staple - see nail
+star of Bethlehem - see flower, few petals
 star of david - see mullet
 star, compass - see mullet
 star, morning - see mace
@@ -3069,19 +3231,24 @@ stingray - see fish, ray
 stirrup - see saddlery
 stitchwort blossom - see flower, few petals
 stoat - see beast, weasel
-stone - see rock and keystone and roundel
+stone - see rock and keystone and roundel, whole
 stool - see chair
 stork - see bird, whole and bird, demi
 strainer - see tool, eating
 strap - see clothing, belt
 strawberry - see fruit, strawberry
+strawberry flower - see flower, rose
+streitgabelklinge - see head, weapon
 stringed instrument - see musical instrument, harp and musical instrument, lute and musical instrument, dulcimer
 stump - see tree, stump
 sturgeon - see fish, other
+sun - see mullet
 sun eclipsed - see sun, whole, charged
 sun issuant - see sun, demi
 sun wheel - see cross
-sun, whole, eclipsed - see sun, whole, charged
+sun, whole - see mullet
+sun, whole, charged - see mullet, charged
+sun, whole, eclipsed - see mullet, charged
 sunflower - see flower, multipetaled
 swallow - see bird, whole and bird, demi
 swan - see bird, whole and bird, demi
@@ -3093,6 +3260,7 @@ swordfish - see fish, other
 sycamore - see tree, rounded shape
 syrinx - see musical instrument, pan pipe
 tablet - see book
+tablet, weaver's - see billet and tool, textile
 tabor - see musical instrument, drum
 tack - see saddlery
 tadpole - see amphibian
@@ -3106,6 +3274,7 @@ tambourine - see musical instrument, drum
 tank, container - see barrel
 tankard - see cup
 tapir - see beast, anteater
+tarasque - see monster, composite and monster, dragon
 targe - see roundel, whole
 tassel - see knot
 tau - see cross
@@ -3116,6 +3285,7 @@ teazle - see flower, thistle
 teeth - see tooth
 tennis racket - see tool, other
 tent - see pavilion
+tentacle - see leg, monster
 tenterhook - see tool, textile and hook and nail
 tern - see bird, whole and bird, demi
 terrapin - see reptile, turtle
@@ -3130,15 +3300,17 @@ thors hammer - see hammer and cross, as charge
 thrush - see bird, whole and bird, demi
 thylacine - see beast, dog
 thyme - see plant, herb
+thyrsus - see staff
 tiara - see crown
 tierce - see flaunch and gore
 tierced in point - see field division, per pall inverted
 tiger - see beast, cat
-tiger lily - see flower, few petals
+tiger lily - see flower, few petals and flower, trumpet shape
 tiger's head - see head, beast, cat
 toad - see amphibian
 toe - see body part
 tomahawk - see axe
+tomato hornworm - see reptile, worm
 tomoe - see symbol and alembic and goute
 tong - see tool, other
 tool, agricultural - see also sickle
@@ -3159,7 +3331,7 @@ torch - see also candle
 torii - see gate
 torque - see annulet and jewelry
 torse - see also annulet
-torteau - see roundel
+torteau - see roundel, whole
 tortoise - see reptile, turtle
 totem pole - see head, beast, other
 touch me not - see flower, multipetaled
@@ -3169,24 +3341,24 @@ tower, siege - see siege engine
 tower, windmill - see windmill
 treatment - see field treatment
 trebuchet - see siege engine
-tree, alder - see tree, elongated shape
+tree, alder - see tree, rounded shape
 tree, apple - see tree, rounded shape
 tree, ash - see tree, rounded shape
 tree, aspen - see tree, rounded shape
-tree, beech - see tree, elongated shape
-tree, birch - see tree, elongated shape
+tree, beech - see tree, rounded shape
+tree, birch - see tree, rounded shape
 tree, blasted - see tree, rounded shape
 tree, cedar - see tree, pine tree shape
 tree, cherry - see tree, rounded shape
 tree, cinnamon - see tree, rounded shape
-tree, cypress - see tree, elongated shape
-tree, date palm - see tree, palm tree shape
+tree, cypress - see tree, rounded shape
+tree, date palm - see tree, rounded shape
 tree, elm - see tree, rounded shape
 tree, fir - see tree, pine tree shape
 tree, hazel - see tree, rounded shape
 tree, heath - see tree, rounded shape
 tree, hurst - see tree, multiple
-tree, juniper - see tree, elongated shape
+tree, juniper - see tree, rounded shape
 tree, laurel - see tree, rounded shape
 tree, madrone - see tree, rounded shape
 tree, maple - see tree, rounded shape
@@ -3194,9 +3366,10 @@ tree, mulberry - see tree, rounded shape
 tree, oak - see tree, rounded shape
 tree, olive - see tree, rounded shape
 tree, orange - see tree, rounded shape
+tree, palm - see tree, rounded shape
 tree, pear - see tree, rounded shape
 tree, pointed shape - see tree, pine tree shape
-tree, poplar - see tree, elongated shape
+tree, poplar - see tree, rounded shape
 tree, redwood - see tree, pine tree shape
 tree, rowan - see tree, rounded shape
 tree, spruce - see tree, pine tree shape
@@ -3210,6 +3383,7 @@ trefoil - see foil, trefoil
 trefoil knot - see knot
 trefoily - see foil, trefoil
 trenket - see tool, other
+tress - see knot
 tressure - see orle
 trews - see clothing, other
 triangle - see also polygon
@@ -3218,12 +3392,14 @@ tricune - see mullet
 trident head - see head, weapon
 trillium - see flower, few petals
 trimount - see base and mountain
+trireme - see ship
 triskele - see triskelion
 triton - see monster, merfolk
 triton shell - see shell, other
 trivet - see tripod
 trojan horse - see toy
 troll - see monster, humanoid
+troll's head - see head, human and head, monster, other
 trousers - see clothing, other
 trout - see fish, other
 trout, winged - see monster, winged
@@ -3255,6 +3431,7 @@ unicorn, winged - see monster, pegasus
 unicornate pegasus - see monster, pegasus
 urchin - see beast, hedgehog
 urchin, sea - see monster, sea, other
+urinal - see bottle
 urn - see ewer
 vair bell - see bell
 vairy - see field treatment, vairy
@@ -3266,10 +3443,12 @@ vegetable lamb - see monster, other
 vehicle - see ship and wagon
 veil - see clothing, headgear
 vetu - see field division, vetu
+vexilium - see flag
+vexillium - see flag
 vexillum - see flag
 vine - see plant, vine
 viol - see musical instrument, lute
-violet - see flower, few petals
+violet - see flower, rose
 violin - see musical instrument, lute
 vires - see annulet
 vixen - see beast, dog
@@ -3277,7 +3456,7 @@ vol - see wing
 waist-apron - see clothing, other
 wake knot - see knot
 wall - see architecture
-walnut - see fruit, nut, not acorn and roundel
+walnut - see fruit, nut, not acorn and roundel, whole
 walnut tree - see tree, rounded shape
 walrus - see beast, seal
 wand - see staff
@@ -3287,27 +3466,36 @@ warwagon - see wagon
 wasp - see arthropod, bee
 water buffalo - see beast, bull
 water lily - see flower, cup shape
+waterwheel - see wheel, heraldic
 weapon - see mace and sword and arrow and axe and bow and hammer and pole axe and trident and spear and sling and gun and siege engine and staff
+weapon head - see head, weapon
 weasel - see beast, weasel
+weaver's tablet - see billet and tool, textile
+weaving tablet - see billet and tool, textile
 weaving tool - see tool, textile and spindle
 web - see spider web
 weed - see plant
 well, ink - see inkhorn
 well, water - see also architecture
+werewolf - see beast, dog
 whale - see fish, whale
 wheat - see plant, wheat
 wheel, catherine - see wheel
 wheel, spinning - see tool, textile
 wheel, wool - see tool, textile
-whelk - see shell, other
+whelk - see shell, other and escallop
 whip - see saddlery
 whippet - see beast, dog
 whirlpool - see gurges
 wild ginger flower - see flower, few petals
 wildman - see human figure
 willow - see tree, rounded shape
+willow-herb blossom - see flower, rose
+willowherb - see flower, rose
 wind - see cloud
 windmill - see also castle
+wine bottle - see bottle
+wine cup - see cup
 winged lion - see monster, winged and beast, cat
 winged man - see monster, winged and monster, humanoid
 winged serpent - see monster, pithon
@@ -3336,6 +3524,7 @@ wool fleece - see hide
 wool pack - see pillow
 wool sack - see pillow
 wool wheel - see tool, textile
+wool-comb - see tool, textile
 wooly mammoth - see beast, elephant
 word - see symbol
 worm - see reptile, worm
@@ -3360,3 +3549,4 @@ zephyr - see cloud and head, human
 zils - see musical instrument, zils
 zither - see musical instrument, harp
 zule - see chess piece
+zydrach - see fish, other

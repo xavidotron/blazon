@@ -98,12 +98,15 @@ class Charge(Thingy):
         self.category = category
         self.mods = []
         self.tags = []
+        self.maintags = []
         self.seealso = []
 
     def combine_with(self, other):
         if (other.name == self.name
             and self.mods == other.mods
-            and self.tags == other.tags and self.between == other.between):
+            and self.tags == other.tags
+            and self.maintags == other.maintags
+            and self.between == other.between):
             ret = copy.deepcopy(self)
             if other.number is not None:
                 ret.number += other.number
@@ -141,20 +144,27 @@ class Charge(Thingy):
         numtagbit = ''
         if numtag:
             numtagbit = ':' + numtag
+        maintagbit = ''
+        if self.maintags:
+            maintagbit = ':' + ':'.join(self.maintags)
 
         should_double = DOUBLE_PRIMARIES
+        was_split_primary = False
         if SPLIT_PRIMARIES and 'primary' in tags and not as_mod:
             if numtag:
                 tags = [numtag] + tags
             tags.remove('primary')
-            for t in tags:
+            was_split_primary = True
+            for t in tags + self.maintags:
                 yield "%s:primary:%s" % (self.desc, t)
-            if len(tags) > 1:
+            if len(tags + self.maintags) > 1:
                 should_double = False
         else:
-            yield "%s%s%s" % (self.desc, numtagbit, tagbit)
+            yield "%s%s%s%s" % (self.desc, numtagbit, tagbit, maintagbit)
         if not as_mod:
             for c in self.seealso:
+                if was_split_primary and c.desc == self.desc:
+                    continue
                 if c.number:
                     yield "?%s:%s%s" % (c.desc, numtag_for(c.number), tagbit)
                 elif c.multiplier and numtagbit:
@@ -182,7 +192,8 @@ class Charge(Thingy):
             c.tags.append(posture)
 
     def __repr__(self):
-        return 'Charge:'+repr((self.name, self.desc, self.category))
+        return 'Charge:'+repr((self.name, self.desc, self.category, self.tags,
+                               self.maintags))
 
 class Ordinary(Parent):
     arounds = []
